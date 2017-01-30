@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TheEventFinder</string>
+
+
+    <!-- string variables for activity_create_event -->
+    <string name="createEvent_title_text">Create Event</string>
+    <string name="createEvent_name_input">Event Name</string>
 </resources>
