@@ -25,44 +25,75 @@ import android.widget.Toast;
 public class CreateEventActivity extends Activity {
 
     private DatePicker datePicker;
-    private Calendar calendarDate;
-    private TextView dateView;
-    private int year, month, day;
+    private Calendar calendarDateFrom, calendarDateTo;
+    private TextView dateViewFrom, dateViewTo;
+    private int yearFrom, monthFrom, dayFrom;
+    private int yearTo, monthTo, dayTo;
 
     private TimePicker timePicker;
-    private Calendar calendarTime;
-    private TextView timeView;
-    private String format = "";
-    private int hour, min;
+    private Calendar calendarTimeFrom, calendarTimeTo;
+    private TextView timeViewFrom, timeViewTo;
+    //private String format = "";
+    private int hourFrom, minFrom;
+    private int hourTo, minTo;
+    private int idDateFrom = 999;
+    private int idDateTo = 899;
+    private int idTimeFrom = 900;
+    private int idTimeTo = 800;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
-        dateView = (TextView) findViewById(R.id.createEvent_startDateId_input);
-        calendarDate = Calendar.getInstance();
-        year = calendarDate.get(Calendar.YEAR);
+        // From Date
+        dateViewFrom = (TextView) findViewById(R.id.createEvent_startDateId_input);
+        calendarDateFrom = Calendar.getInstance();
 
-        month = calendarDate.get(Calendar.MONTH);
-        day = calendarDate.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month+1, day);
+        yearFrom = calendarDateFrom.get(Calendar.YEAR);
+        monthFrom = calendarDateFrom.get(Calendar.MONTH);
+        dayFrom = calendarDateFrom.get(Calendar.DAY_OF_MONTH);
+        showDate(yearFrom, monthFrom+1, dayFrom, idDateFrom);
 
-        timeView = (TextView) findViewById(R.id.createEvent_startTimeId_input);
-        calendarTime = Calendar.getInstance();
+        timeViewFrom = (TextView) findViewById(R.id.createEvent_startTimeId_input);
+        calendarTimeFrom = Calendar.getInstance();
 
-        hour = calendarTime.get(Calendar.HOUR_OF_DAY);
-        min = calendarTime.get(Calendar.MINUTE);
-        showTime(hour, min);
+        hourFrom = calendarTimeFrom.get(Calendar.HOUR_OF_DAY);
+        minFrom = calendarTimeFrom.get(Calendar.MINUTE);
+        showTime(hourFrom, minFrom, idTimeFrom);
+
+        // End Date
+        dateViewTo = (TextView) findViewById(R.id.createEvent_endDateId_input);
+        calendarDateTo = Calendar.getInstance();
+        yearTo = calendarDateTo.get(Calendar.YEAR);
+        monthTo = calendarDateTo.get(Calendar.MONTH);
+        dayTo = calendarDateTo.get(Calendar.DAY_OF_MONTH);
+        showDate(yearTo, monthTo+1, dayTo, idDateTo);
+
+        timeViewTo = (TextView) findViewById(R.id.createEvent_endTimeId_input);
+        calendarTimeTo = Calendar.getInstance();
+
+        hourTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
+        minTo = calendarTimeTo.get(Calendar.MINUTE);
+        showTime(hourTo, minTo, idTimeTo);
     }
+
     /**
      * code for Date settings
      * TODO fix so user cant pick the date that happen in the past
      */
     @SuppressWarnings("deprecation")
-    public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "Choose Date",
+    public void setDateFrom(View view) {
+        showDialog(idDateFrom);
+        Toast.makeText(getApplicationContext(), "Choose Start Date",
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @SuppressWarnings("deprecation")
+    public void setDateTo(View view) {
+        showDialog(idDateTo);
+        Toast.makeText(getApplicationContext(), "Choose End Date",
                 Toast.LENGTH_SHORT)
                 .show();
     }
@@ -70,17 +101,23 @@ public class CreateEventActivity extends Activity {
     @Override
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
-        if (id == 999) {
+        if (id == idDateFrom) {
             return new DatePickerDialog(this,
-                    myDateListener, year, month, day);
-        } else if (id == 900) {
+                    myDateListenerFrom, yearFrom, monthFrom, dayFrom);
+        } else if(id == idDateTo) {
+            return new DatePickerDialog(this,
+                    myDateListenerTo, yearTo, monthTo, dayTo);
+        } else if (id == idTimeFrom) {
             return new TimePickerDialog(this,
-                    myTimeListener, hour, min, true);
+                    myTimeListenerFrom, hourFrom, minFrom, true);
+        } else if(id == idTimeTo) {
+            return new TimePickerDialog(this,
+                    myTimeListenerTo, hourTo, minTo, true);
         }
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener myDateListener = new
+    private DatePickerDialog.OnDateSetListener myDateListenerFrom = new
             DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker arg0,
@@ -89,27 +126,52 @@ public class CreateEventActivity extends Activity {
                     // arg1 = year
                     // arg2 = month
                     // arg3 = day
-                    showDate(arg1, arg2+1, arg3);
+                    showDate(arg1, arg2+1, arg3, idDateFrom);
                 }
             };
 
-    private void showDate(int year, int month, int day) {
-        dateView.setText(new StringBuilder().append(day).append("/")
-                .append(month).append("/").append(year));
+    private DatePickerDialog.OnDateSetListener myDateListenerTo = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg1, int arg2, int arg3) {
+                    // TODO Auto-generated method stub
+                    // arg1 = year
+                    // arg2 = month
+                    // arg3 = day
+                    showDate(arg1, arg2+1, arg3, idDateTo);
+                }
+            };
+
+    private void showDate(int year, int month, int day, int id) {
+        if(id == idDateFrom) {
+            dateViewFrom.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+        } else if (id == idDateTo) {
+            dateViewTo.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+        }
     }
 
     /**
      * code for Time settings
      * TODO fix so user cant pick the time that happen in the past
      */
-    public void setTime(View view) {
-        showDialog(900);
-        Toast.makeText(getApplicationContext(), "Choose Time",
+    public void setTimeFrom(View view) {
+        showDialog(idTimeFrom);
+        Toast.makeText(getApplicationContext(), "Choose Start Time",
                 Toast.LENGTH_SHORT)
                 .show();
     }
 
-    private TimePickerDialog.OnTimeSetListener myTimeListener = new
+    public void setTimeTo(View view) {
+        showDialog(idTimeTo);
+        Toast.makeText(getApplicationContext(), "Choose End time",
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    private TimePickerDialog.OnTimeSetListener myTimeListenerFrom = new
             TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker arg0,
@@ -117,24 +179,53 @@ public class CreateEventActivity extends Activity {
                     // TODO Auto-generated method stub
                     // arg1 = hour
                     // arg2 = minute
-                    showTime(arg1, arg2);
+                    showTime(arg1, arg2, idTimeFrom);
                 }
             };
 
-    private void showTime(int hour, int min) {
-        if (hour == 0) {
-            hour += 12;
-            format = "AM";
-        } else if (hour == 12) {
-            format = "PM";
-        } else if (hour > 12) {
-            hour -= 12;
-            format = "PM";
-        } else {
-            format = "AM";
+    private TimePickerDialog.OnTimeSetListener myTimeListenerTo = new
+            TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker arg0,
+                                      int arg1, int arg2) {
+                    // TODO Auto-generated method stub
+                    // arg1 = hour
+                    // arg2 = minute
+                    showTime(arg1, arg2, idTimeTo);
+                }
+            };
+
+    private void showTime(int hour, int min, int id) {
+        if(id == idTimeFrom) {
+            /*if (hour == 0) {
+                hour += 12;
+                format = "AM";
+            } else if (hour == 12) {
+                format = "PM";
+            } else if (hour > 12) {
+                hour -= 12;
+                format = "PM";
+            } else {
+                format = "AM";
+            }*/
+
+            timeViewFrom.setText(new StringBuilder().append(hour).append(" : ").append(min));
         }
 
-        timeView.setText(new StringBuilder().append(hour).append(" : ").append(min)
-                .append(" ").append(format));
+        else if (id == idTimeTo) {
+            /*if (hour == 0) {
+                hour += 12;
+                format = "AM";
+            } else if (hour == 12) {
+                format = "PM";
+            } else if (hour > 12) {
+                hour -= 12;
+                format = "PM";
+            } else {
+                format = "AM";
+            }*/
+
+            timeViewTo.setText(new StringBuilder().append(hour).append(" : ").append(min));
+        }
     }
 }
