@@ -1,6 +1,7 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Calendar;
@@ -18,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
  */
@@ -76,6 +78,17 @@ public class CreateEventActivity extends Activity {
         hourTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
         minTo = calendarTimeTo.get(Calendar.MINUTE);
         showTime(hourTo, minTo, idTimeTo);
+
+    }
+
+    /**
+     * naming-convenient change later.
+     * Test function for switching activity for now, will be use later for
+     * when submitting/creating an event
+     */
+    public void buttonSubmit(View view) {
+        Intent intent = new Intent(CreateEventActivity.this, MyProfileActivity.class);
+        startActivity(intent);
     }
 
     /**
