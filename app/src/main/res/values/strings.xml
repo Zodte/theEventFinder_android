@@ -17,4 +17,7 @@
 
     <!-- string variables for activity_my_profile.xml -->
     <string name="myProfile_myPictureDesc_text">Profile Picture</string>
+
+    <!--  -->
+    <string name="eventInfo_eventInfoImg_txt">event image</string>
 </resources>
