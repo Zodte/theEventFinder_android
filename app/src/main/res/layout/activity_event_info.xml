@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="10"
+    android:layout_height="wrap_content"
     tools:context=".EventInfoActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:padding="10dp"
-        android:layout_weight="1"
         android:background="@drawable/border_shadow"
         android:elevation="5dp">
 
@@ -53,5 +51,68 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="4"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:id="@+id/eventInfo_memberInfo_view"
+            android:text="number of people attending"/>
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:id="@+id/eventInfo_likeInfo_view"
+            android:text="number of likes/rating"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:id="@+id/eventInfo_eventDescription_txt"
+        android:text="this is the best event"
+        android:padding="10dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/eventInfo_cancelEventId_btn"
+            android:layout_marginLeft="49dp"
+            android:layout_marginStart="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/colorPink"
+            android:textColor="@color/colorWhite"
+            android:text="@string/eventInfo_cancelEventBtn_txt"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/eventInfo_joinEventId_btn"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="49dp"
+            android:layout_marginEnd="49dp"
+            android:background="@color/colorPink"
+            android:text="@string/eventInfo_joinEventBtn_txt"
+            android:textColor="@color/colorWhite"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
