@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">TheEventFinder</string>
-
+    <string name="app_name_create_event">Create Event</string>
+    <string name="app_name_my_profile">My Profile</string>
+    <string name="app_name_search">Search</string>
+    <string name="app_name_event_info">Event Info</string>
     <!-- string variables for activity_create_event.xml -->
     <string name="createEvent_title_text">Create Event</string>
     <string name="createEvent_name_placeholder">Event Name</string>
