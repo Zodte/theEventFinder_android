@@ -1,8 +1,43 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sareenaith.theeventfinder.EventsMapActivity" />
+    android:id="@+id/map_container"
+    tools:context="com.example.sareenaith.theeventfinder.EventsMapActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:padding="5dp">
+
+
+        <ImageButton
+            android:id="@+id/eventMap_profile_icon"
+            android:layout_width="35dp"
+            android:layout_height="32dp"
+            android:src="@drawable/profile_icon"
+            android:onClick="changeToProfileActivity"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ImageButton
+            android:id="@+id/eventMap_create_event_icon"
+            android:layout_width="35dp"
+            android:layout_height="32dp"
+            android:src="@drawable/create_event_icon"
+            android:onClick="changeToCreateEventActivity"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+</RelativeLayout>

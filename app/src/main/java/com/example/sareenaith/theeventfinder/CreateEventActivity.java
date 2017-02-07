@@ -87,8 +87,7 @@ public class CreateEventActivity extends Activity {
      * when submitting/creating an event
      */
     public void buttonSubmit(View view) {
-        Intent intent = new Intent(CreateEventActivity.this, MyProfileActivity.class);
-        startActivity(intent);
+
     }
 
     /**

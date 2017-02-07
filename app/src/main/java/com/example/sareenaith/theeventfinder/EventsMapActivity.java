@@ -1,9 +1,12 @@
 package com.example.sareenaith.theeventfinder;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
 
+import com.google.android.gms.games.event.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -24,13 +27,22 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    public void changeToProfileActivity(View view) {
+        Intent intent = new Intent(EventsMapActivity.this, MyProfileActivity.class);
+        startActivity(intent);
+    }
 
+    public void changeToCreateEventActivity(View view) {
+        Intent intent = new Intent(EventsMapActivity.this, CreateEventActivity.class);
+        startActivity(intent);
+    }
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
