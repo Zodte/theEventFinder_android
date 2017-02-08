@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
-import com.google.android.gms.games.event.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,17 +18,65 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    ImageButton imgBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
+
+        imgBtn = (ImageButton) findViewById(R.id.eventMap_settings_icon);
+        imgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(EventsMapActivity.this, imgBtn);
+                popup.getMenuInflater().inflate(R.menu.create_drop_list, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Intent intent;
+                        switch (item.getItemId()) {
+                            case R.id.item_one:
+                                intent = new Intent(EventsMapActivity.this, MyProfileActivity.class);
+                                startActivity(intent);
+                                return true;
+                            case R.id.item_two:
+                                intent = new Intent(EventsMapActivity.this, MyProfileActivity.class);
+                                startActivity(intent);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
+                Object menuHelper;
+                Class[] argTypes;
+                try {
+                    Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
+                    fMenuHelper.setAccessible(true);
+                    menuHelper = fMenuHelper.get(popup);
+                    argTypes = new Class[]{boolean.class};
+                    menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
+                } catch (Exception e) {
+                    // Possible exceptions are NoSuchMethodError and NoSuchFieldError
+                    //
+                    // In either case, an exception indicates something is wrong with the reflection code, or the
+                    // structure of the PopupMenu class or its dependencies has changed.
+                    //
+                    // These exceptions should never happen since we're shipping the AppCompat library in our own apk,
+                    // but in the case that they do, we simply can't force icons to display, so log the error and
+                    // show the menu normally.
+                }
+                popup.show();
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -34,10 +84,12 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
     }
 
+    /*
     public void changeToProfileActivity(View view) {
         Intent intent = new Intent(EventsMapActivity.this, MyProfileActivity.class);
         startActivity(intent);
     }
+    */
 
     public void changeToCreateEventActivity(View view) {
         Intent intent = new Intent(EventsMapActivity.this, CreateEventActivity.class);

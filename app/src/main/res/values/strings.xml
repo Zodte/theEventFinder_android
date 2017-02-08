@@ -6,6 +6,8 @@
     <string name="app_name_event_info">Event Info</string>
     <string name="title_activity_events_map">Event Map</string>
 
+    <string name="settings_my_profile">My Profile</string>
+    <string name="settings_logout">Logout</string>
     <!-- string variables for activity_create_event.xml -->
     <string name="createEvent_title_text">Create Event</string>
     <string name="createEvent_name_placeholder">Event Name</string>

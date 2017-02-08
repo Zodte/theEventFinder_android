@@ -20,11 +20,10 @@
 
 
         <ImageButton
-            android:id="@+id/eventMap_profile_icon"
-            android:layout_width="35dp"
-            android:layout_height="32dp"
-            android:src="@drawable/profile_icon"
-            android:onClick="changeToProfileActivity"
+            android:id="@+id/eventMap_settings_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/settings_icon"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
