@@ -78,7 +78,6 @@ public class CreateEventActivity extends Activity {
         hourTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
         minTo = calendarTimeTo.get(Calendar.MINUTE);
         showTime(hourTo, minTo, idTimeTo);
-
     }
 
     /**

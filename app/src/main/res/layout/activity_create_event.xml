@@ -89,6 +89,7 @@
             android:layout_marginRight="10dp"
             android:src="@mipmap/from_icon"
             android:id="@+id/imageView_from_icon"
+            android:layout_above="@+id/createEvent_startDateId_input"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
@@ -236,7 +237,9 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:ems="10"
+            android:maxLength="2"
             android:padding="10dp"
             android:background="@drawable/shape_edit_text"
             android:id="@+id/createEvent_ageId_input"

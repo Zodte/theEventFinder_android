@@ -11,14 +11,6 @@
         android:layout_height="0dp"
         android:layout_weight="0.20">
 
-        <ImageButton
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:id="@+id/myProfile_profilePicId_imageButton"
-            android:src="@drawable/blastoise_profile"
-            android:contentDescription="@string/myProfile_myPictureDesc_text"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 
