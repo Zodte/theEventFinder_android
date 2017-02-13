@@ -4,11 +4,25 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,21 +30,34 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     ImageButton imgBtn;
+    RequestQueue requestQueue;
+    private ArrayList<Event> events = new ArrayList<Event>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
+
+        requestQueue = Volley.newRequestQueue(this);
 
         imgBtn = (ImageButton) findViewById(R.id.eventMap_settings_icon);
         imgBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +134,53 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        String url = "http://10.0.2.2:3000/getAllEvents/2017-05-05";
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // TODO Response
+                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
+
+                        for(int i = 0; i < response.length(); i++){
+                            JSONObject event = null;
+                            try {
+                                event = response.getJSONObject(i);
+                                String eventID = event.getString("id");
+                                String name = event.getString("name");
+                                String description = event.getString("description");
+                                int ageMin = event.getInt("age_min");
+                                int ageMax = event.getInt("age_max");
+                                int creatorID = event.getInt("creator_id");
+                                boolean genderRestriction = event.getBoolean("gender_restriction");
+                                String startDateString = event.getString("start_date").replace("T"," ").substring(0,23);
+                                Timestamp startDate = Timestamp.valueOf(startDateString);
+                                String endDateString = event.getString("end_date").replace("T", " ").substring(0,23);
+                                Timestamp endDate = Timestamp.valueOf(endDateString);
+                                float lat = (float)event.getDouble("lat");
+                                float lgt = (float)event.getDouble("lgt");
+
+                                Event eventObj = new Event(name, description, ageMin, ageMax, genderRestriction,
+                                        lat, lgt, creatorID, startDate, endDate );
+                                events.add(eventObj);
+                                Log.d("myApp",""+eventObj.getStartDate());
+                            } catch (JSONException e) {
+                                Log.d("myApp", "buhuu");
+                            }
+
+                        }
+                        addEvents();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.d("myApp", ""+error);
+                    }
+                });
+        requestQueue.add(jsObjRequest);
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -117,47 +190,12 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 
     }
 
-    class RetrieveEvents extends AsyncTask<Void, Void, String> {
-
-        private Exception exception;
-
-        protected void onPreExecute() {
-            //if we wanto add a progress bar later
-            //progressBar.setVisibility(View.VISIBLE);
-            //responseView.setText("");
-        }
-
-        protected String doInBackground(Void... urls) {
-            try {
-                URL url = new URL(/*API_URL + */"&user="/* + USER_ID*/);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    return stringBuilder.toString();
-                }
-                finally{
-                    urlConnection.disconnect();
-                }
-            }
-            catch(Exception e) {
-                //Log.e("ERROR", e.getMessage(), e);
-                return null;
-            }
-        }
-
-        protected void onPostExecute(String response) {
-            if(response == null) {
-                response = "THERE WAS AN ERROR";
-            }
-            //progressBar.setVisibility(View.GONE);
-            //Log.i("INFO", response);
-            //responseView.setText(response);
+    private void addEvents(){
+        for(int i = 0; i<events.size(); i++){
+            LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
+            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
         }
     }
+
 }
