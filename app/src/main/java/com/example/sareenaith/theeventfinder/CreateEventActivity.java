@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.View;
 
 import android.widget.DatePicker;
+import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,22 @@ public class CreateEventActivity extends Activity {
      */
     public void buttonSubmit(View view) {
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch(view.getId()) {
+            case R.id.createEvent_maleId_txt:
+                if(checked) {
+                    Toast.makeText(CreateEventActivity.this, "hello", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.createEvent_femaleId_txt:
+                if(checked) {
+                    Toast.makeText(CreateEventActivity.this, "goodbye", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     /**
