@@ -251,7 +251,6 @@
     </RelativeLayout>
 
     <ImageButton
-        android:onClick="buttonSubmit"
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:src="@mipmap/add_icon"

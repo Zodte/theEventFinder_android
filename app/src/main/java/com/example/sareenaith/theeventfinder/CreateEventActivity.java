@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -12,26 +14,48 @@ import android.app.Dialog;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import android.widget.ImageButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
  */
 
-public class CreateEventActivity extends Activity {
+public class CreateEventActivity extends Activity implements View.OnClickListener {
+
+    private static final String URL = "http://localhost:3000/createEvent";
 
     private DatePicker datePicker;
     private Calendar calendarDateFrom, calendarDateTo;
     private TextView dateViewFrom, dateViewTo;
     private int yearFrom, monthFrom, dayFrom;
     private int yearTo, monthTo, dayTo;
+
+    private EditText eventNameTxt;
+    private EditText eventDescriptionTxt;
+    private ImageButton eventButton;
+    private long lat;
+    private long lgt;
 
     private TimePicker timePicker;
     private Calendar calendarTimeFrom, calendarTimeTo;
@@ -44,10 +68,16 @@ public class CreateEventActivity extends Activity {
     private int idTimeFrom = 900;
     private int idTimeTo = 800;
 
+    private GoogleMap mMap;
+    private Event event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
+        eventNameTxt = (EditText) findViewById(R.id.createEvent_nameId_input);
+        eventDescriptionTxt = (EditText) findViewById(R.id.createEvent_descriptionId_input);
+        eventButton = (ImageButton) findViewById(R.id.createEvent_submitId_btn);
 
         // From Date
         dateViewFrom = (TextView) findViewById(R.id.createEvent_startDateId_input);
@@ -79,6 +109,8 @@ public class CreateEventActivity extends Activity {
         hourTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
         minTo = calendarTimeTo.get(Calendar.MINUTE);
         showTime(hourTo, minTo, idTimeTo);
+
+        eventButton.setOnClickListener(this);
     }
 
     /**
@@ -86,8 +118,38 @@ public class CreateEventActivity extends Activity {
      * Test function for switching activity for now, will be use later for
      * when submitting/creating an event
      */
-    public void buttonSubmit(View view) {
+    @Override
+    public void onClick(View view) {
+        sendSubmit();
+        Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
+        startActivity(intent);
+    }
 
+    private void sendSubmit() {
+        final String eventName = eventNameTxt.getText().toString().trim();
+        final String eventDescription = eventDescriptionTxt.getText().toString().trim();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("myApp", ""+error);
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void addEvents() {
+            LatLng pos = new LatLng(event.getLat(), event.getLgt());
+            mMap.addMarker(new MarkerOptions().position(pos).title(event.getName()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
     }
 
     public void onRadioButtonClicked(View view) {
