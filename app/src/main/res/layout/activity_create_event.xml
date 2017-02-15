@@ -4,9 +4,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="15dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
     tools:context=".CreateEventActivity">
 
     <RelativeLayout
@@ -248,6 +245,13 @@
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/imageView_age_icon"
             android:layout_toRightOf="@+id/imageView_age_icon"/>
+
+        <Button
+            android:text="Choose Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chooseLocation_button"
+            android:onClick="setLocation"/>
     </RelativeLayout>
 
     <ImageButton
@@ -293,4 +297,12 @@
             android:text="Female"
             android:id="@+id/createEvent_femaleId_txt"/>
     </RadioGroup>
+
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:/>
+
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.sareenaith.theeventfinder;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -41,7 +46,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by Hoai Nam Duc Tran on 30/01/2017.
  */
 
-public class CreateEventActivity extends Activity implements View.OnClickListener {
+public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String URL = "http://localhost:3000/createEvent";
 
@@ -110,7 +115,12 @@ public class CreateEventActivity extends Activity implements View.OnClickListene
         minTo = calendarTimeTo.get(Calendar.MINUTE);
         showTime(hourTo, minTo, idTimeTo);
 
-        eventButton.setOnClickListener(this);
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        //eventButton.setOnClickListener(this);
+
     }
 
     /**
@@ -118,38 +128,17 @@ public class CreateEventActivity extends Activity implements View.OnClickListene
      * Test function for switching activity for now, will be use later for
      * when submitting/creating an event
      */
-    @Override
-    public void onClick(View view) {
-        sendSubmit();
-        Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
-        startActivity(intent);
-    }
+//    @Override
+//    public void onClick(View view) {
+//        sendSubmit();
+//        Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
+//        startActivity(intent);
+//    }
 
-    private void sendSubmit() {
-        final String eventName = eventNameTxt.getText().toString().trim();
-        final String eventDescription = eventDescriptionTxt.getText().toString().trim();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("myApp", ""+error);
-                    }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void addEvents() {
-            LatLng pos = new LatLng(event.getLat(), event.getLgt());
-            mMap.addMarker(new MarkerOptions().position(pos).title(event.getName()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+    public void setLocation(View v){
+        RelativeLayout mainLayout=(RelativeLayout)this.findViewById(R.id.createEvent_firstContainer);
+        mainLayout.setVisibility(RelativeLayout.GONE);
+        Log.d("myApp", "Called");
     }
 
     public void onRadioButtonClicked(View view) {
@@ -317,5 +306,10 @@ public class CreateEventActivity extends Activity implements View.OnClickListene
 
             timeViewTo.setText(new StringBuilder().append(hour).append(" : ").append(min));
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
     }
 }

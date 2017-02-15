@@ -122,6 +122,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         Intent intent = new Intent(EventsMapActivity.this, CreateEventActivity.class);
         startActivity(intent);
     }
+
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -181,12 +183,6 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                     }
                 });
         requestQueue.add(jsObjRequest);
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        //new RetrieveEvents().execute();
 
     }
 
