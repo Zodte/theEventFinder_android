@@ -112,7 +112,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
     }
 
-    private void setUpMap() {
+    private void setMapClick() {
         mMap.setOnMapClickListener(this);
     }
 
@@ -331,6 +331,6 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        setUpMap();
+        setMapClick();
     }
 }
