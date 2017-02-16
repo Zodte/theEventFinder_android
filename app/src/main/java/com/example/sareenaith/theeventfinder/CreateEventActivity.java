@@ -3,6 +3,7 @@ package com.example.sareenaith.theeventfinder;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import java.util.Calendar;
@@ -19,9 +20,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
@@ -135,9 +138,16 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 //        startActivity(intent);
 //    }
 
-    public void setLocation(View v){
-        RelativeLayout mainLayout=(RelativeLayout)this.findViewById(R.id.createEvent_firstContainer);
-        mainLayout.setVisibility(RelativeLayout.GONE);
+    public void setLocation(View v) {
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
+        ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
+        mainLayoutParams.height = 0;
+        mainLayout.setLayoutParams(mainLayoutParams);
+
+        LinearLayout mapLayout = (LinearLayout) findViewById(R.id.map_fragment);
+        ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        mapLayout.setLayoutParams(params);
         Log.d("myApp", "Called");
     }
 

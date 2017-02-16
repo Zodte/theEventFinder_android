@@ -6,303 +6,317 @@
     android:layout_height="match_parent"
     tools:context=".CreateEventActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/createEvent_firstContainer"
-        android:padding="5dp">
+        android:id="@+id/map_fragment"
+        android:layout_height="0dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/event_icon"
-            android:id="@+id/imageView_event_icon"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:contentDescription="icon for event name"/>
-
-        <EditText
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:maxLines="1"
-            android:gravity="top|start"
-            android:padding="10dp"
-            android:background="@drawable/shape_edit_text"
-            android:id="@+id/createEvent_nameId_input"
-            android:hint="@string/createEvent_name_placeholder"
-            android:layout_toEndOf="@+id/imageView_event_icon"
-            android:layout_toRightOf="@+id/imageView_event_icon" />
-    </RelativeLayout>
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:id="@+id/createEvent_secondContainer"
-        android:layout_below="@+id/createEvent_firstContainer">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/description_icon"
-            android:id="@+id/imageView_description_icon"
-            android:contentDescription="icon for description"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:maxLines="10"
-            android:width="0dip"
-            android:scrollbars="none"
-            android:gravity="top|start"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:ems="10"
-            android:background="@drawable/shape_edit_text"
-            android:id="@+id/createEvent_descriptionId_input"
-            android:hint="@string/createEvent_description_placeholder"
-            android:layout_toRightOf="@+id/imageView_description_icon"
-            android:layout_toEndOf="@+id/imageView_description_icon" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:id="@+id/createEvent_thirdContainer"
-        android:layout_below="@+id/createEvent_secondContainer">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/from_icon"
-            android:id="@+id/imageView_from_icon"
-            android:layout_above="@+id/createEvent_startDateId_input"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-
-        <TextView
-            android:text="@string/createEvent_startDate_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/createEvent_startDateId_text"
-            android:ems="10"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/imageView_from_icon"
-            android:layout_toRightOf="@+id/imageView_from_icon"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/hourglass_from"
-            android:id="@+id/imageView_hourglass_from_icon"
-            android:layout_below="@+id/imageView_from_icon"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:id="@+id/createEvent_startDateId_input"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/createEvent_startDate_textView_placeholder"
-            android:onClick="setDateFrom"
-            android:padding="10dp"
-            android:layout_toEndOf="@+id/imageView_hourglass_from_icon"
-            android:layout_toRightOf="@+id/imageView_hourglass_from_icon"
-            android:layout_below="@+id/createEvent_startDateId_text"
-            android:layout_toStartOf="@+id/createEvent_startTimeId_input"
-            android:layout_toLeftOf="@+id/createEvent_startTimeId_input"/>
-
-        <TextView
-            android:id="@+id/createEvent_startTimeId_input"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/createEvent_startTime_textView_placeholder"
-            android:onClick="setTimeFrom"
-            android:padding="10dp"
-            android:layout_alignBottom="@+id/createEvent_startDateId_input"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:id="@+id/createEvent_fourthContainer"
-        android:layout_below="@+id/createEvent_thirdContainer">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/to_icon"
-            android:id="@+id/imageView_to_icon"
-            android:layout_above="@+id/createEvent_endDateId_input"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:text="@string/createEvent_endDate_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/createEvent_endDateId_text"
-            android:ems="10"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:layout_toEndOf="@+id/imageView_to_icon"
-            android:layout_toRightOf="@+id/imageView_to_icon"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/hourglass_to"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/imageView_hourglass_to_icon"
-            android:layout_below="@+id/createEvent_endDateId_text"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/createEvent_endDate_textView_placeholder"
-            android:onClick="setDateTo"
-            android:padding="10dp"
-            android:layout_below="@+id/createEvent_endDateId_text"
-            android:id="@+id/createEvent_endDateId_input"
-            android:layout_toEndOf="@+id/imageView_hourglass_to_icon"
-            android:layout_toRightOf="@+id/imageView_hourglass_to_icon"
-            android:layout_toStartOf="@+id/createEvent_endTimeId_input"
-            android:layout_toLeftOf="@+id/createEvent_endTimeId_input"/>
-
-        <TextView
-            android:id="@+id/createEvent_endTimeId_input"
-            style="@android:style/Widget.Holo.Light.Spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/createEvent_endTime_textView_placeholder"
-            android:onClick="setTimeTo"
-            android:padding="10dp"
-            android:layout_alignBaseline="@+id/createEvent_endDateId_input"
-            android:layout_alignBottom="@+id/createEvent_endDateId_input"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:id="@+id/createEvent_fifthContainer"
-        android:layout_below="@+id/createEvent_fourthContainer">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/age_icon"
-            android:id="@+id/imageView_age_icon"
-            android:layout_centerVertical="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:maxLength="2"
-            android:padding="10dp"
-            android:background="@drawable/shape_edit_text"
-            android:id="@+id/createEvent_ageId_input"
-            android:hint="@string/createEvent_age_placeholder"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/imageView_age_icon"
-            android:layout_toRightOf="@+id/imageView_age_icon"/>
-
-        <Button
-            android:text="Choose Location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/chooseLocation_button"
-            android:onClick="setLocation"/>
-    </RelativeLayout>
-
-    <ImageButton
-        android:layout_width="53dp"
-        android:layout_height="53dp"
-        android:src="@mipmap/add_icon"
-        android:id="@+id/createEvent_submitId_btn"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="11dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Sex"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:id="@+id/createEvent_chooseSexId_txt"
-        android:layout_alignBottom="@+id/createEvent_groupSexId_radioBtn"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/createEvent_groupSexId_radioBtn" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/createEvent_groupSexId_radioBtn"
-        android:orientation="horizontal"
-        android:layout_above="@+id/createEvent_submitId_btn"
-        android:layout_centerHorizontal="true"
-        android:onClick="onRadioButtonClicked">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male"
-            android:id="@+id/createEvent_maleId_txt"/>
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Female"
-            android:id="@+id/createEvent_femaleId_txt"/>
-    </RadioGroup>
-
-    <fragment
-        android:id="@+id/map"
-        class="com.google.android.gms.maps.MapFragment"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:/>
+        android:id="@+id/createEvent_mainLayout">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/createEvent_firstContainer"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/event_icon"
+                android:id="@+id/imageView_event_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:contentDescription="icon for event name"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="1"
+                android:gravity="top|start"
+                android:padding="10dp"
+                android:background="@drawable/shape_edit_text"
+                android:id="@+id/createEvent_nameId_input"
+                android:hint="@string/createEvent_name_placeholder"
+                android:layout_toEndOf="@+id/imageView_event_icon"
+                android:layout_toRightOf="@+id/imageView_event_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/createEvent_secondContainer"
+            android:layout_below="@+id/createEvent_firstContainer">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/description_icon"
+                android:id="@+id/imageView_description_icon"
+                android:contentDescription="icon for description"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:maxLines="10"
+                android:width="0dip"
+                android:scrollbars="none"
+                android:gravity="top|start"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:ems="10"
+                android:background="@drawable/shape_edit_text"
+                android:id="@+id/createEvent_descriptionId_input"
+                android:hint="@string/createEvent_description_placeholder"
+                android:layout_toRightOf="@+id/imageView_description_icon"
+                android:layout_toEndOf="@+id/imageView_description_icon" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/createEvent_thirdContainer"
+            android:layout_below="@+id/createEvent_secondContainer">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/from_icon"
+                android:id="@+id/imageView_from_icon"
+                android:layout_above="@+id/createEvent_startDateId_input"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+
+            <TextView
+                android:text="@string/createEvent_startDate_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/createEvent_startDateId_text"
+                android:ems="10"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/imageView_from_icon"
+                android:layout_toRightOf="@+id/imageView_from_icon"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/hourglass_from"
+                android:id="@+id/imageView_hourglass_from_icon"
+                android:layout_below="@+id/imageView_from_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/createEvent_startDateId_input"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/createEvent_startDate_textView_placeholder"
+                android:onClick="setDateFrom"
+                android:padding="10dp"
+                android:layout_toEndOf="@+id/imageView_hourglass_from_icon"
+                android:layout_toRightOf="@+id/imageView_hourglass_from_icon"
+                android:layout_below="@+id/createEvent_startDateId_text"
+                android:layout_toStartOf="@+id/createEvent_startTimeId_input"
+                android:layout_toLeftOf="@+id/createEvent_startTimeId_input"/>
+
+            <TextView
+                android:id="@+id/createEvent_startTimeId_input"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/createEvent_startTime_textView_placeholder"
+                android:onClick="setTimeFrom"
+                android:padding="10dp"
+                android:layout_alignBottom="@+id/createEvent_startDateId_input"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/createEvent_fourthContainer"
+            android:layout_below="@+id/createEvent_thirdContainer">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/to_icon"
+                android:id="@+id/imageView_to_icon"
+                android:layout_above="@+id/createEvent_endDateId_input"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="@string/createEvent_endDate_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/createEvent_endDateId_text"
+                android:ems="10"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:layout_toEndOf="@+id/imageView_to_icon"
+                android:layout_toRightOf="@+id/imageView_to_icon"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/hourglass_to"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/imageView_hourglass_to_icon"
+                android:layout_below="@+id/createEvent_endDateId_text"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/createEvent_endDate_textView_placeholder"
+                android:onClick="setDateTo"
+                android:padding="10dp"
+                android:layout_below="@+id/createEvent_endDateId_text"
+                android:id="@+id/createEvent_endDateId_input"
+                android:layout_toEndOf="@+id/imageView_hourglass_to_icon"
+                android:layout_toRightOf="@+id/imageView_hourglass_to_icon"
+                android:layout_toStartOf="@+id/createEvent_endTimeId_input"
+                android:layout_toLeftOf="@+id/createEvent_endTimeId_input"/>
+
+            <TextView
+                android:id="@+id/createEvent_endTimeId_input"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/createEvent_endTime_textView_placeholder"
+                android:onClick="setTimeTo"
+                android:padding="10dp"
+                android:layout_alignBaseline="@+id/createEvent_endDateId_input"
+                android:layout_alignBottom="@+id/createEvent_endDateId_input"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/createEvent_fifthContainer"
+            android:layout_below="@+id/createEvent_fourthContainer">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/age_icon"
+                android:id="@+id/imageView_age_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:maxLength="2"
+                android:padding="10dp"
+                android:background="@drawable/shape_edit_text"
+                android:id="@+id/createEvent_ageId_input"
+                android:hint="@string/createEvent_age_placeholder"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/imageView_age_icon"
+                android:layout_toRightOf="@+id/imageView_age_icon"/>
+
+            <Button
+                android:text="Choose Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chooseLocation_button"
+                android:onClick="setLocation"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:src="@mipmap/add_icon"
+            android:id="@+id/createEvent_submitId_btn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="11dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Sex"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:id="@+id/createEvent_chooseSexId_txt"
+            android:layout_alignBottom="@+id/createEvent_groupSexId_radioBtn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/createEvent_groupSexId_radioBtn" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/createEvent_groupSexId_radioBtn"
+            android:orientation="horizontal"
+            android:layout_above="@+id/createEvent_submitId_btn"
+            android:layout_centerHorizontal="true"
+            android:onClick="onRadioButtonClicked">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Male"
+                android:id="@+id/createEvent_maleId_txt"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female"
+                android:id="@+id/createEvent_femaleId_txt"/>
+        </RadioGroup>
+    </RelativeLayout>
 </RelativeLayout>
