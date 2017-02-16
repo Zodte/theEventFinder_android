@@ -65,6 +65,10 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private long lat;
     private long lgt;
 
+    private RelativeLayout mainLayout;
+    private RelativeLayout mapLayout;
+
+
     private TimePicker timePicker;
     private Calendar calendarTimeFrom, calendarTimeTo;
     private TextView timeViewFrom, timeViewTo;
@@ -137,12 +141,12 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 //    }
 
     public void setLocation(View view) {
-        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
         mainLayoutParams.height = 0;
         mainLayout.setLayoutParams(mainLayoutParams);
 
-        RelativeLayout mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
+        mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mapLayout.setLayoutParams(params);
@@ -153,13 +157,12 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
      * TODO - implement (lat,long) for retrieving location
      */
     public void onClickAccept(View view) {
-
-        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
+        mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
         mainLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mainLayout.setLayoutParams(mainLayoutParams);
 
-        RelativeLayout mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
+        mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
         params.height = 0;
         mapLayout.setLayoutParams(params);
