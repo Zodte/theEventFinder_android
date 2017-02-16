@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".CreateEventActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/map_fragment"
         android:layout_height="0dp">
@@ -16,12 +16,23 @@
             android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:onClick="onClickAccept"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:id="@+id/createEvent_mainLayout">
 
         <RelativeLayout
@@ -40,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:contentDescription="icon for event name"/>
+                android:contentDescription="@+id/createEvent_eDIcon"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -74,7 +85,7 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:maxLines="10"
                 android:width="0dip"
                 android:scrollbars="none"
@@ -107,7 +118,6 @@
                 android:layout_above="@+id/createEvent_startDateId_input"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
-
 
             <TextView
                 android:text="@string/createEvent_startDate_text"
@@ -247,7 +257,21 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:inputType="number"
+                android:ems="10"
+                android:maxLength="2"
+                android:padding="10dp"
+                android:background="@drawable/shape_edit_text"
+                android:id="@+id/createEvent_minAgeId_input"
+                android:hint="@string/createEvent_minAge_placeholder"
+                android:layout_toEndOf="@+id/imageView_age_icon"
+                android:layout_toRightOf="@+id/imageView_age_icon"/>
 
             <EditText
                 android:layout_width="wrap_content"
@@ -257,22 +281,10 @@
                 android:maxLength="2"
                 android:padding="10dp"
                 android:background="@drawable/shape_edit_text"
-                android:id="@+id/createEvent_ageId_input"
-                android:hint="@string/createEvent_age_placeholder"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/imageView_age_icon"
-                android:layout_toRightOf="@+id/imageView_age_icon"/>
-
-            <Button
-                android:text="Choose Location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/chooseLocation_button"
-                android:onClick="setLocation"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/createEvent_maxAgeId_input"
+                android:hint="@string/createEvent_maxAge_placeholder"
+                android:layout_toEndOf="@+id/createEvent_minAgeId_input"
+                android:layout_toRightOf="@+id/createEvent_minAgeId_input"/>
         </RelativeLayout>
 
         <ImageButton
@@ -288,35 +300,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose Sex"
+            android:text="Is it gender restrict"
             android:gravity="center"
             android:textSize="18sp"
             android:id="@+id/createEvent_chooseSexId_txt"
-            android:layout_alignBottom="@+id/createEvent_groupSexId_radioBtn"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/createEvent_groupSexId_radioBtn" />
+            android:layout_below="@+id/createEvent_fifthContainer"/>
 
-        <RadioGroup
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/createEvent_groupSexId_radioBtn"
-            android:orientation="horizontal"
-            android:layout_above="@+id/createEvent_submitId_btn"
-            android:layout_centerHorizontal="true"
-            android:onClick="onRadioButtonClicked">
+            android:id="@+id/createEvent_checkSexId_checkBox"
+            android:layout_alignBaseline="@+id/createEvent_chooseSexId_txt"
+            android:layout_alignBottom="@+id/createEvent_chooseSexId_txt"
+            android:layout_toRightOf="@+id/createEvent_chooseSexId_txt"
+            android:layout_toEndOf="@+id/createEvent_chooseSexId_txt" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Male"
-                android:id="@+id/createEvent_maleId_txt"/>
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Female"
-                android:id="@+id/createEvent_femaleId_txt"/>
-        </RadioGroup>
+        <Button
+            android:text="Choose Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chooseLocation_button"
+            android:onClick="setLocation"
+            android:layout_below="@+id/createEvent_chooseSexId_txt" />
     </RelativeLayout>
+
 </RelativeLayout>

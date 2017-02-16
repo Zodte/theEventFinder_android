@@ -122,8 +122,6 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //eventButton.setOnClickListener(this);
-
     }
 
     /**
@@ -138,33 +136,38 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 //        startActivity(intent);
 //    }
 
-    public void setLocation(View v) {
+    public void setLocation(View view) {
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
         mainLayoutParams.height = 0;
         mainLayout.setLayoutParams(mainLayoutParams);
 
-        LinearLayout mapLayout = (LinearLayout) findViewById(R.id.map_fragment);
+        RelativeLayout mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mapLayout.setLayoutParams(params);
         Log.d("myApp", "Called");
     }
 
+    /*
+     * TODO - implement (lat,long) for retrieving location
+     */
+    public void onClickAccept(View view) {
+
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
+        ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
+        mainLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        mainLayout.setLayoutParams(mainLayoutParams);
+
+        RelativeLayout mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
+        ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
+        params.height = 0;
+        mapLayout.setLayoutParams(params);
+        Log.d("myApp", "Location set");
+    }
+
     public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch(view.getId()) {
-            case R.id.createEvent_maleId_txt:
-                if(checked) {
-                    Toast.makeText(CreateEventActivity.this, "hello", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.createEvent_femaleId_txt:
-                if(checked) {
-                    Toast.makeText(CreateEventActivity.this, "goodbye", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
+
     }
 
     /**

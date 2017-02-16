@@ -8,6 +8,7 @@
 
     <string name="settings_my_profile">My Profile</string>
     <string name="settings_logout">Logout</string>
+
     <!-- string variables for activity_create_event.xml -->
     <string name="createEvent_title_text">Create Event</string>
     <string name="createEvent_name_placeholder">Event Name</string>
@@ -18,9 +19,10 @@
     <string name="createEvent_endDate_text">To: </string>
     <string name="createEvent_endDate_textView_placeholder">Set Date</string>
     <string name="createEvent_endTime_textView_placeholder">Set Time</string>
-    <string name="createEvent_age_placeholder">Set the Required Age</string>
+    <string name="createEvent_minAge_placeholder">min age</string>
+    <string name="createEvent_maxAge_placeholder">max age</string>
     <string name="createEvent_submit_btn">Submit</string>
-
+    <string name="createEvent_eDIcon">icon for event name</string>
 
     <!-- string variables for activity_my_profile.xml -->
     <string name="myProfile_myPictureDesc_text">Profile Picture</string>
