@@ -3,45 +3,30 @@ package com.example.sareenaith.theeventfinder;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 
-import android.os.Bundle;
-
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -49,7 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Created by Hoai Nam Duc Tran on 30/01/2017.
  */
 
-public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback {
+public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private static final String URL = "http://localhost:3000/createEvent";
 
@@ -62,8 +47,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private EditText eventNameTxt;
     private EditText eventDescriptionTxt;
     private ImageButton eventButton;
-    private long lat;
-    private long lgt;
+    private double lat;
+    private double lgt;
 
     private RelativeLayout mainLayout;
     private RelativeLayout mapLayout;
@@ -125,7 +110,26 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
 
+    private void setUpMap() {
+        mMap.setOnMapClickListener(this);
+    }
+
+    @Override
+    public void onMapClick(LatLng point) {
+        lat = point.latitude;
+        lgt = point.longitude;
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(point);
+
+        mMap.clear();
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(point));
+        mMap.addMarker(markerOptions);
+        markerOptions.title("Event Coordinator");
+
+        Log.d("myApp", "lat: " + lat + "lgt: " + lgt);
     }
 
     /**
@@ -327,5 +331,6 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        setUpMap();
     }
 }
