@@ -1,7 +1,6 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import java.util.Calendar;
@@ -9,10 +8,12 @@ import java.util.Calendar;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,10 +26,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import utilityclass.InputFilterMinMax;
 
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
@@ -37,7 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private static final String URL = "http://localhost:3000/createEvent";
-
+    private String check = "no";
     private DatePicker datePicker;
     private Calendar calendarDateFrom, calendarDateTo;
     private TextView dateViewFrom, dateViewTo;
@@ -49,11 +50,13 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private ImageButton eventButton;
     private double lat;
     private double lgt;
+    private EditText minAge;
+    private EditText maxAge;
 
     private RelativeLayout mainLayout;
     private RelativeLayout mapLayout;
 
-
+    private CheckBox checkBox;
     private TimePicker timePicker;
     private Calendar calendarTimeFrom, calendarTimeTo;
     private TextView timeViewFrom, timeViewTo;
@@ -75,6 +78,11 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         eventNameTxt = (EditText) findViewById(R.id.createEvent_nameId_input);
         eventDescriptionTxt = (EditText) findViewById(R.id.createEvent_descriptionId_input);
         eventButton = (ImageButton) findViewById(R.id.createEvent_submitId_btn);
+
+        checkBox = (CheckBox) findViewById(R.id.createEvent_checkSexId_checkBox);
+
+        minAge = (EditText) findViewById(R.id.createEvent_minAgeId_input);
+        maxAge = (EditText) findViewById(R.id.createEvent_maxAgeId_input);
 
         // From Date
         dateViewFrom = (TextView) findViewById(R.id.createEvent_startDateId_input);
@@ -112,6 +120,16 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
     }
 
+    public void setGenderRestriction(View view) {
+        if(checkBox.isChecked()) {
+            check = "yes";
+            Toast.makeText(getApplicationContext(), ""+check, Toast.LENGTH_SHORT).show();
+        } else {
+            check = "no";
+            Toast.makeText(getApplicationContext(), ""+check,Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setMapClick() {
         mMap.setOnMapClickListener(this);
     }
@@ -129,7 +147,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         mMap.addMarker(markerOptions);
         markerOptions.title("Event Coordinator");
 
-        Log.d("myApp", "lat: " + lat + "lgt: " + lgt);
+        Toast.makeText(getApplicationContext(), "lat:"+lat+ " " +"long:"+lgt,Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -143,6 +161,26 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 //        Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
 //        startActivity(intent);
 //    }
+    // check the age
+    public void checkAge() {
+        String minText = minAge.getText().toString().trim();
+        String maxText = maxAge.getText().toString().trim();
+        if(minText.equals("")) {
+            minAge.setText(R.string.age);
+        } else if(maxText.equals("")) {
+            maxAge.setText(R.string.age);
+        }
+        try {
+            int minVal = Integer.parseInt(minAge.getText().toString().trim());
+            int maxVal = Integer.parseInt(maxAge.getText().toString().trim());
+            if(minVal > maxVal) {
+                Toast.makeText(getApplicationContext(), "The min age cannot be higher than max age",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } catch(NumberFormatException error) {
+            Toast.makeText(getApplicationContext(),"Please enter the required age",Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public void setLocation(View view) {
         mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
@@ -171,10 +209,6 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         params.height = 0;
         mapLayout.setLayoutParams(params);
         Log.d("myApp", "Location set");
-    }
-
-    public void onRadioButtonClicked(View view) {
-
     }
 
     /**
@@ -328,6 +362,9 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
+    public void sendEvent(View view) {
+        checkAge();
+    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

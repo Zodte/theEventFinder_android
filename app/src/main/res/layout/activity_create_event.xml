@@ -262,7 +262,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:text="18"
                 android:inputType="number"
                 android:ems="10"
                 android:maxLength="2"
@@ -276,6 +276,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="18"
                 android:inputType="number"
                 android:ems="10"
                 android:maxLength="2"
@@ -291,6 +292,7 @@
             android:layout_width="53dp"
             android:layout_height="53dp"
             android:src="@mipmap/add_icon"
+            android:onClick="sendEvent"
             android:id="@+id/createEvent_submitId_btn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_alignParentBottom="true"
@@ -310,6 +312,7 @@
 
         <CheckBox
             android:layout_width="wrap_content"
+            android:onClick="setGenderRestriction"
             android:layout_height="wrap_content"
             android:id="@+id/createEvent_checkSexId_checkBox"
             android:layout_alignBaseline="@+id/createEvent_chooseSexId_txt"

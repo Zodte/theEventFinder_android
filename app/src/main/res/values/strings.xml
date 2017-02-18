@@ -21,6 +21,7 @@
     <string name="createEvent_endTime_textView_placeholder">Set Time</string>
     <string name="createEvent_minAge_placeholder">min age</string>
     <string name="createEvent_maxAge_placeholder">max age</string>
+    <string name="age">18</string>
     <string name="createEvent_submit_btn">Submit</string>
     <string name="createEvent_eDIcon">icon for event name</string>
 
