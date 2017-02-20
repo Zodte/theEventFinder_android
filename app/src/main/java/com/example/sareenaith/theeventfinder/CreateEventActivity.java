@@ -3,7 +3,11 @@ package com.example.sareenaith.theeventfinder;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import java.io.EOFException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -22,12 +26,21 @@ import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import utilityclass.InputFilterMinMax;
 
@@ -37,7 +50,7 @@ import utilityclass.InputFilterMinMax;
 
 public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
-    private static final String URL = "http://localhost:3000/createEvent";
+    private static final String URL = "http://10.0.2.2:3000/login";
     private String check = "no";
     private DatePicker datePicker;
     private Calendar calendarDateFrom, calendarDateTo;
@@ -362,9 +375,42 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
-    public void sendEvent(View view) {
+    public void sendEvent(View view) throws JSONException {
         checkAge();
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("Volley", response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("Volley", error.toString());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("eventName", eventNameTxt.getText().toString().trim());
+                    params.put("lati", String.valueOf(lat));
+                    params.put("lgt", String.valueOf(lgt));
+                    params.put("genderRestrict", check);
+                    params.put("descr", eventDescriptionTxt.getText().toString().trim());
+                    params.put("ageMin", minAge.getText().toString().trim());
+                    params.put("ageMax", maxAge.getText().toString().trim());
+                    params.put("endDate", dateViewTo.getText().toString().trim());
+                    params.put("startDate", dateViewFrom.getText().toString().trim());
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
