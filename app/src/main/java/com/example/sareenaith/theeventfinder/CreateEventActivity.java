@@ -392,8 +392,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("eventName", eventNameTxt.getText().toString().trim());
-                    params.put("lati", String.valueOf(lat));
+                    params.put("name", eventNameTxt.getText().toString().trim());
+                    params.put("lat", String.valueOf(lat));
                     params.put("lgt", String.valueOf(lgt));
                     params.put("genderRestrict", check);
                     params.put("descr", eventDescriptionTxt.getText().toString().trim());
