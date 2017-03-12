@@ -42,7 +42,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import utilityclass.InputFilterMinMax;
+//import utilityclass.InputFilterMinMax;
 
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.

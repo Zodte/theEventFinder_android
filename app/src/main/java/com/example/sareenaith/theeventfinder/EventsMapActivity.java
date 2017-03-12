@@ -135,63 +135,22 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        String url = "http://10.0.2.2:3000/getAllEvents/2017-05-05";
-        JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        // TODO Response
-                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
-
-                        for(int i = 0; i < response.length(); i++){
-                            JSONObject event = null;
-                            try {
-                                event = response.getJSONObject(i);
-                                String eventID = event.getString("id");
-                                String name = event.getString("name");
-                                String description = event.getString("description");
-                                int ageMin = event.getInt("age_min");
-                                int ageMax = event.getInt("age_max");
-                                int creatorID = event.getInt("creator_id");
-                                boolean genderRestriction = event.getBoolean("gender_restriction");
-                                String startDateString = event.getString("start_date").replace("T"," ").substring(0,23);
-                                Timestamp startDate = Timestamp.valueOf(startDateString);
-                                String endDateString = event.getString("end_date").replace("T", " ").substring(0,23);
-                                Timestamp endDate = Timestamp.valueOf(endDateString);
-                                float lat = (float)event.getDouble("lat");
-                                float lgt = (float)event.getDouble("lgt");
-
-                                Event eventObj = new Event(name, description, ageMin, ageMax, genderRestriction,
-                                        lat, lgt, creatorID, startDate, endDate );
-                                events.add(eventObj);
-                                Log.d("myApp",""+eventObj.getStartDate());
-                            } catch (JSONException e) {
-                                Log.d("myApp", "buhuu");
-                            }
-
-                        }
-                        addEvents();
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        Log.d("myApp", ""+error);
-                    }
-                });
-        requestQueue.add(jsObjRequest);
-
+        EventService eventService = new EventService();
+        eventService.getAllEvents();
     }
 
-    private void addEvents(){
-        for(int i = 0; i<events.size(); i++){
-            LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
-            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
-        }
-    }
+    //Always reset all events
+    //Might be better to add them on top of others
+//    public void setEvents(ArrayList<Event> tmpEvents){
+//        events = new ArrayList<Event>(tmpEvents);
+//    }
+//
+//    public void addEvents(){
+//        for(int i = 0; i<events.size(); i++){
+//            LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
+//            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+//        }
+//    }
 
 }
