@@ -18,24 +18,25 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+
 /**
  * Created by SareenAith on 28/2/2017.
  */
 
-public class EventService extends FragmentActivity {
+public class EventService {
+
+
 
     RequestQueue requestQueue;
     private ArrayList<Event> events = new ArrayList<Event>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d("myApp", "I came!");
-        requestQueue = Volley.newRequestQueue(this);
+    public EventService() {
+        Log.d("myApp", "init");
     }
 
     public void getAllEvents() {
-        String url = "http://10.0.2.2:3000/getAllEvents/2017-05-05";
+        Log.d("myApp", "Fetching events");
+        String url = "http://10.0.2.2:3000/getAllEvents/2018-04-04";
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
             (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
@@ -71,19 +72,21 @@ public class EventService extends FragmentActivity {
                         }
 
                     }
+                      Log.d("myApp", events.get(0).getName());
 //                    EventsMapActivity eventsMapActivity = new EventsMapActivity();
 //                    eventsMapActivity.setEvents(events);
 //                    eventsMapActivity.addEvents();
+
                 }
             }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     // TODO Auto-generated method stub
-                    Log.d("myApp", ""+error);
+                    Log.d("myApp", "VILLLAAAA:"+error);
                 }
             });
-        //requestQueue.add(jsObjRequest);
 
+        //requestQueue.add(jsObjRequest);
     }
 }

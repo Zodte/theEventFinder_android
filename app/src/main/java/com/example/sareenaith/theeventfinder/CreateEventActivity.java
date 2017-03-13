@@ -1,6 +1,7 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -50,7 +51,7 @@ import org.json.JSONObject;
 
 public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
-    private static final String URL = "http://10.0.2.2:3000/login";
+    private static final String URL = "http://192.168.0.101:3000/createEvent";
     private String check = "no";
     private DatePicker datePicker;
     private Calendar calendarDateFrom, calendarDateTo;
@@ -392,20 +393,25 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("name", eventNameTxt.getText().toString().trim());
-                    params.put("lat", String.valueOf(lat));
-                    params.put("lgt", String.valueOf(lgt));
+                    params.put("eventName", eventNameTxt.getText().toString().trim());
+                    params.put("lati", String.valueOf(lat));
+                    params.put("long", String.valueOf(lgt));
                     params.put("genderRestrict", check);
                     params.put("descr", eventDescriptionTxt.getText().toString().trim());
                     params.put("ageMin", minAge.getText().toString().trim());
                     params.put("ageMax", maxAge.getText().toString().trim());
                     params.put("endDate", dateViewTo.getText().toString().trim());
                     params.put("startDate", dateViewFrom.getText().toString().trim());
+                    params.put("isAndroid", "true");
                     return params;
                 }
             };
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
+
+            Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
+            startActivity(intent);
+
         } catch(Exception e) {
             e.printStackTrace();
         }

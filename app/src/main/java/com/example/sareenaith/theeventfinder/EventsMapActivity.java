@@ -56,7 +56,6 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
-
         requestQueue = Volley.newRequestQueue(this);
 
         imgBtn = (ImageButton) findViewById(R.id.eventMap_settings_icon);
@@ -135,8 +134,54 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        EventService eventService = new EventService();
-        eventService.getAllEvents();
+        mMap = googleMap;
+        String url = "http://192.168.0.101:3000/getallevents/2017-12-12";
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // TODO Response
+                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
+
+                        for(int i = 0; i < response.length(); i++){
+                            JSONObject event = null;
+                            try {
+                                event = response.getJSONObject(i);
+                                String eventID = event.getString("id");
+                                String name = event.getString("name");
+                                String description = event.getString("description");
+                                int ageMin = event.getInt("age_min");
+                                int ageMax = event.getInt("age_max");
+                                int creatorID = event.getInt("creator_id");
+                                boolean genderRestriction = event.getBoolean("gender_restriction");
+                                String startDateString = event.getString("start_date").replace("T"," ").substring(0,23);
+                                Timestamp startDate = Timestamp.valueOf(startDateString);
+                                String endDateString = event.getString("end_date").replace("T", " ").substring(0,23);
+                                Timestamp endDate = Timestamp.valueOf(endDateString);
+                                float lat = (float)event.getDouble("lat");
+                                float lgt = (float)event.getDouble("lgt");
+
+                                Event eventObj = new Event(name, description, ageMin, ageMax, genderRestriction,
+                                        lat, lgt, creatorID, startDate, endDate );
+                                events.add(eventObj);
+                                Log.d("myApp",""+eventObj.getStartDate());
+                            } catch (JSONException e) {
+                                Log.d("myApp", "buhuu");
+                            }
+
+                        }
+                        addEvents();
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.d("myApp", ""+error);
+                    }
+                });
+        requestQueue.add(jsObjRequest);
     }
 
     //Always reset all events
@@ -145,12 +190,12 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 //        events = new ArrayList<Event>(tmpEvents);
 //    }
 //
-//    public void addEvents(){
-//        for(int i = 0; i<events.size(); i++){
-//            LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
-//            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
-//        }
-//    }
+    public void addEvents(){
+        for(int i = 0; i<events.size(); i++){
+            LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
+            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+        }
+   }
 
 }
