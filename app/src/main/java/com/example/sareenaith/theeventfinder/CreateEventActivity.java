@@ -84,6 +84,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
     private GoogleMap mMap;
     private Event event;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -292,11 +293,11 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
     private void showDate(int year, int month, int day, int id) {
         if(id == idDateFrom) {
-            dateViewFrom.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+            dateViewFrom.setText(new StringBuilder().append(year).append("-")
+                    .append(month).append("-").append(day));
         } else if (id == idDateTo) {
-            dateViewTo.setText(new StringBuilder().append(day).append("/")
-                    .append(month).append("/").append(year));
+            dateViewTo.setText(new StringBuilder().append(year).append("-")
+                    .append(month).append("-").append(day));
         }
     }
 
@@ -356,7 +357,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                 format = "AM";
             }*/
 
-            timeViewFrom.setText(new StringBuilder().append(hour).append(" : ").append(min));
+            timeViewFrom.setText(new StringBuilder().append(hour).append(":").append(min));
         }
 
         else if (id == idTimeTo) {
@@ -371,8 +372,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
             } else {
                 format = "AM";
             }*/
-
-            timeViewTo.setText(new StringBuilder().append(hour).append(" : ").append(min));
+            timeViewTo.setText(new StringBuilder().append(hour).append(":").append(min));
+            System.out.println(timeViewTo.getText());
         }
     }
 
@@ -400,8 +401,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                     params.put("descr", eventDescriptionTxt.getText().toString().trim());
                     params.put("ageMin", minAge.getText().toString().trim());
                     params.put("ageMax", maxAge.getText().toString().trim());
-                    params.put("endDate", dateViewTo.getText().toString().trim());
-                    params.put("startDate", dateViewFrom.getText().toString().trim());
+                    params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
+                    params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
                     params.put("isAndroid", "true");
                     return params;
                 }
