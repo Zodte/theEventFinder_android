@@ -5,6 +5,7 @@
     <string name="app_name_search">Search</string>
     <string name="app_name_event_info">Event Info</string>
     <string name="title_activity_events_map">Event Map</string>
+    <string name="facebook_app_id">1173059556143995</string>
 
     <string name="settings_my_profile">My Profile</string>
     <string name="settings_logout">Logout</string>
