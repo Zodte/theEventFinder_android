@@ -25,7 +25,8 @@ import java.util.ArrayList;
 
 public class EventService {
 
-
+    private Config config = new Config();
+    private final String URL = config.getUrl();
 
     RequestQueue requestQueue;
     private ArrayList<Event> events = new ArrayList<Event>();
@@ -36,9 +37,8 @@ public class EventService {
 
     public void getAllEvents() {
         Log.d("myApp", "Fetching events");
-        String url = "http://10.0.2.2:3000/getAllEvents/2018-04-04";
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
-            (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            (Request.Method.GET, URL+"getAllEvents/2018-04-04", null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {

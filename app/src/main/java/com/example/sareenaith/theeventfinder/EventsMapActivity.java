@@ -49,6 +49,8 @@ import java.util.Date;
 
 public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private Config config = new Config();
+    private final String URL = config.getUrl();
     private GoogleMap mMap;
     ImageButton imgBtn;
     RequestQueue requestQueue;
@@ -136,9 +138,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        String url = "http://192.168.0.101:3000/getallevents/2017-12-12";
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, URL+"getallevents/2017-12-12", null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {

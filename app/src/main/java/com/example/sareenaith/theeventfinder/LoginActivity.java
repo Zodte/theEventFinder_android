@@ -32,6 +32,8 @@ import java.util.Map;
  */
 
 public class LoginActivity extends AppCompatActivity {
+    private Config config = new Config();
+    private final String URL = config.getUrl();
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
@@ -145,14 +147,12 @@ public class LoginActivity extends AppCompatActivity {
     private void sendUser(Profile profile)  {
         final Profile user = profile;
         try {
-            // for localhost use "http://10.0.2.2:3000/"
-            final String URL = "https://eventure2.herokuapp.com/check";
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"check", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.d("Volley", response);
                     String res = response;
-                    if(res.equals("true")) {
+                    if(res.equals(true)) {
                         Log.d("Volley", "yoyoyo");
                     }
                 }

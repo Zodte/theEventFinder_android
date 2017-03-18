@@ -51,7 +51,8 @@ import org.json.JSONObject;
 
 public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
-    private static final String URL = "http://192.168.0.101:3000/createEvent";
+    private Config config = new Config();
+    private final String URL = config.getUrl();
     private String check = "no";
     private DatePicker datePicker;
     private Calendar calendarDateFrom, calendarDateTo;
@@ -380,7 +381,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     public void sendEvent(View view) throws JSONException {
         checkAge();
         try {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"createEvent", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.d("Volley", response);
