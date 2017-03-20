@@ -28,9 +28,12 @@
 
     <!-- string variables for activity_my_profile.xml -->
     <string name="myProfile_myPictureDesc_text">Profile Picture</string>
+    <string name="myProfile_my_hosted_events">My Hosted Events</string>
+    <string name="myProfile_attended_events_button">My Attended Events</string>
 
     <!-- string variables for activity_event_info.xml -->
     <string name="eventInfo_eventInfoImg_txt">event image</string>
     <string name="eventInfo_cancelEventBtn_txt">Cancel</string>
     <string name="eventInfo_joinEventBtn_txt">Join</string>
+    <string name="title_activity_hosted_events">HostedEventsActivity</string>
 </resources>
