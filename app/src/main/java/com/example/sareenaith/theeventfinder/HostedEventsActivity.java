@@ -65,7 +65,7 @@ public class HostedEventsActivity extends AppCompatActivity {
                                 Log.d("myApp", "buhuu");
                             }
                         }
-                        showEventInfo();
+                        showEvents();
                     }
                 }, new Response.ErrorListener() {
 
@@ -77,9 +77,9 @@ public class HostedEventsActivity extends AppCompatActivity {
                 });
     }
 
-    public void showEventInfo(){
+    public void showEvents(){
         for(int i = 0; i<events.size(); i++){
-            System.out.println("Er inní showEventInfo og i er: "+i);
+            System.out.println("Er inní showEvents og i er: "+i);
         }
     }
 }

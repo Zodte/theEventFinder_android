@@ -1,11 +1,12 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import java.io.EOFException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,6 @@ import java.util.Map;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 
@@ -41,9 +41,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-
-//import utilityclass.InputFilterMinMax;
 
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
@@ -75,13 +72,14 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private TimePicker timePicker;
     private Calendar calendarTimeFrom, calendarTimeTo;
     private TextView timeViewFrom, timeViewTo;
-    //private String format = "";
     private int hourFrom, minFrom;
     private int hourTo, minTo;
     private int idDateFrom = 999;
     private int idDateTo = 899;
     private int idTimeFrom = 900;
     private int idTimeTo = 800;
+
+    SharedPreferences sharedpreferences;
 
     private GoogleMap mMap;
     private Event event;
@@ -90,6 +88,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
+        sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
 
         eventNameTxt = (EditText) findViewById(R.id.createEvent_nameId_input);
         eventDescriptionTxt = (EditText) findViewById(R.id.createEvent_descriptionId_input);
@@ -380,6 +380,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
     public void sendEvent(View view) throws JSONException {
         checkAge();
+        final String dbid = sharedpreferences.getString("db_id", null);
+        System.out.println("inní sendEvent og dbid er: "+dbid);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"createEvent", new Response.Listener<String>() {
                 @Override
@@ -405,6 +407,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                     params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
                     params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
                     params.put("isAndroid", "true");
+                    params.put("db_id", dbid);
                     return params;
                 }
             };
