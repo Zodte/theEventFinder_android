@@ -27,6 +27,7 @@ import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -70,6 +71,9 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
     private RelativeLayout mainLayout;
     private RelativeLayout mapLayout;
+
+
+
 
     private CheckBox checkBox;
     private TimePicker timePicker;
@@ -219,6 +223,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
         mainLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mainLayout.setLayoutParams(mainLayoutParams);
+
 
         mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();

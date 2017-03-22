@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Button;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -30,6 +35,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -47,8 +53,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
+public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback{
+
+
+    private Button eventDetailsBtn;
+    private TextView eventDetailsNameTw, getEventDetailsDescrTw;
+    RelativeLayout eventInfo;
     private Config config = new Config();
     private final String URL = config.getUrl();
     private GoogleMap mMap;
@@ -60,6 +71,14 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
         requestQueue = Volley.newRequestQueue(this);
+
+        // Event datails
+        eventDetailsBtn = (Button) findViewById(R.id.eventMap_details_btn);
+        eventDetailsNameTw = (TextView) findViewById(R.id.eventMap_details_name);
+        getEventDetailsDescrTw = (TextView) findViewById(R.id.eventMap_details_descr);
+        eventInfo = (RelativeLayout) findViewById(R.id.eventInfo);
+        eventInfo.setVisibility(View.GONE);
+
 
         imgBtn = (ImageButton) findViewById(R.id.eventMap_settings_icon);
         imgBtn.setOnClickListener(new View.OnClickListener() {
@@ -137,10 +156,36 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+        // Handle marker click
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                eventInfo.setVisibility(View.VISIBLE);
+                final int clickedEventIndex = Integer.parseInt(marker.getTitle());
+                eventDetailsNameTw.setText("Name: "+ events.get(clickedEventIndex).getName());
+                getEventDetailsDescrTw.setText("Description: " + events.get(clickedEventIndex).getDescription());
+
+
+                eventDetailsBtn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(EventsMapActivity.this, EventDetailsActivity.class);
+                        intent.putExtra("eventId", events.get(clickedEventIndex).getId()+"");
+
+                        startActivity(intent);
+                    }
+                });
+
+
+                return true;
+            }
+        });
+
+
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, URL+"getallevents/2017-12-12", null, new Response.Listener<JSONArray>() {
-
                     @Override
                     public void onResponse(JSONArray response) {
                         // TODO Response
@@ -150,7 +195,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                             JSONObject event = null;
                             try {
                                 event = response.getJSONObject(i);
-                                String eventID = event.getString("id");
+                                int eventID = event.getInt("id");
                                 String name = event.getString("name");
                                 String description = event.getString("description");
                                 int ageMin = event.getInt("age_min");
@@ -164,7 +209,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                                 float lat = (float)event.getDouble("lat");
                                 float lgt = (float)event.getDouble("lgt");
 
-                                Event eventObj = new Event(name, description, ageMin, ageMax, genderRestriction,
+                                Event eventObj = new Event(eventID, name, description, ageMin, ageMax, genderRestriction,
                                         lat, lgt, creatorID, startDate, endDate );
                                 events.add(eventObj);
                                 Log.d("myApp",""+eventObj.getStartDate());
@@ -195,9 +240,10 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     public void addEvents(){
         for(int i = 0; i<events.size(); i++){
             LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
-            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
+            mMap.addMarker(new MarkerOptions().position(pos).title(i+""));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
         }
    }
+
 
 }

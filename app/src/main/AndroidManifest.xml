@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sareenaith.theeventfinder">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -13,20 +13,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".EventsMapActivity"
-            android:label="@string/app_name">
-
-        </activity>
-
-        <activity
-            android:name=".MainActivity">
-
-        </activity>
-
-        <activity
-            android:name=".TestActivity">
-
-        </activity>
-
+            android:label="@string/app_name"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".TestActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name">
@@ -42,32 +31,23 @@
             android:value="@string/facebook_app_id" />
 
         <provider
-            android:authorities="com.facebook.app.FacebookContentProvider"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
+            android:authorities="com.facebook.app.FacebookContentProvider"
+            android:exported="true" />
 
         <activity
             android:name=".CreateEventActivity"
-            android:label="@string/app_name_create_event">
-
-        </activity>
-
+            android:label="@string/app_name_create_event"></activity>
         <activity
             android:name=".MyProfileActivity"
-            android:label="@string/app_name_my_profile">
-
-        </activity>
-
+            android:label="@string/app_name_my_profile"></activity>
         <activity
             android:name=".EventInfoActivity"
-            android:label="@string/app_name_event_info">
-
-        </activity>
+            android:label="@string/app_name_event_info"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCTkvklOd_nb58-7hhbIjBvkkHEXvJasfQ" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -76,14 +56,15 @@
         <activity
             android:name=".EventsMapActivity"
             android:label="@string/title_activity_events_map"></activity>
-            -->
+        -->
 
         <activity
             android:name=".SearchActivity"
-            android:label="@string/app_name_search">
-
-        </activity>
-
+            android:label="@string/app_name_search"></activity>
+        <activity
+            android:name=".EventDetailsActivity"
+            android:label="@string/title_activity_event_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

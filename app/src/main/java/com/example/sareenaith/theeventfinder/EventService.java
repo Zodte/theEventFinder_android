@@ -49,7 +49,7 @@ public class EventService {
                         JSONObject event = null;
                         try {
                             event = response.getJSONObject(i);
-                            String eventID = event.getString("id");
+                            int eventID = event.getInt("id");
                             String name = event.getString("name");
                             String description = event.getString("description");
                             int ageMin = event.getInt("age_min");
@@ -63,7 +63,7 @@ public class EventService {
                             float lat = (float)event.getDouble("lat");
                             float lgt = (float)event.getDouble("lgt");
 
-                            Event eventObj = new Event(name, description, ageMin, ageMax, genderRestriction,
+                            Event eventObj = new Event(eventID, name, description, ageMin, ageMax, genderRestriction,
                                     lat, lgt, creatorID, startDate, endDate );
                             events.add(eventObj);
                             Log.d("myApp",""+eventObj.getStartDate());

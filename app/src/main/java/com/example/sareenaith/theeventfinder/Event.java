@@ -31,8 +31,9 @@ public class Event {
 
     }
 
-    public Event(String name, String description, int ageMin, int ageMax, boolean genderRestriction,
+    public Event(int id, String name, String description, int ageMin, int ageMax, boolean genderRestriction,
                  float lat, float lgt, int creatorId, Timestamp startDate, Timestamp endDate) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.ageMin = ageMin;
