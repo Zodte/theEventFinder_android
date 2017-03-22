@@ -29,6 +29,7 @@
     <!-- string variables for activity_my_profile.xml -->
     <string name="myProfile_myPictureDesc_text">Profile Picture</string>
     <string name="myProfile_my_hosted_events">My Hosted Events</string>
+    <string name="myProfile_no_hosted_events">You haven\'t hosted any events yet</string>
     <string name="myProfile_attended_events_button">My Attended Events</string>
 
     <!-- string variables for activity_event_info.xml -->

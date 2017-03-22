@@ -204,13 +204,23 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(String response) {
                     Log.d("Volley", response);
 
-                    if(response.equals("true")) {
+                    editor.putString("db_id", response); // Storing our db ID of the new user
+                    editor.apply();
+                    final String check = sharedpreferences.getString("db_id", null);
+
+
+                    // We really don't have to do any checks below, since we'll always receive the
+                    // dbid of the user.
+
+                    /*if(response.equals("true")) {
                         // TODO something else we want to do when the user already exists? Maybe welcome him back? :)
                         Log.d("Volley", "Fékk response frá /check og það var true => notandi var nú þegar til");
+                        editor.putString("db_id", dbid); // Storing our db ID of the new user
+                        editor.apply();
                     } else {
                         editor.putString("db_id", response); // Storing our db ID of the new user
                         editor.apply();
-                    }
+                    }*/
 
                 }
             }, new Response.ErrorListener() {
