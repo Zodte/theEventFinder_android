@@ -3,7 +3,10 @@ package com.example.sareenaith.theeventfinder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +28,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.maps.GoogleMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     private AccessToken accessToken;
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
-
     //Facebook login button
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
@@ -67,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
         callbackManager = CallbackManager.Factory.create();
@@ -182,12 +186,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void nextActivity(Profile profile){
         if(profile != null){
-            Intent main = new Intent(LoginActivity.this, TestActivity.class);
-            main.putExtra("id", profile.getId());
-            main.putExtra("userName", profile.getName());
-            main.putExtra("token", sendToken(accessToken));
+            Intent main = new Intent(LoginActivity.this, EventsMapActivity.class);
+            //main.putExtra("id", profile.getId());
+            //main.putExtra("userName", profile.getName());
+            //main.putExtra("token", sendToken(accessToken));
             sendUser(profile);
             startActivity(main);
+            finish();
         }
     }
 
@@ -246,4 +251,5 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 }
