@@ -63,8 +63,9 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-    public static final int REQUEST_CHECK_SETTINGS = 0x1;
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
+    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private Config config = new Config();
     private final String URL = config.getUrl();
     private GoogleMap mMap;
@@ -265,8 +266,6 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         for(int i = 0; i<events.size(); i++){
             LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
             mMap.addMarker(new MarkerOptions().position(pos).title(i+""));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
-            mMap.addMarker(new MarkerOptions().position(pos).title(events.get(i).getName()));
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
         }
     }
@@ -291,6 +290,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest);
+        
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -326,7 +326,16 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.i("myApp", "Location services connection failed with code " + connectionResult.getErrorCode());
+        }
     }
 
     @Override
