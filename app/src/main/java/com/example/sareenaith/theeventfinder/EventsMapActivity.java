@@ -223,9 +223,6 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                 (Request.Method.GET, URL+"getallevents/2017-12-12", null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        // TODO Response
-                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
-
                         for(int i = 0; i < response.length(); i++){
                             JSONObject event = null;
                             try {
@@ -359,8 +356,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+       //mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //stop location updates
         if (mGoogleApiClient != null) {

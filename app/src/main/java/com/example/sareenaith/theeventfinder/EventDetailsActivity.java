@@ -129,14 +129,12 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void attendEvent() {
         final String dbid = sharedpreferences.getString("db_id", null);
-        Toast.makeText(getApplicationContext(), "id er"+dbid,
-                Toast.LENGTH_SHORT)
-                .show();
+
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d("Volley", response);
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -159,9 +157,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
-
-
+        Toast.makeText(getApplicationContext(), "You are now attending this event!",
+                Toast.LENGTH_SHORT)
+                .show();
+        String personName = sharedpreferences.getString("name", null);
+        attendBtn.setVisibility(View.GONE);
+        eventAttendeesTw.append(personName+"\n");
     }
 
 
