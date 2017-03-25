@@ -78,21 +78,12 @@
         </activity>
 
         <activity
-            android:name=".HostedEventsActivity"
+            android:name=".MyEventsListActivity"
             android:label="@string/myProfile_my_hosted_events">
             <intent-filter>
                 <action android:name="com.example.sareenaith.theeventfinder.HostedEventsActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".AttendedEventsActivity"
-            android:label="@string/myProfile_my_attended_events">
-            <intent-filter>
-                <action android:name="com.example.sareenaith.theeventfinder.AttendedEventsActivity"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
     </application>

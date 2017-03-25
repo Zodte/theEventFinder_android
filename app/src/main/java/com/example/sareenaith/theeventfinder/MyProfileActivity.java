@@ -2,12 +2,9 @@ package com.example.sareenaith.theeventfinder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
@@ -31,7 +28,8 @@ public class MyProfileActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MyProfileActivity.this, HostedEventsActivity.class);
+                        Intent intent = new Intent(MyProfileActivity.this, MyEventsListActivity.class);
+                        intent.putExtra("source", "getHostedEvents/");
                         startActivity(intent);
                     }
                 }
@@ -42,7 +40,8 @@ public class MyProfileActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MyProfileActivity.this, AttendedEventsActivity.class);
+                        Intent intent = new Intent(MyProfileActivity.this, MyEventsListActivity.class);
+                        intent.putExtra("source", "getAttendedEvents/");
                         startActivity(intent);
                     }
                 }
