@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sareenaith.theeventfinder.HostedEventsMoreDetails">
+
+    <TextView
+        android:id="@+id/hostedEventNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/myProfile_event_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/hostedEventStartTimeLabel"
+        android:layout_alignStart="@+id/hostedEventStartTimeLabel"/>
+
+    <TextView
+        android:id="@+id/hostedEventDescriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="@string/myProfile_event_desc"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="57dp"
+        android:layout_below="@+id/hostedEventNameLabel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="33dp"
+        android:layout_marginStart="33dp"/>
+
+    <TextView
+        android:id="@+id/hostedEventStartTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hostedEventDescriptionLabel"
+        android:layout_alignStart="@+id/hostedEventDescriptionLabel"
+        android:layout_below="@+id/hostedEventDescriptionLabel"
+        android:layout_marginTop="37dp"
+        android:text="@string/myProfile_event_start"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+    <TextView
+        android:id="@+id/hostedEventEndTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="@string/myProfile_event_end"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:layout_below="@+id/hostedEventStartTimeLabel"
+        android:layout_alignLeft="@+id/hostedEventStartTimeLabel"
+        android:layout_alignStart="@+id/hostedEventStartTimeLabel"/>
+
+    <TextView
+        android:id="@+id/hostedEventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hostedEventNameLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/hostedEventDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hostedEventDescriptionLabel"
+        android:layout_marginTop="6dp"
+        android:layout_centerHorizontal="true"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/hostedEventStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hostedEventStartTimeLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/hostedEventEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hostedEventEndTimeLabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:text="TextView"/>
+
+    Vantar attendees texta hér!!
+
+    <TextView
+        android:id="@+id/eventDetails_attendees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/hostedEventEndTime"
+        android:layout_alignLeft="@+id/hostedEventEndTime"
+        android:layout_alignStart="@+id/hostedEventEndTime"
+        android:layout_marginTop="59dp"
+        android:maxLines="100" />
+
+
+</RelativeLayout>

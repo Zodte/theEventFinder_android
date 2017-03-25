@@ -26,11 +26,18 @@
     <string name="createEvent_submit_btn">Submit</string>
     <string name="createEvent_eDIcon">icon for event name</string>
 
-    <!-- string variables for activity_my_profile.xml -->
+    <!-- string variables for everything related to My Profile stuff -->
     <string name="myProfile_myPictureDesc_text">Profile Picture</string>
     <string name="myProfile_my_hosted_events">My Hosted Events</string>
-    <string name="myProfile_no_hosted_events">You haven\'t hosted any events yet</string>
+    <string name="myProfile_no_events">No events to show</string>
+    <string name="myProfile_my_attended_events">My Attended Events</string>
     <string name="myProfile_attended_events_button">My Attended Events</string>
+    <string name="myProfile_event_name">Event name:</string>
+    <string name="myProfile_event_desc">Event description:</string>
+    <string name="myProfile_event_start">Start time:</string>
+    <string name="myProfile_event_end">End time:</string>
+    <string name="myProfile_event_attendees">Attendees:</string>
+
 
     <!-- string variables for activity_event_info.xml -->
     <string name="eventInfo_eventInfoImg_txt">event image</string>

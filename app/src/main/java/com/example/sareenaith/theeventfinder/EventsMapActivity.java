@@ -42,6 +42,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -73,7 +74,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Marker mCurrLocationMarker;
-    private Button eventDetailsBtn;
+    private Button eventDetailsBtn, eventDetailsHideBtn;
     private TextView eventDetailsNameTw, getEventDetailsDescrTw;
     RelativeLayout eventInfo;
     ImageButton imgBtn;
@@ -88,6 +89,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 
         // Event datails
         eventDetailsBtn = (Button) findViewById(R.id.eventMap_details_btn);
+
         eventDetailsNameTw = (TextView) findViewById(R.id.eventMap_details_name);
         getEventDetailsDescrTw = (TextView) findViewById(R.id.eventMap_details_descr);
         eventInfo = (RelativeLayout) findViewById(R.id.eventInfo);
@@ -178,7 +180,10 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                 final int clickedEventIndex = Integer.parseInt(marker.getTitle());
                 eventDetailsNameTw.setText("Name: "+ events.get(clickedEventIndex).getName());
                 getEventDetailsDescrTw.setText("Description: " + events.get(clickedEventIndex).getDescription());
-
+                eventDetailsHideBtn = (Button) findViewById(R.id.eventMap_details_hide_btn);
+                LatLng pos = new LatLng(events.get(clickedEventIndex).getLat(), events.get(clickedEventIndex).getLgt());
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
 
                 eventDetailsBtn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -186,6 +191,12 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                         Intent intent = new Intent(EventsMapActivity.this, EventDetailsActivity.class);
                         intent.putExtra("eventId", events.get(clickedEventIndex).getId()+"");
                         startActivity(intent);
+                    }
+                });
+
+                eventDetailsHideBtn.setOnClickListener(new View.OnClickListener() {
+                    public  void onClick(View v) {
+                        eventInfo.setVisibility(View.INVISIBLE);
                     }
                 });
 

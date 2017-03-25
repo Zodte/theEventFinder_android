@@ -31,7 +31,18 @@ public class MyProfileActivity extends AppCompatActivity {
                 new View.OnClickListener(){
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent("com.example.sareenaith.theeventfinder.HostedEventsActivity");
+                        Intent intent = new Intent(MyProfileActivity.this, HostedEventsActivity.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+        attendedButton = (Button) findViewById(R.id.myprofile_attended_button);
+        attendedButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MyProfileActivity.this, AttendedEventsActivity.class);
                         startActivity(intent);
                     }
                 }

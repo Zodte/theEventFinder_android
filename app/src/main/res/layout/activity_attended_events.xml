@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sareenaith.theeventfinder.HostedEventsActivity">
+    tools:context="com.example.sareenaith.theeventfinder.AttendedEventsActivity">
 
     <TextView
-        android:id="@+id/noHostedEvents"
+        android:id="@+id/noAttendedEvents"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_alignParentTop="true"
@@ -16,8 +16,8 @@
         android:textSize="20sp"/>
 
     <ListView
-        android:id="@+id/hostedEventList"
-        android:layout_below="@id/noHostedEvents"
+        android:id="@+id/attendedEventList"
+        android:layout_below="@id/noAttendedEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

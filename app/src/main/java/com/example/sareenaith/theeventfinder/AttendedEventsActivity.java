@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class HostedEventsActivity extends AppCompatActivity {
+public class AttendedEventsActivity extends AppCompatActivity {
     private Config config = new Config();
     private final String URL = config.getUrl();
     SharedPreferences sharedpreferences;
@@ -37,7 +37,7 @@ public class HostedEventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hosted_events);
+        setContentView(R.layout.activity_attended_events);
         requestQueue = Volley.newRequestQueue(this);
         sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         getEvents();
@@ -47,11 +47,11 @@ public class HostedEventsActivity extends AppCompatActivity {
         final String dbid = sharedpreferences.getString("db_id", null);
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, URL+"getHostedEvents/"+dbid, null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, URL+"getAttendedEvents/"+dbid, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d("myApp", response.length()+" Response inní HostedEventsActivity -> getEvents :"+ response);
+                        Log.d("myApp", response.length()+" Response inní AttendedEventsActivity -> getEvents :"+ response);
 
                         for(int i = 0; i < response.length(); i++){
                             JSONObject event = null;
@@ -100,13 +100,13 @@ public class HostedEventsActivity extends AppCompatActivity {
             }
 
             ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, eventNames);
-            ListView lst = (ListView) findViewById(R.id.hostedEventList);
+            ListView lst = (ListView) findViewById(R.id.attendedEventList);
             lst.setAdapter(adapter);
             lst.setOnItemClickListener(
                     new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent intent = new Intent(HostedEventsActivity.this, EventDetailsActivity.class);
+                            Intent intent = new Intent(AttendedEventsActivity.this, EventDetailsActivity.class);
                             intent.putExtra("eventId", events.get(position).getId()+"");
 
                             startActivity(intent);
@@ -114,10 +114,9 @@ public class HostedEventsActivity extends AppCompatActivity {
                     }
             );
         } else {
-            TextView noEvents = (TextView) findViewById(R.id.noHostedEvents);
+            TextView noEvents = (TextView) findViewById(R.id.noAttendedEvents);
             noEvents.setText(R.string.myProfile_no_events);
         }
     }
 
 }
-
