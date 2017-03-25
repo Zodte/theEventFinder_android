@@ -26,7 +26,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            android:text="TextView" />
+            android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_description"
@@ -36,7 +36,7 @@
             android:layout_alignStart="@+id/eventDetails_name"
             android:layout_below="@+id/eventDetails_name"
             android:layout_marginTop="37dp"
-            android:text="TextView" />
+            android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_time"
@@ -46,7 +46,7 @@
             android:layout_alignStart="@+id/eventDetails_description"
             android:layout_below="@+id/eventDetails_description"
             android:layout_marginTop="43dp"
-            android:text="TextView" />
+            android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_age"
@@ -56,7 +56,7 @@
             android:layout_alignStart="@+id/eventDetails_time"
             android:layout_below="@+id/eventDetails_time"
             android:layout_marginTop="43dp"
-            android:text="TextView" />
+            android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_genderRestrict"
@@ -66,13 +66,13 @@
             android:layout_alignRight="@+id/eventDetails_age"
             android:layout_below="@+id/eventDetails_age"
             android:layout_marginTop="51dp"
-            android:text="TextView" />
+            android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_attendees"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text=""
             android:layout_below="@+id/eventDetails_genderRestrict"
             android:layout_alignLeft="@+id/eventDetails_genderRestrict"
             android:layout_alignStart="@+id/eventDetails_genderRestrict"
@@ -85,7 +85,6 @@
             android:layout_height="wrap_content"
             android:text="Attend Event"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

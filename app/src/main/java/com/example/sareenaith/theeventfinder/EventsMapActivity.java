@@ -185,7 +185,6 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 
                         Intent intent = new Intent(EventsMapActivity.this, EventDetailsActivity.class);
                         intent.putExtra("eventId", events.get(clickedEventIndex).getId()+"");
-
                         startActivity(intent);
                     }
                 });

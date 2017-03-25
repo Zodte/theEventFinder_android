@@ -2,6 +2,7 @@ package com.example.sareenaith.theeventfinder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,13 +39,14 @@ public class EventDetailsActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     private Config config = new Config();
     private final String URL = config.getUrl();
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
 
-
+        sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         eventNameTw =  (TextView) findViewById(R.id.eventDetails_name);
         eventDescrTw =  (TextView) findViewById(R.id.eventDetails_description);
         eventTimeTw =  (TextView) findViewById(R.id.eventDetails_time);
@@ -60,13 +62,17 @@ public class EventDetailsActivity extends AppCompatActivity {
             eventId = (String)extras.get("eventId");
         }
 
+        final String dbid = sharedpreferences.getString("db_id", null);
+        Map<String, String> params = new HashMap();
+        params.put("eventId", eventId);
+        params.put("userId", dbid);
+        JSONObject parameters = new JSONObject(params);
+
         requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, URL+"getFullEventInfo/"+eventId, null, new Response.Listener<JSONObject>() {
+                (Request.Method.POST, URL+"getFullEventInfo", parameters, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // TODO Response
-                        Log.d("myApp", response.length()+"Response received baaaby!:"+ response);
                             JSONObject event = null;
                             try {
                                 event = response;
@@ -78,6 +84,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 String startDate = event.getString("start_date").substring(0,10);
                                 Boolean genRestrict = event.getBoolean("gender_restriction");
                                 JSONArray attendees = event.getJSONArray("attendees");
+                                Boolean isAttending = event.getBoolean("isAttending");
 
                                 eventNameTw.setText("Event name: " + eventName);
                                 eventDescrTw.setText("Description: " + eventDescr);
@@ -95,8 +102,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     eventAttendeesTw.append(attendee.getString("name")+"\n");
                                 }
 
+                                if(isAttending) {
+                                    attendBtn.setVisibility(View.GONE);
+                                }
 
-                                Log.d("myApp","EventName: "+eventName);
+                                Log.d("myApp","EventName: "+isAttending);
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");
                             }
@@ -110,45 +120,51 @@ public class EventDetailsActivity extends AppCompatActivity {
                 });
         requestQueue.add(jsObjRequest);
 
-        final Context thisContext = this;
         attendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               /* try {
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("Volley", response);
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.e("Volley", error.toString());
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("eventName", eventNameTxt.getText().toString().trim());
-                            params.put("lati", String.valueOf(lat));
-                            params.put("long", String.valueOf(lgt));
-                            params.put("genderRestrict", check);
-                            params.put("descr", eventDescriptionTxt.getText().toString().trim());
-                            params.put("ageMin", minAge.getText().toString().trim());
-                            params.put("ageMax", maxAge.getText().toString().trim());
-                            params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
-                            params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
-                            params.put("isAndroid", "true");
-                            return params;
-                        }
-                    };
-                    RequestQueue requestQueue = Volley.newRequestQueue(thisContext);
-                    requestQueue.add(stringRequest);
-
-                } catch(Exception e) {
-                    e.printStackTrace();
-                } */
+                attendEvent();
             }
         });
     }
+
+    public void attendEvent() {
+        final String dbid = sharedpreferences.getString("db_id", null);
+        Toast.makeText(getApplicationContext(), "id er"+dbid,
+                Toast.LENGTH_SHORT)
+                .show();
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("Volley", response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("eventId", eventId);
+                    params.put("userId", dbid);
+                    params.put("isAndroid", "true");
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
+
 
 }
