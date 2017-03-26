@@ -170,17 +170,6 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         Toast.makeText(getApplicationContext(), "lat:"+lat+ " " +"long:"+lgt,Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * naming-convenient change later.
-     * Test function for switching activity for now, will be use later for
-     * when submitting/creating an event
-     */
-//    @Override
-//    public void onClick(View view) {
-//        sendSubmit();
-//        Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
-//        startActivity(intent);
-//    }
     // check the age
     public void checkAge() {
         String minText = minAge.getText().toString().trim();
@@ -202,6 +191,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
+    // show layout "visible" and "invisible" when choosing location.
     public void setLocation(View view) {
         mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
@@ -212,24 +202,19 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mapLayout.setLayoutParams(params);
-        Log.d("myApp", "Called");
     }
 
-    /*
-     * TODO - implement (lat,long) for retrieving location
-     */
+    // show layout "visible" and "invisible" when accepting location.
     public void onClickAccept(View view) {
         mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
         mainLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mainLayout.setLayoutParams(mainLayoutParams);
 
-
         mapLayout = (RelativeLayout) findViewById(R.id.map_fragment);
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
         params.height = 0;
         mapLayout.setLayoutParams(params);
-        Log.d("myApp", "Location set");
     }
 
     /**
@@ -351,35 +336,11 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
     private void showTime(int hour, int min, int id) {
         if(id == idTimeFrom) {
-            /*if (hour == 0) {
-                hour += 12;
-                format = "AM";
-            } else if (hour == 12) {
-                format = "PM";
-            } else if (hour > 12) {
-                hour -= 12;
-                format = "PM";
-            } else {
-                format = "AM";
-            }*/
-
             timeViewFrom.setText(new StringBuilder().append(hour).append(":").append(min));
         }
 
         else if (id == idTimeTo) {
-            /*if (hour == 0) {
-                hour += 12;
-                format = "AM";
-            } else if (hour == 12) {
-                format = "PM";
-            } else if (hour > 12) {
-                hour -= 12;
-                format = "PM";
-            } else {
-                format = "AM";
-            }*/
             timeViewTo.setText(new StringBuilder().append(hour).append(":").append(min));
-            System.out.println(timeViewTo.getText());
         }
     }
 

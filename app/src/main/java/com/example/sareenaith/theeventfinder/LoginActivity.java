@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private AccessToken accessToken;
     SharedPreferences sharedpreferences;
     SharedPreferences.Editor editor;
+
     //Facebook login button
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
@@ -155,12 +156,13 @@ public class LoginActivity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
         nextActivity(profile);
     }
+
     @Override
     protected void onPause() {
-
         super.onPause();
     }
 
+    // stop tracking profile and token.
     protected void onStop() {
         super.onStop();
         //Facebook login
@@ -176,14 +178,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private String sendToken(AccessToken accessToken) {
-        String token = "";
-        if(accessToken != null) {
-            token = accessToken.getToken();
-        }
-        return token;
-    }
-
+    // proceed to the next activity and also send the user profile.
     private void nextActivity(Profile profile){
         if(profile != null){
             Intent main = new Intent(LoginActivity.this, EventsMapActivity.class);

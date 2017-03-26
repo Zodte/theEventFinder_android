@@ -113,6 +113,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
             checkLocationPermission();
         }
 
+        // code for the option items from settings
         imgBtn = (ImageButton) findViewById(R.id.eventMap_settings_icon);
         imgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,8 +177,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
+     * This is where we can add markers or lines, add listeners or move the camera.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -220,7 +220,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
             }
         });
 
-        //Initialize Google Play Services
+        //Initialize Google Play Services and check whether access granted for using GPS
+        // also checking the sdk version
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -234,6 +235,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
             mMap.setMyLocationEnabled(true);
         }
 
+        // sending request to the server to get all events on specific day
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, URL+"getallevents/2017-12-12", null, new Response.Listener<JSONArray>() {
                     @Override
@@ -284,6 +286,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 //        events = new ArrayList<Event>(tmpEvents);
 //    }
 //
+
+    // add all events when map is ready
     public void addEvents(){
         for(int i = 0; i<events.size(); i++){
             LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
@@ -293,9 +297,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     }
 
 
-    /*
-        below are code to connect to GoogleClientApi for GPS
-     */
+    // below are code to connect to GoogleClientApi for GPS
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -305,6 +307,9 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         mGoogleApiClient.connect();
     }
 
+    // what happens when we successfull connected to the API. In this case,
+    // we request the "balanced power accuracy" and update location when the user
+    // is moving and enable Location service when user granted the app permission.
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
@@ -346,6 +351,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 
     }
 
+    // when the connection to Google Client API is failed we will try to
+    // find the solution and fix it.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if (connectionResult.hasResolution()) {
@@ -360,6 +367,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         }
     }
 
+    // when the location change, remove the marker and stop the
+    // location update.
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
@@ -380,6 +389,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         }
     }
 
+    // check whether Location service permission is granted.
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -411,6 +421,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         }
     }
 
+    // what we will do after received the permission.
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
