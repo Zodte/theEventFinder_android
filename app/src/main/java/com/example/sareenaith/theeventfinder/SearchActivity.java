@@ -38,7 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     Spinner tags;
     TextView tags_text;
     Button clearTag;
-    NumberPicker available;
+    //NumberPicker available;
     CheckBox genderRestriction;
 
     private int fromDay_int = 0;
@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //fromDay
+        //Set
         fromDay = (SeekBar) findViewById(R.id.fromDay_range);
         fromDay.setMax(30);
 
@@ -146,17 +146,18 @@ public class SearchActivity extends AppCompatActivity {
 
         clearTag = (Button) findViewById(R.id.clear_btn);
 
-        available = (NumberPicker) findViewById(R.id.available_numberPicker);
-        available.setMinValue(0);
-        available.setMaxValue(20);
-        available.setValue(1);
-        available.setWrapSelectorWheel(true);
-        available.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                available_int = newVal;
-            }
-        });
+        //Works but server side needs to be implemented, will be implemented later
+//        available = (NumberPicker) findViewById(R.id.available_numberPicker);
+//        available.setMinValue(0);
+//        available.setMaxValue(20);
+//        available.setValue(1);
+//        available.setWrapSelectorWheel(true);
+//        available.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+//            @Override
+//            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+//                available_int = newVal;
+//            }
+//        });
 
         genderRestriction = (CheckBox) findViewById(R.id.genderRestrict_checkbox);
         genderRestriction.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -166,6 +167,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        //Retrieves variables from map event acivity
         Bundle inBundle = getIntent().getExtras();
         if(inBundle != null) {
             Long from_searchDate = inBundle.getLong("from_searchDate");
@@ -235,6 +237,7 @@ public class SearchActivity extends AppCompatActivity {
         displayTagsText();
     }
 
+    //Displays which tags have been choosen by user
     public void displayTagsText() {
         StringBuilder sb = new StringBuilder();
         for (String s : tags_array)
@@ -251,15 +254,17 @@ public class SearchActivity extends AppCompatActivity {
         clearTag.setVisibility(View.GONE);
     }
 
+    //Submits search criteria to map event acticity
     public void acceptIt(View view) {
         Intent intent = new Intent(SearchActivity.this, EventsMapActivity.class);
         intent.putExtra("from_searchDate", getFromDate());
         intent.putExtra("to_searchDate", getToDate());
-        intent.putExtra("spotsAvailable", available_int);
+        //intent.putExtra("spotsAvailable", available_int);
         intent.putExtra("genderRestricted", genderRestrict);
         intent.putExtra("tags", tags_array);
         startActivity(intent);
     }
+
 
     public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
