@@ -23,6 +23,8 @@ import java.util.ArrayList;
  * Created by SareenAith on 28/2/2017.
  */
 
+
+// This class is not currently used!
 public class EventService {
 
     private Config config = new Config();

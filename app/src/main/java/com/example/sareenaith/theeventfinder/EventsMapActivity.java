@@ -184,38 +184,40 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         mMap = googleMap;
         // Handle marker click
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
+                // Show the overlay when a marker is clicked.
                 eventInfo.setVisibility(View.VISIBLE);
+                // The index is stored in the title of the marker,  this title is not shown to the user.
                 final int clickedEventIndex = Integer.parseInt(marker.getTitle());
                 eventDetailsNameTw.setText("Name: "+ events.get(clickedEventIndex).getName());
                 getEventDetailsDescrTw.setText("Description: " + events.get(clickedEventIndex).getDescription());
                 eventDetailsHideBtn = (Button) findViewById(R.id.eventMap_details_hide_btn);
+                // Move the camera to the clicked marker.
                 LatLng pos = new LatLng(events.get(clickedEventIndex).getLat(), events.get(clickedEventIndex).getLgt());
                 mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
 
-
+                // Click listener for "show event details" button on the overlay that appears when a marker
+                // is clicked.
                 eventDetailsBtn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-
                         Intent intent = new Intent(EventsMapActivity.this, EventDetailsActivity.class);
                         intent.putExtra("eventId", events.get(clickedEventIndex).getId()+"");
                         startActivity(intent);
                     }
                 });
 
+                // Click listener for "Hide this window" button on the overlay that appears when
+                // a marker is clicked.
                 eventDetailsHideBtn.setOnClickListener(new View.OnClickListener() {
                     public  void onClick(View v) {
                         eventInfo.setVisibility(View.INVISIBLE);
                     }
                 });
-
-
                 return true;
             }
         });
@@ -235,7 +237,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
             mMap.setMyLocationEnabled(true);
         }
 
-        // sending request to the server to get all events on specific day
+        // sending request to the server to get all events before a specific date.
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (Request.Method.GET, URL+"getallevents/2017-12-12", null, new Response.Listener<JSONArray>() {
                     @Override

@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -27,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
+        // Get the id of the event that we are supposed to show in detail.
         if(extras != null) {
             eventId = (String)extras.get("eventId");
         }
@@ -96,17 +92,19 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     eventGenRestrictTw.setText("This is not a gender restricted event");
                                 }
 
-                                eventAttendeesTw.setText("Attendees:\n");
+                                // Currently we fetch all attendees and calculate the number of attendees by the
+                                // length of the attendee array.  This is a dirty fix that will get changed later,
+                                // because there is no need to fetch all the individual attendees any more.
+                                eventAttendeesTw.setText("Number of attendees: "+attendees.length());
+                                /*
                                 for(int i = 0; i < attendees.length(); i++) {
                                     JSONObject attendee = attendees.getJSONObject(i);
                                     eventAttendeesTw.append(attendee.getString("name")+"\n");
                                 }
-
+                                */
                                 if(isAttending) {
                                     attendBtn.setVisibility(View.GONE);
                                 }
-
-                                Log.d("myApp","EventName: "+isAttending);
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");
                             }
@@ -120,6 +118,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 });
         requestQueue.add(jsObjRequest);
 
+        // Click listener for the "Attend" button.
         attendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attendEvent();
@@ -128,8 +127,9 @@ public class EventDetailsActivity extends AppCompatActivity {
     }
 
     public void attendEvent() {
+        // Fetch the userId
         final String dbid = sharedpreferences.getString("db_id", null);
-
+        // Tell the server the user is going to attend the event.
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
                 @Override
@@ -144,6 +144,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             }) {
                 @Override
                 protected Map<String, String> getParams() {
+                    // Add the post parameters to the http request.
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("eventId", eventId);
                     params.put("userId", dbid);
@@ -160,12 +161,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "You are now attending this event!",
                 Toast.LENGTH_SHORT)
                 .show();
-        String personName = sharedpreferences.getString("name", null);
+
+        // Hide the attending button if it is clicked.
         attendBtn.setVisibility(View.GONE);
-        eventAttendeesTw.append(personName+"\n");
+
     }
-
-
-
-
 }
