@@ -196,8 +196,9 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
                 getEventDetailsDescrTw.setText("Description: " + events.get(clickedEventIndex).getDescription());
                 eventDetailsHideBtn = (Button) findViewById(R.id.eventMap_details_hide_btn);
                 LatLng pos = new LatLng(events.get(clickedEventIndex).getLat(), events.get(clickedEventIndex).getLgt());
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
                 mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
+
 
                 eventDetailsBtn.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {

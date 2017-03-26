@@ -101,8 +101,9 @@ public class MyEventsListActivity extends AppCompatActivity {
                 eventNames[i] = events.get(i).getName();
             }
 
-            ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, eventNames);
+            //ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, eventNames);
             ListView lst = (ListView) findViewById(R.id.myEventList);
+            Event_ListAdapter adapter = new Event_ListAdapter(this, events);
             lst.setAdapter(adapter);
             lst.setOnItemClickListener(
                     new AdapterView.OnItemClickListener() {
