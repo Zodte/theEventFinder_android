@@ -3,4 +3,138 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/searchRange_title"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Seach Range"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fromPickers">
+        <SeekBar
+            android:id="@+id/fromDay_range"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/fromHour_range"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fromDay_range">
+        </SeekBar>
+
+        <TextView
+            android:text="From:"
+            android:id="@+id/fromSearchRange_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/fromDay_range"/>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <SeekBar
+            android:id="@+id/toDay_range"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content">
+        </SeekBar>
+
+        <SeekBar
+            android:id="@+id/toHour_range"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toDay_range">
+        </SeekBar>
+
+        <TextView
+            android:text="To:"
+            android:id="@+id/searchRange_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/toDay_range" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tags_title"
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Tags"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/tags_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/event_tags"
+            android:prompt="@string/event_tags_prompt"></Spinner>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tags_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/clear_btn"
+            android:onClick="clearTag"
+            android:text="Clear"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tags_text"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/available_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/available_title"
+            android:text="Spots Available:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+
+        <NumberPicker
+            android:id="@+id/available_numberPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_toRightOf="@id/available_title"></NumberPicker>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp">
+        <TextView
+            android:id="@+id/genderRestrict_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Gender Restricted"/>
+        <CheckBox
+            android:id="@+id/genderRestrict_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/genderRestrict_title"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/acceptBtn"
+        android:onClick="acceptIt"
+        android:text="search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

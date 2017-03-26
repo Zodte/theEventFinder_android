@@ -80,12 +80,26 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     ImageButton imgBtn;
     RequestQueue requestQueue;
     private ArrayList<Event> events = new ArrayList<Event>();
+    Long from_searchDate;
+    Long to_searchDate;
+    int spotsAvailable = 1;
+    Boolean genderRestricted = false;
+    ArrayList<String> tags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
         requestQueue = Volley.newRequestQueue(this);
+
+        Bundle inBundle = getIntent().getExtras();
+        if(inBundle != null) {
+            from_searchDate = inBundle.getLong("from_searchDate");
+            to_searchDate = inBundle.getLong("to_searchDate");
+            spotsAvailable = inBundle.getInt("spotsAvailable");
+            genderRestricted = inBundle.getBoolean("genderRestricted");
+            tags = inBundle.getStringArrayList("tags");
+        }
 
         // Event datails
         eventDetailsBtn = (Button) findViewById(R.id.eventMap_details_btn);
@@ -427,5 +441,12 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
         }
+    }
+
+    public void searchActivity(View view) {
+        Intent intent = new Intent(EventsMapActivity.this, SearchActivity.class);
+        intent.putExtra("from_searchDate", from_searchDate);
+        intent.putExtra("to_searchDate", to_searchDate);
+        startActivity(intent);
     }
 }

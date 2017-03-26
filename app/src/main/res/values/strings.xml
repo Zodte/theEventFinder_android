@@ -45,4 +45,14 @@
     <string name="eventInfo_joinEventBtn_txt">Join</string>
     <string name="title_activity_event_details">EventDetailsActivity</string>
     <string name="title_activity_hosted_events">HostedEventsActivity</string>
+
+    <!-- string variables for searchActivity -->
+    <string name="event_tags_prompt">Choose Tags</string>
+    <string-array name="event_tags">
+        <item>Choose</item>
+        <item>Outdoor</item>
+        <item>Music</item>
+        <item>Sport</item>
+        <item>Party</item>
+    </string-array>
 </resources>
