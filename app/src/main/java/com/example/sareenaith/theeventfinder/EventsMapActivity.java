@@ -59,7 +59,10 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
+/**
+ *  This class is responsible to check permission for Location Services, connect to Google Client API
+ *  and initialize Google Map, show events etc. basically it is a main activity.
+ */
 public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -101,7 +104,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
             tags = inBundle.getStringArrayList("tags");
         }
 
-        // Event datails
+        // Event details
         eventDetailsBtn = (Button) findViewById(R.id.eventMap_details_btn);
 
         eventDetailsNameTw = (TextView) findViewById(R.id.eventMap_details_name);

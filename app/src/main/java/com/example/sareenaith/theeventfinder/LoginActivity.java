@@ -37,9 +37,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Notandi on 14/03/2017.
+ * This activity associate with facebook SDK, getting facebook profile and access token,
+ * connection to backend for to check for user.
  */
-
 public class LoginActivity extends AppCompatActivity {
     private Config config = new Config();
     private final String URL = config.getUrl();
