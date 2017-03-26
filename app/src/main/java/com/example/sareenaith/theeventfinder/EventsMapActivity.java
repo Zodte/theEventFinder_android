@@ -96,7 +96,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         if(inBundle != null) {
             from_searchDate = inBundle.getLong("from_searchDate");
             to_searchDate = inBundle.getLong("to_searchDate");
-            spotsAvailable = inBundle.getInt("spotsAvailable");
+            //spotsAvailable = inBundle.getInt("spotsAvailable");
             genderRestricted = inBundle.getBoolean("genderRestricted");
             tags = inBundle.getStringArrayList("tags");
         }
