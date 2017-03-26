@@ -8,6 +8,7 @@ import android.widget.Button;
 
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
+ * Basic stuff. Two buttons which either get my hosted events or my attended events.
  */
 
 public class MyProfileActivity extends AppCompatActivity {

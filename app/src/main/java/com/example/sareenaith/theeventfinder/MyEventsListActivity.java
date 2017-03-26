@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +24,12 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
+/**
+ * Gets my events, whether they are my hosted events or the ones I'm attending (it depends on the
+ * Extra included in the intent which endpoint we're calling on the server) and displays them
+ * in a list.
+ */
 
 public class MyEventsListActivity extends AppCompatActivity {
     private Config config = new Config();
@@ -53,7 +58,6 @@ public class MyEventsListActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.d("myApp", response.length()+" Response inní MyEventsListActivity -> getEvents :"+ response);
 
                         for(int i = 0; i < response.length(); i++){
                             JSONObject event = null;
@@ -87,7 +91,6 @@ public class MyEventsListActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
                         Log.d("myApp", ""+error);
                     }
                 });
@@ -96,12 +99,7 @@ public class MyEventsListActivity extends AppCompatActivity {
 
     public void showEvents(){
         if (events.size() > 0) {
-            String[] eventNames = new String[events.size()];
-            for(int i = 0; i<events.size(); i++){
-                eventNames[i] = events.get(i).getName();
-            }
 
-            //ArrayAdapter<String> adapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, eventNames);
             ListView lst = (ListView) findViewById(R.id.myEventList);
             Event_ListAdapter adapter = new Event_ListAdapter(this, events);
             lst.setAdapter(adapter);
@@ -121,6 +119,5 @@ public class MyEventsListActivity extends AppCompatActivity {
             noEvents.setText(R.string.myProfile_no_events);
         }
     }
-
 }
 

@@ -11,18 +11,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by geelo on 25-Mar-17.
+ * This adapter class allows us to display the basic details of events in the list view under 'My
+ * Profile' (both hosted and attended).
  */
 
-public class Event_ListAdapter extends BaseAdapter{
-    private Context mContext;
+class Event_ListAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private ArrayList<Event> mDataSource;
 
-    public Event_ListAdapter(Context context, ArrayList<Event> items) {
-        mContext = context;
+    Event_ListAdapter(Context context, ArrayList<Event> items) {
         mDataSource = items;
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
