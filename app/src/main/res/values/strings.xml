@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TheEventFinder</string>
+    <string name="app_name">Eventure</string>
     <string name="app_name_create_event">Create Event</string>
     <string name="app_name_my_profile">My Profile</string>
     <string name="app_name_search">Search</string>
