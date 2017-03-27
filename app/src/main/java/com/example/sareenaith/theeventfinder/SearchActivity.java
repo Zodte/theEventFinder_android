@@ -25,7 +25,6 @@ import java.util.Date;
 /**
  * Created by Hoai Nam Duc Tran on 30/01/2017.
  */
-
 public class SearchActivity extends AppCompatActivity {
 
 
@@ -188,7 +187,7 @@ public class SearchActivity extends AppCompatActivity {
         toDay.setProgress(tDay);
         toHour.setProgress(tHour);
     }
-
+    //Updates text based on user input
     public void showFromSearchRangeText(){
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
         Calendar cal = Calendar.getInstance();
@@ -200,7 +199,7 @@ public class SearchActivity extends AppCompatActivity {
 
         fromSearchRange.setText("From: \n" + start);
     }
-
+    //Updates viewtext based on users input
     public void showToSearchRangeText(){
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
         Calendar cal = Calendar.getInstance();
@@ -225,6 +224,7 @@ public class SearchActivity extends AppCompatActivity {
         return endDate;
     }
 
+    //Adds new tag to array of all tags
     public void addTag(String tag){
         if(!tag.equals("Choose")){
             if(tags_array.size() == 0) {
