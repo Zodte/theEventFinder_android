@@ -30,7 +30,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private String eventId;
     private TextView eventNameTw, eventDescrTw, eventTimeTw, eventAgesTw, eventGenRestrictTw, eventAttendeesTw;
-    private Button attendBtn;
+    private Button attendBtn, unAttendBtn;
     RequestQueue requestQueue;
     private Config config = new Config();
     private final String URL = config.getUrl();
@@ -49,6 +49,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventGenRestrictTw =  (TextView) findViewById(R.id.eventDetails_genderRestrict);
         eventAttendeesTw =  (TextView) findViewById(R.id.eventDetails_attendees);
         attendBtn = (Button) findViewById(R.id.eventDetails_attendBtn);
+        unAttendBtn = (Button) findViewById(R.id.eventDetails_unAttendBtn);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -118,10 +119,20 @@ public class EventDetailsActivity extends AppCompatActivity {
                 });
         requestQueue.add(jsObjRequest);
 
+
+
         // Click listener for the "Attend" button.
         attendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attendEvent();
+                unAttendBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
+        unAttendBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                unAttendEvent();
+                attendBtn.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -163,7 +174,42 @@ public class EventDetailsActivity extends AppCompatActivity {
                 .show();
 
         // Hide the attending button if it is clicked.
-        attendBtn.setVisibility(View.GONE);
+        attendBtn.setVisibility(View.INVISIBLE);
+    }
 
+    public void unAttendEvent() {
+        final String dbid = sharedpreferences.getString("db_id", null);
+
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"unAttendEvent", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    // Add the post parameters to the http request.
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("eventId", eventId);
+                    params.put("userId", dbid);
+                    params.put("isAndroid", "true");
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(getApplicationContext(), "You have unattending this event!",
+                Toast.LENGTH_SHORT)
+                .show();
+        unAttendBtn.setVisibility(View.INVISIBLE);
     }
 }

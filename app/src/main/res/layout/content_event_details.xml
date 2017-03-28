@@ -84,8 +84,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Attend Event"
-            android:layout_marginBottom="38dp"
+            android:layout_marginBottom="41dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="28dp"
+            android:layout_marginEnd="28dp" />
+
+        <Button
+            android:id="@+id/eventDetails_unAttendBtn"
+            android:text="unAttend Event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/eventDetails_attendBtn"
+            android:layout_alignBottom="@+id/eventDetails_attendBtn"
+            android:layout_toRightOf="@+id/eventDetails_attendees"
+            android:layout_toEndOf="@+id/eventDetails_attendees" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
