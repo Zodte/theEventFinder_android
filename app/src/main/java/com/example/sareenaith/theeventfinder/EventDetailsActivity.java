@@ -105,6 +105,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 */
                                 if(isAttending) {
                                     attendBtn.setVisibility(View.GONE);
+                                }else{
+                                    unAttendBtn.setVisibility(View.GONE);
                                 }
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");
