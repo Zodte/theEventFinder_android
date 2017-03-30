@@ -10,53 +10,33 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Seach Range"/>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fromPickers">
-        <SeekBar
-            android:id="@+id/fromDay_range"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content" />
-
-        <SeekBar
-            android:id="@+id/fromHour_range"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fromDay_range">
-        </SeekBar>
-
         <TextView
-            android:text="From:"
-            android:id="@+id/fromSearchRange_text"
+            android:id="@+id/fromDateView"
+            style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/fromDay_range"/>
+            android:hint="@string/createEvent_startDate_textView_placeholder"
+            android:onClick="setFromDate"
+            android:padding="10dp"/>
 
 
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <SeekBar
-            android:id="@+id/toDay_range"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </SeekBar>
-
-        <SeekBar
-            android:id="@+id/toHour_range"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toDay_range">
-        </SeekBar>
-
         <TextView
-            android:text="To:"
-            android:id="@+id/searchRange_text"
+            android:id="@+id/toDateView"
+            style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/toDay_range" />
+            android:hint="@string/createEvent_startDate_textView_placeholder"
+            android:onClick="setToDate"
+            android:padding="10dp"/>
 
     </RelativeLayout>
 

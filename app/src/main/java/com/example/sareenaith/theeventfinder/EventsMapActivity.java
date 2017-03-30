@@ -58,7 +58,11 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  *  This class is responsible to check permission for Location Services, connect to Google Client API
  *  and initialize Google Map, show events etc. basically it is a main activity.
@@ -83,8 +87,8 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     ImageButton imgBtn;
     RequestQueue requestQueue;
     private ArrayList<Event> events = new ArrayList<Event>();
-    Long from_searchDate;
-    Long to_searchDate;
+    String from_searchDate;
+    String to_searchDate;
     int spotsAvailable = 1;
     Boolean genderRestricted = false;
     ArrayList<String> tags;
@@ -97,11 +101,13 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
 
         Bundle inBundle = getIntent().getExtras();
         if(inBundle != null) {
-            from_searchDate = inBundle.getLong("from_searchDate");
-            to_searchDate = inBundle.getLong("to_searchDate");
+            from_searchDate = inBundle.getString("from_searchDate");
+            to_searchDate = inBundle.getString("to_searchDate");
             //spotsAvailable = inBundle.getInt("spotsAvailable");
             genderRestricted = inBundle.getBoolean("genderRestricted");
             tags = inBundle.getStringArrayList("tags");
+        }else{
+            resetSearchDates();
         }
 
         // Event details
@@ -177,6 +183,15 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         startActivity(intent);
     }
 
+    //Sets search dates to default value
+    public void resetSearchDates(){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar now = Calendar.getInstance();
+        from_searchDate = dateFormat.format(now.getTime());
+        now.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH)+3, now.get(Calendar.DAY_OF_MONTH));
+        to_searchDate = dateFormat.format(now.getTime());
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -241,8 +256,11 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         }
 
         // sending request to the server to get all events before a specific date.
+        Toast.makeText(getApplicationContext(), from_searchDate + "   " + to_searchDate,
+                Toast.LENGTH_LONG)
+                .show();
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, URL+"getallevents/2017-12-12", null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, URL+"getallevents/" + to_searchDate, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         for(int i = 0; i < response.length(); i++){

@@ -1,6 +1,7 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,12 +29,18 @@ import java.util.Date;
 public class SearchActivity extends AppCompatActivity {
 
 
-    SeekBar fromDay;
-    SeekBar fromHour;
-    TextView fromSearchRange;
-    SeekBar toDay;
-    SeekBar toHour;
-    TextView searchRange;
+    private int fromDateID = 999;
+    private DatePicker fromDatePicker;
+    private Calendar fromCalendar;
+    private TextView fromDateView;
+    private int fromYear, fromMonth, fromDay;
+
+    private int toDateID = 888;
+    private DatePicker toDatePicker;
+    private Calendar toCalendar;
+    private TextView toDateView;
+    private int toYear, toMonth, toDay;
+
     Spinner tags;
     TextView tags_text;
     Button clearTag;
@@ -44,7 +51,7 @@ public class SearchActivity extends AppCompatActivity {
     private int fromHour_int = 0;
     private int toDay_int = 3;
     private int toHour_int = 0;
-    private int available_int = 1;
+    //private int available_int = 1;
     private ArrayList<String> tags_array = new ArrayList<>();
     private Boolean genderRestrict;
     @Override
@@ -52,91 +59,21 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //Set
-        fromDay = (SeekBar) findViewById(R.id.fromDay_range);
-        fromDay.setMax(30);
+        //From date setup
+        fromDateView = (TextView) findViewById(R.id.fromDateView);
+        fromCalendar = Calendar.getInstance();
+        fromYear = fromCalendar.get(Calendar.YEAR);
+        fromMonth = fromCalendar.get(Calendar.MONTH);
+        fromDay = fromCalendar.get(Calendar.DAY_OF_MONTH);
+        showDate(fromYear, fromMonth+1, fromDay, fromDateID);
 
-        fromDay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                fromDay_int = progress;
-                showFromSearchRangeText();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        //fromHour
-        fromHour = (SeekBar) findViewById(R.id.fromHour_range);
-        fromHour.setMax(24);
-        fromHour.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                fromHour_int = progress;
-                showFromSearchRangeText();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        fromSearchRange = (TextView) findViewById(R.id.fromSearchRange_text);
-        //toDay
-        toDay = (SeekBar) findViewById(R.id.toDay_range);
-        toDay.setMax(30);
-        toDay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                toDay_int = progress;
-                showToSearchRangeText();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        //toHour
-        toHour = (SeekBar) findViewById(R.id.toHour_range);
-        toHour.setMax(24);
-        toHour.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                toHour_int = progress;
-                showToSearchRangeText();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        searchRange = (TextView) findViewById(R.id.searchRange_text);
+        //To date setup
+        toDateView = (TextView) findViewById(R.id.toDateView);
+        toCalendar = Calendar.getInstance();
+        toYear = toCalendar.get(Calendar.YEAR);
+        toMonth = toCalendar.get(Calendar.MONTH);
+        toDay = toCalendar.get(Calendar.DAY_OF_MONTH);
+        showDate(toYear, toMonth+1, toDay, toDateID);
 
         tags = (Spinner) findViewById(R.id.tags_spinner);
         tags.setOnItemSelectedListener(new CustomOnItemSelectedListener());
@@ -176,52 +113,87 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    //FromDate in milliseconds
-    //toDate in milliseconds
-    public void setupDateSpins(Long fromDate, Long toDate ){
-        Calendar cal = Calendar.getInstance();
-        int fDay = (int) Math.floor(((((fromDate - cal.getTimeInMillis())/1000)/60)/60)/24);
-        int fHour = (int) Math.floor(((((fromDate - cal.getTimeInMillis())/1000)/60)/60)%24);
-        int tDay = (int) Math.floor(((((toDate - cal.getTimeInMillis())/1000)/60)/60)/24);
-        int tHour = (int) Math.floor(((((toDate - cal.getTimeInMillis())/1000)/60)/60)%24);
-        toDay.setProgress(tDay);
-        toHour.setProgress(tHour);
-    }
-    //Updates text based on user input
-    public void showFromSearchRangeText(){
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
-        Calendar cal = Calendar.getInstance();
-
-        long startTime = cal.getTimeInMillis() + (fromDay_int * 24 * 60 * 60 * 1000) + (fromHour_int * 60 * 60 * 1000);
-
-        cal.setTimeInMillis(startTime);
-        String start = dateFormat1.format(cal.getTime());
-
-        fromSearchRange.setText("From: \n" + start);
-    }
-    //Updates viewtext based on users input
-    public void showToSearchRangeText(){
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
-        Calendar cal = Calendar.getInstance();
-
-        long endTime = cal.getTimeInMillis() + (toDay_int * 24 * 60 * 60 * 1000) + (toHour_int * 60 * 60 * 1000);
-
-        cal.setTimeInMillis(endTime);
-        String end = dateFormat1.format(cal.getTime());
-
-        searchRange.setText("To: \n " + end);
+    @SuppressWarnings("deprecation")
+    public void setFromDate(View view) {
+        showDialog(fromDateID);
     }
 
-    public Long getFromDate(){
-        Calendar now = Calendar.getInstance();
-        Long startDate = now.getTimeInMillis() + (fromDay_int * 24 * 60 * 60 * 1000) + (fromHour_int * 60 * 60 * 1000);
-        return startDate;
+    @SuppressWarnings("deprecation")
+    public void setToDate(View view) {
+        showDialog(toDateID);
     }
 
-    public Long getToDate(){
-        Calendar now = Calendar.getInstance();
-        Long endDate = now.getTimeInMillis() + (toDay_int * 24 * 60 * 60 * 1000) + (toHour_int * 60 * 60 * 1000);
-        return endDate;
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+            return new DatePickerDialog(this,
+                    myDateListenerFrom, fromYear, fromMonth, fromDay);
+        }else if(id == 888){
+            return new DatePickerDialog(this,
+                    myDateListenerTo, toYear, toMonth, toDay);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListenerFrom = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg1, int arg2, int arg3) {
+                    // TODO Auto-generated method stub
+                    // arg1 = year
+                    // arg2 = month
+                    // arg3 = day
+                    setFromDate(arg1, arg2+1, arg3);
+                    showDate(arg1, arg2+1, arg3, fromDateID);
+                }
+            };
+
+    private DatePickerDialog.OnDateSetListener myDateListenerTo = new
+            DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker arg0,
+                                      int arg1, int arg2, int arg3) {
+                    // TODO Auto-generated method stub
+                    // arg1 = year
+                    // arg2 = month
+                    // arg3 = day
+                    setToDate(arg1, arg2+1, arg3);
+                    showDate(arg1, arg2+1, arg3, toDateID);
+                }
+            };
+
+    private void showDate(int year, int month, int day, int id) {
+        if(id == 999) {
+            fromDateView.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+        }else if(id == 888){
+            toDateView.setText(new StringBuilder().append(day).append("/")
+                    .append(month).append("/").append(year));
+        }
+    }
+
+    public void setFromDate(int year, int month, int day){
+        fromYear = year;
+        fromMonth = month;
+        fromDay = day;
+    }
+
+    public String getFromDate(){
+        return (new StringBuilder().append(toYear).append("-")
+                .append(fromMonth).append("-").append(fromDay)).toString();
+    }
+
+    public void setToDate(int year, int month, int day){
+        toYear = year;
+        toMonth = month;
+        toDay = day;
+    }
+
+    public String getToDate(){
+        return (new StringBuilder().append(toYear).append("-")
+                .append(toMonth).append("-").append(toDay)).toString();
     }
 
     //Adds new tag to array of all tags
