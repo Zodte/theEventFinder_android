@@ -3,9 +3,12 @@ package com.example.sareenaith.theeventfinder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +38,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     private Config config = new Config();
     private final String URL = config.getUrl();
     SharedPreferences sharedpreferences;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +106,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 }
                                 */
                                 if(isAttending) {
-                                    attendBtn.setVisibility(View.GONE);
+                                    attendBtn.setVisibility(View.INVISIBLE);
                                 }else{
-                                    unAttendBtn.setVisibility(View.GONE);
+                                    unAttendBtn.setVisibility(View.INVISIBLE);
                                 }
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");
@@ -121,20 +123,27 @@ public class EventDetailsActivity extends AppCompatActivity {
                 });
         requestQueue.add(jsObjRequest);
 
-
-
         // Click listener for the "Attend" button.
         attendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 attendEvent();
-                unAttendBtn.setVisibility(View.VISIBLE);
             }
         });
+/*        attendBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    attendBtn.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    attendBtn.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_OUT);
+                }
+                return true;
+            }
+        });*/
 
         unAttendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 unAttendEvent();
-                attendBtn.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -177,6 +186,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         // Hide the attending button if it is clicked.
         attendBtn.setVisibility(View.INVISIBLE);
+        unAttendBtn.setVisibility(View.VISIBLE);
     }
 
     public void unAttendEvent() {
@@ -209,9 +219,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        Toast.makeText(getApplicationContext(), "You have unattending this event!",
-                Toast.LENGTH_SHORT)
-                .show();
         unAttendBtn.setVisibility(View.INVISIBLE);
+        attendBtn.setVisibility(View.VISIBLE);
     }
 }

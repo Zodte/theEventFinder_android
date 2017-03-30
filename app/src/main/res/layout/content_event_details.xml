@@ -10,11 +10,12 @@
 
 
     <RelativeLayout
-        android:layout_width="385dp"
-        android:layout_height="550dp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="-87dp">
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
         <TextView
             android:id="@+id/eventDetails_name"
@@ -72,33 +73,32 @@
             android:id="@+id/eventDetails_attendees"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_below="@+id/eventDetails_genderRestrict"
             android:layout_alignLeft="@+id/eventDetails_genderRestrict"
             android:layout_alignStart="@+id/eventDetails_genderRestrict"
+            android:layout_below="@+id/eventDetails_genderRestrict"
             android:layout_marginTop="59dp"
-            android:maxLines="100" />
+            android:maxLines="100"
+            android:text="" />
 
         <Button
             android:id="@+id/eventDetails_attendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Attend Event"
-            android:layout_marginBottom="41dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="41dp"
+            android:layout_marginEnd="28dp"
             android:layout_marginRight="28dp"
-            android:layout_marginEnd="28dp" />
+            android:text="Attend Event" />
 
         <Button
             android:id="@+id/eventDetails_unAttendBtn"
-            android:text="unAttend Event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/eventDetails_attendBtn"
-            android:layout_alignBottom="@+id/eventDetails_attendBtn"
-            android:layout_toRightOf="@+id/eventDetails_attendees"
-            android:layout_toEndOf="@+id/eventDetails_attendees" />
+            android:text="unAttend Event"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="26dp"
+            android:layout_marginStart="26dp" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
