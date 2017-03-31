@@ -12,8 +12,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -67,7 +70,7 @@ import java.util.Calendar;
  *  This class is responsible to check permission for Location Services, connect to Google Client API
  *  and initialize Google Map, show events etc. basically it is a main activity.
  */
-public class EventsMapActivity extends FragmentActivity implements OnMapReadyCallback,
+public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -203,6 +206,7 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
         // Handle marker click
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -319,6 +323,15 @@ public class EventsMapActivity extends FragmentActivity implements OnMapReadyCal
         }
     }
 
+
+    public void getMyLocation(View view) {
+        LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+    }
 
     // below are code to connect to GoogleClientApi for GPS
     protected synchronized void buildGoogleApiClient() {

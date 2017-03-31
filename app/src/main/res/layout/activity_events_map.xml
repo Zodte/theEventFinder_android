@@ -1,9 +1,10 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/map_container"
+    android:fitsSystemWindows="true"
     tools:context="com.example.sareenaith.theeventfinder.EventsMapActivity">
 
     <fragment
@@ -12,12 +13,6 @@
         android:layout_height="match_parent"
         class="com.google.android.gms.maps.SupportMapFragment"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="searchActivity"
-        android:text="search"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,18 +20,47 @@
         android:padding="5dp">
 
         <ImageButton
-            android:id="@+id/eventMap_settings_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/settings_icon"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:id="@+id/eventMap_search_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_state"
+            android:onClick="searchActivity"
+            android:scaleType="centerInside"
+            android:contentDescription="search icon"
+            android:src="@drawable/search_icon_48x48"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
 
         <ImageButton
+            android:id="@+id/eventMap_settings_icon"
+            android:contentDescription="settings icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/button_state"
+            android:adjustViewBounds="true"
+            android:src="@drawable/settings_icon"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
+<!--
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/my_location_icon_48x48"
+            android:id="@+id/eventMap_my_location_icon"
+            android:layout_below="@+id/eventMap_search_btn"
+            android:layout_marginTop="35dp"
+            android:onClick="getMyLocation"
+            android:scaleType="centerInside"
+            android:background="@drawable/button_state"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+-->
+        <ImageButton
             android:id="@+id/eventMap_create_event_icon"
-            android:layout_width="35dp"
-            android:layout_height="32dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_state"
             android:src="@drawable/create_event_icon"
             android:onClick="changeToCreateEventActivity"
             android:layout_alignParentBottom="true"

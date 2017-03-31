@@ -10,5 +10,4 @@
         android:id="@+id/item_two"
         android:title="@string/settings_logout"
         android:icon="@mipmap/logout_icon"/>
-
 </menu>
