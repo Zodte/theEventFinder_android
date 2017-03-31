@@ -106,9 +106,9 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 }
                                 */
                                 if(isAttending) {
-                                    attendBtn.setVisibility(View.INVISIBLE);
+                                    attendBtn.setEnabled(false);
                                 }else{
-                                    unAttendBtn.setVisibility(View.INVISIBLE);
+                                    unAttendBtn.setEnabled(false);
                                 }
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");
@@ -129,17 +129,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                 attendEvent();
             }
         });
-/*        attendBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    attendBtn.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    attendBtn.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_OUT);
-                }
-                return true;
-            }
-        });*/
 
         unAttendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -183,10 +172,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "You are now attending this event!",
                 Toast.LENGTH_SHORT)
                 .show();
-
         // Hide the attending button if it is clicked.
-        attendBtn.setVisibility(View.INVISIBLE);
-        unAttendBtn.setVisibility(View.VISIBLE);
+        attendBtn.setEnabled(false);
+        unAttendBtn.setEnabled(true);
     }
 
     public void unAttendEvent() {
@@ -219,7 +207,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        unAttendBtn.setVisibility(View.INVISIBLE);
-        attendBtn.setVisibility(View.VISIBLE);
+        unAttendBtn.setEnabled(false);
+        attendBtn.setEnabled(true);
     }
 }
