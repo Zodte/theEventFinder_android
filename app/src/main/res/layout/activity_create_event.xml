@@ -266,54 +266,6 @@
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:id="@+id/createEvent_fifthContainer"
-            android:layout_below="@+id/createEvent_fourthContainer">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/age_icon"
-                android:id="@+id/imageView_age_icon"
-                android:layout_centerVertical="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="18"
-                android:inputType="number"
-                android:ems="10"
-                android:maxLength="2"
-                android:padding="10dp"
-                android:background="@drawable/shape_edit_text"
-                android:id="@+id/createEvent_minAgeId_input"
-                android:hint="@string/createEvent_minAge_placeholder"
-                android:layout_toEndOf="@+id/imageView_age_icon"
-                android:layout_toRightOf="@+id/imageView_age_icon"/>
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="18"
-                android:inputType="number"
-                android:ems="10"
-                android:maxLength="2"
-                android:padding="10dp"
-                android:background="@drawable/shape_edit_text"
-                android:id="@+id/createEvent_maxAgeId_input"
-                android:hint="@string/createEvent_maxAge_placeholder"
-                android:layout_toEndOf="@+id/createEvent_minAgeId_input"
-                android:layout_toRightOf="@+id/createEvent_minAgeId_input"/>
-        </RelativeLayout>
-
         <ImageButton
             android:layout_width="53dp"
             android:layout_height="53dp"
@@ -334,7 +286,7 @@
             android:id="@+id/createEvent_chooseSexId_txt"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/createEvent_fifthContainer"/>
+            android:layout_below="@+id/createEvent_fourthContainer"/>
 
         <EditText
             android:id="@+id/createEvent_hiddenPosText"

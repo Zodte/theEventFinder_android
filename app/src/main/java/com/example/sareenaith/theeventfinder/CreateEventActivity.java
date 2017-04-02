@@ -115,9 +115,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
         checkBox = (CheckBox) findViewById(R.id.createEvent_checkSexId_checkBox);
 
-        minAge = (EditText) findViewById(R.id.createEvent_minAgeId_input);
-        maxAge = (EditText) findViewById(R.id.createEvent_maxAgeId_input);
-
+        //minAge = (EditText) findViewById(R.id.createEvent_minAgeId_input);
+        //maxAge = (EditText) findViewById(R.id.createEvent_maxAgeId_input);
         // From Date
         dateViewFrom = (TextView) findViewById(R.id.createEvent_startDateId_input);
         Calendar calendarDateFrom = Calendar.getInstance();
@@ -256,7 +255,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
         Toast.makeText(getApplicationContext(), "lat:"+lat+ " " +"long:"+lgt,Toast.LENGTH_SHORT).show();
     }
-
+    /*
     // check the age
     public void checkAge() {
         String minText = minAge.getText().toString().trim();
@@ -277,7 +276,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
             Toast.makeText(getApplicationContext(),"Please enter the required age",Toast.LENGTH_SHORT).show();
         }
     }
-
+*/
     // show layout "visible" and "invisible" when choosing location.
     public void setLocation(View view) {
         mAwesomeValidation.clear();
@@ -439,7 +438,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
         if (mAwesomeValidation.validate()) {
             Toast.makeText(this, "Validation Successful", Toast.LENGTH_LONG).show();
-            checkAge();
+            //checkAge();
             final String dbid = sharedpreferences.getString("db_id", null);
             System.out.println("inní sendEvent og dbid er: "+dbid);
             try {
@@ -462,8 +461,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                         params.put("long", String.valueOf(lgt));
                         params.put("genderRestrict", check);
                         params.put("descr", eventDescriptionTxt.getText().toString().trim());
-                        params.put("ageMin", minAge.getText().toString().trim());
-                        params.put("ageMax", maxAge.getText().toString().trim());
+                        params.put("ageMin", "18"); //minAge.getText().toString().trim());
+                        params.put("ageMax", "100"); //maxAge.getText().toString().trim());
                         params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
                         params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
                         params.put("isAndroid", "true");

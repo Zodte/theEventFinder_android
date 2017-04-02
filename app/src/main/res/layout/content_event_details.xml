@@ -50,22 +50,12 @@
             android:text="" />
 
         <TextView
-            android:id="@+id/eventDetails_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/eventDetails_time"
-            android:layout_alignStart="@+id/eventDetails_time"
-            android:layout_below="@+id/eventDetails_time"
-            android:layout_marginTop="43dp"
-            android:text="" />
-
-        <TextView
             android:id="@+id/eventDetails_genderRestrict"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/eventDetails_age"
-            android:layout_alignRight="@+id/eventDetails_age"
-            android:layout_below="@+id/eventDetails_age"
+            android:layout_alignEnd="@+id/eventDetails_time"
+            android:layout_alignRight="@+id/eventDetails_time"
+            android:layout_below="@+id/eventDetails_time"
             android:layout_marginTop="51dp"
             android:text="" />
 
@@ -77,7 +67,6 @@
             android:layout_alignStart="@+id/eventDetails_genderRestrict"
             android:layout_below="@+id/eventDetails_genderRestrict"
             android:layout_marginTop="59dp"
-            android:maxLines="100"
             android:text="" />
 
         <Button

@@ -49,7 +49,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventNameTw =  (TextView) findViewById(R.id.eventDetails_name);
         eventDescrTw =  (TextView) findViewById(R.id.eventDetails_description);
         eventTimeTw =  (TextView) findViewById(R.id.eventDetails_time);
-        eventAgesTw =  (TextView) findViewById(R.id.eventDetails_age);
+        //eventAgesTw =  (TextView) findViewById(R.id.eventDetails_age);
         eventGenRestrictTw =  (TextView) findViewById(R.id.eventDetails_genderRestrict);
         eventAttendeesTw =  (TextView) findViewById(R.id.eventDetails_attendees);
         attendBtn = (Button) findViewById(R.id.eventDetails_attendBtn);
@@ -80,8 +80,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 event = response;
                                 String eventName = event.getString("name");
                                 String eventDescr = event.getString("description");
-                                int ageMin = event.getInt("age_min");
-                                int ageMax = event.getInt("age_max");
+                                //int ageMin = event.getInt("age_min");
+                                //int ageMax = event.getInt("age_max");
                                 String endDate = event.getString("end_date").substring(0,10);
                                 String startDate = event.getString("start_date").substring(0,10);
                                 Boolean genRestrict = event.getBoolean("gender_restriction");
@@ -96,7 +96,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 eventNameTw.setText("Event name: " + eventName);
                                 eventDescrTw.setText("Description: " + eventDescr);
                                 eventTimeTw.setText("This event is starts " + startDate + " and ends " + endDate);
-                                eventAgesTw.setText("This event is for ages " + ageMin + " to " + ageMax);
+                                //eventAgesTw.setText("This event is for ages " + ageMin + " to " + ageMax);
                                 if(genRestrict) {
                                     eventGenRestrictTw.setText("This is a gender restricted event");
                                 } else {
