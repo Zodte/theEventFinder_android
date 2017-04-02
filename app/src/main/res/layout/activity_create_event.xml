@@ -33,7 +33,10 @@
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:id="@+id/createEvent_mainLayout">
+        android:id="@+id/createEvent_mainLayout"
+        android:layout_below="@+id/map_fragment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -51,7 +54,19 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:contentDescription="@+id/createEvent_eDIcon"/>
+                android:contentDescription="create event image"/>
+
+            <TextView
+                android:id="@+id/createEvent_nameLength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView_event_icon"
+                android:layout_marginLeft="7dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="5dp"
+                android:text="40"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -83,9 +98,20 @@
                 android:id="@+id/imageView_description_icon"
                 android:contentDescription="icon for description"/>
 
+            <TextView
+                android:id="@+id/createEvent_descrLength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/imageView_description_icon"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:text="100"/>
+
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:maxLines="10"
                 android:width="0dip"
                 android:scrollbars="none"
@@ -302,13 +328,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Is it gender restrict"
+            android:text="Gender restrict?"
             android:gravity="center"
             android:textSize="18sp"
             android:id="@+id/createEvent_chooseSexId_txt"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/createEvent_fifthContainer"/>
+
+        <EditText
+            android:id="@+id/createEvent_hiddenPosText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/chooseLocation_button"
+            android:layout_alignBottom="@+id/chooseLocation_button"
+            android:layout_alignEnd="@+id/createEvent_submitId_btn"
+            android:layout_alignRight="@+id/createEvent_submitId_btn"
+            android:background="@android:color/transparent"/>
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -328,5 +364,6 @@
             android:onClick="setLocation"
             android:layout_below="@+id/createEvent_chooseSexId_txt" />
     </RelativeLayout>
+
 
 </RelativeLayout>

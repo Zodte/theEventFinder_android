@@ -14,12 +14,13 @@ import java.util.Map;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -34,6 +35,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -43,24 +46,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 
-/**
- * Created by Hoai Nam Duc Tran on 30/01/2017.
- */
+import static android.view.View.GONE;
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+
+import static java.lang.Integer.parseInt;
 
 public class CreateEventActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private Config config = new Config();
     private final String URL = config.getUrl();
     private String check = "no";
-    private DatePicker datePicker;
-    private Calendar calendarDateFrom, calendarDateTo;
     private TextView dateViewFrom, dateViewTo;
     private int yearFrom, monthFrom, dayFrom;
     private int yearTo, monthTo, dayTo;
 
     private EditText eventNameTxt;
     private EditText eventDescriptionTxt;
-    private ImageButton eventButton;
     private double lat;
     private double lgt;
     private EditText minAge;
@@ -69,12 +70,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private RelativeLayout mainLayout;
     private RelativeLayout mapLayout;
 
-
-
-
     private CheckBox checkBox;
-    private TimePicker timePicker;
-    private Calendar calendarTimeFrom, calendarTimeTo;
     private TextView timeViewFrom, timeViewTo;
     private int hourFrom, minFrom;
     private int hourTo, minTo;
@@ -83,21 +79,39 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private int idTimeFrom = 900;
     private int idTimeTo = 800;
 
+    private String nameCharsMax = "40"; // max must equal the text in the xml file. Otherwise it will look silly.
+    private String descCharsMax = "100";
+
+    private String eventNameBeforeChange;
+    private String eventDescBeforeChange;
+
+    private EditText validateLocation;
+
     SharedPreferences sharedpreferences;
 
+    AwesomeValidation mAwesomeValidation;
+
     private GoogleMap mMap;
-    private Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+        mAwesomeValidation = new AwesomeValidation(BASIC);
+
         sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
 
         eventNameTxt = (EditText) findViewById(R.id.createEvent_nameId_input);
         eventDescriptionTxt = (EditText) findViewById(R.id.createEvent_descriptionId_input);
-        eventButton = (ImageButton) findViewById(R.id.createEvent_submitId_btn);
+        validateLocation = (EditText) findViewById(R.id.createEvent_hiddenPosText);
+
+
+        // validating the 2 fields above. The regex as the 3rd param is the string pattern that is accepted.
+        mAwesomeValidation.addValidation(this, R.id.createEvent_nameId_input, RegexTemplate.NOT_EMPTY, R.string.noEmptyFields);
+        mAwesomeValidation.addValidation(this, R.id.createEvent_descriptionId_input, RegexTemplate.NOT_EMPTY, R.string.noEmptyFields);
+        // adding a hidden textfield so we can validate the lat and lng coordinates.
+        mAwesomeValidation.addValidation(this, R.id.createEvent_hiddenPosText, RegexTemplate.NOT_EMPTY, R.string.noLocation);
 
         checkBox = (CheckBox) findViewById(R.id.createEvent_checkSexId_checkBox);
 
@@ -106,7 +120,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
         // From Date
         dateViewFrom = (TextView) findViewById(R.id.createEvent_startDateId_input);
-        calendarDateFrom = Calendar.getInstance();
+        Calendar calendarDateFrom = Calendar.getInstance();
 
         yearFrom = calendarDateFrom.get(Calendar.YEAR);
         monthFrom = calendarDateFrom.get(Calendar.MONTH);
@@ -114,7 +128,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         showDate(yearFrom, monthFrom+1, dayFrom, idDateFrom);
 
         timeViewFrom = (TextView) findViewById(R.id.createEvent_startTimeId_input);
-        calendarTimeFrom = Calendar.getInstance();
+        Calendar calendarTimeFrom = Calendar.getInstance();
 
         hourFrom = calendarTimeFrom.get(Calendar.HOUR_OF_DAY);
         minFrom = calendarTimeFrom.get(Calendar.MINUTE);
@@ -122,14 +136,14 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
         // End Date
         dateViewTo = (TextView) findViewById(R.id.createEvent_endDateId_input);
-        calendarDateTo = Calendar.getInstance();
+        Calendar calendarDateTo = Calendar.getInstance();
         yearTo = calendarDateTo.get(Calendar.YEAR);
         monthTo = calendarDateTo.get(Calendar.MONTH);
         dayTo = calendarDateTo.get(Calendar.DAY_OF_MONTH);
         showDate(yearTo, monthTo+1, dayTo, idDateTo);
 
         timeViewTo = (TextView) findViewById(R.id.createEvent_endTimeId_input);
-        calendarTimeTo = Calendar.getInstance();
+        Calendar calendarTimeTo = Calendar.getInstance();
 
         hourTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
         minTo = calendarTimeTo.get(Calendar.MINUTE);
@@ -138,6 +152,76 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        addTextListeners();
+    }
+
+    public void addTextListeners() {
+
+        eventNameTxt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+                EditText etEventNameBeforeChange = (EditText) findViewById(R.id.createEvent_nameId_input);
+                eventNameBeforeChange = etEventNameBeforeChange.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                TextView charactersLeft = (TextView) findViewById(R.id.createEvent_nameLength);
+                String text = s.toString();
+                Integer newValue = parseInt(nameCharsMax) - text.length();
+                System.out.println(newValue);
+                if (newValue < 0) {
+                    eventNameTxt.setText(eventNameBeforeChange);
+                    return;
+                }
+                charactersLeft.setText((newValue.toString()));
+
+            }
+        });
+
+        eventDescriptionTxt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+                EditText etEventDescrBeforeChange = (EditText) findViewById(R.id.createEvent_descriptionId_input);
+                eventDescBeforeChange = etEventDescrBeforeChange.getText().toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                TextView charactersLeft = (TextView) findViewById(R.id.createEvent_descrLength);
+                String text = s.toString();
+                Integer newValue = parseInt(descCharsMax) - text.length();
+                if (newValue < 0) {
+                    eventDescriptionTxt.setText(eventDescBeforeChange);
+                    return;
+                }
+                charactersLeft.setText((newValue.toString()));
+
+            }
+        });
+
     }
 
     public void setGenderRestriction(View view) {
@@ -158,6 +242,9 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     public void onMapClick(LatLng point) {
         lat = point.latitude;
         lgt = point.longitude;
+
+        validateLocation.setText(Double.toString(lat));
+        validateLocation.setVisibility(View.GONE);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(point);
@@ -180,8 +267,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
             maxAge.setText(R.string.age);
         }
         try {
-            int minVal = Integer.parseInt(minAge.getText().toString().trim());
-            int maxVal = Integer.parseInt(maxAge.getText().toString().trim());
+            int minVal = parseInt(minAge.getText().toString().trim());
+            int maxVal = parseInt(maxAge.getText().toString().trim());
             if(minVal > maxVal) {
                 Toast.makeText(getApplicationContext(), "The min age cannot be higher than max age",
                         Toast.LENGTH_SHORT).show();
@@ -193,6 +280,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
     // show layout "visible" and "invisible" when choosing location.
     public void setLocation(View view) {
+        mAwesomeValidation.clear();
+
         mainLayout = (RelativeLayout) findViewById(R.id.createEvent_mainLayout);
         ViewGroup.LayoutParams mainLayoutParams = mainLayout.getLayoutParams();
         mainLayoutParams.height = 0;
@@ -344,47 +433,53 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
+    // this is the "onClick" method of the (+) button on the create event page
     public void sendEvent(View view) throws JSONException {
-        checkAge();
-        final String dbid = sharedpreferences.getString("db_id", null);
-        System.out.println("inní sendEvent og dbid er: "+dbid);
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"createEvent", new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.d("Volley", response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("Volley", error.toString());
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("eventName", eventNameTxt.getText().toString().trim());
-                    params.put("lati", String.valueOf(lat));
-                    params.put("long", String.valueOf(lgt));
-                    params.put("genderRestrict", check);
-                    params.put("descr", eventDescriptionTxt.getText().toString().trim());
-                    params.put("ageMin", minAge.getText().toString().trim());
-                    params.put("ageMax", maxAge.getText().toString().trim());
-                    params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
-                    params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
-                    params.put("isAndroid", "true");
-                    params.put("db_id", dbid);
-                    return params;
-                }
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(stringRequest);
+        System.out.println("validate location er: "+validateLocation.getText().toString());
 
-            Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
-            startActivity(intent);
+        if (mAwesomeValidation.validate()) {
+            Toast.makeText(this, "Validation Successful", Toast.LENGTH_LONG).show();
+            checkAge();
+            final String dbid = sharedpreferences.getString("db_id", null);
+            System.out.println("inní sendEvent og dbid er: "+dbid);
+            try {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"createEvent", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Volley", response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", error.toString());
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("eventName", eventNameTxt.getText().toString().trim());
+                        params.put("lati", String.valueOf(lat));
+                        params.put("long", String.valueOf(lgt));
+                        params.put("genderRestrict", check);
+                        params.put("descr", eventDescriptionTxt.getText().toString().trim());
+                        params.put("ageMin", minAge.getText().toString().trim());
+                        params.put("ageMax", maxAge.getText().toString().trim());
+                        params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
+                        params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
+                        params.put("isAndroid", "true");
+                        params.put("db_id", dbid);
+                        return params;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(stringRequest);
 
-        } catch(Exception e) {
-            e.printStackTrace();
+                Intent intent = new Intent(CreateEventActivity.this, EventsMapActivity.class);
+                startActivity(intent);
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

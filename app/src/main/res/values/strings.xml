@@ -25,6 +25,10 @@
     <string name="age">18</string>
     <string name="createEvent_submit_btn">Submit</string>
     <string name="createEvent_eDIcon">icon for event name</string>
+    <!--string variables for create event validation-->
+    <string name="noEmptyFields">Field cannot be empty</string>
+    <string name="noLocation">Event must have a location</string>
+    <string name="noDates">Event must start sometime and end sometime</string>
 
     <!-- string variables for everything related to My Profile stuff -->
     <string name="myProfile_myPictureDesc_text">Profile Picture</string>
@@ -37,7 +41,6 @@
     <string name="myProfile_event_start">Start time:</string>
     <string name="myProfile_event_end">End time:</string>
     <string name="myProfile_event_attendees">Attendees:</string>
-
 
     <!-- string variables for activity_event_info.xml -->
     <string name="eventInfo_eventInfoImg_txt">event image</string>
