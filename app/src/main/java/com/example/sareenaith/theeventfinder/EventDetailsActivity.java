@@ -37,6 +37,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     private Config config = new Config();
     private final String URL = config.getUrl();
+    private int numAttendees = 0;
+    boolean isCreator = false;
     SharedPreferences sharedpreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventAttendeesTw =  (TextView) findViewById(R.id.eventDetails_attendees);
         attendBtn = (Button) findViewById(R.id.eventDetails_attendBtn);
         unAttendBtn = (Button) findViewById(R.id.eventDetails_unAttendBtn);
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -85,6 +88,11 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 JSONArray attendees = event.getJSONArray("attendees");
                                 Boolean isAttending = event.getBoolean("isAttending");
 
+                                if(Integer.parseInt(dbid) == event.getInt("creator_id")) {
+                                    attendBtn.setEnabled(false);
+                                    unAttendBtn.setEnabled(false);
+                                }
+
                                 eventNameTw.setText("Event name: " + eventName);
                                 eventDescrTw.setText("Description: " + eventDescr);
                                 eventTimeTw.setText("This event is starts " + startDate + " and ends " + endDate);
@@ -98,6 +106,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 // Currently we fetch all attendees and calculate the number of attendees by the
                                 // length of the attendee array.  This is a dirty fix that will get changed later,
                                 // because there is no need to fetch all the individual attendees any more.
+                                numAttendees = attendees.length();
                                 eventAttendeesTw.setText("Number of attendees: "+attendees.length());
                                 /*
                                 for(int i = 0; i < attendees.length(); i++) {
@@ -141,6 +150,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Fetch the userId
         final String dbid = sharedpreferences.getString("db_id", null);
         // Tell the server the user is going to attend the event.
+        eventAttendeesTw.setText("Number of attendees: "+ ++numAttendees);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
                 @Override
@@ -175,11 +185,12 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Hide the attending button if it is clicked.
         attendBtn.setEnabled(false);
         unAttendBtn.setEnabled(true);
+
     }
 
     public void unAttendEvent() {
         final String dbid = sharedpreferences.getString("db_id", null);
-
+        eventAttendeesTw.setText("Number of attendees: "+ --numAttendees);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"unAttendEvent", new Response.Listener<String>() {
                 @Override
@@ -209,5 +220,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
         unAttendBtn.setEnabled(false);
         attendBtn.setEnabled(true);
+
     }
 }
