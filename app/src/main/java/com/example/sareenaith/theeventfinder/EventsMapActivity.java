@@ -94,7 +94,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     String to_searchDate;
     int spotsAvailable = 1;
     Boolean genderRestricted = false;
-    ArrayList<String> tags;
+    String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +108,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
             to_searchDate = inBundle.getString("to_searchDate");
             //spotsAvailable = inBundle.getInt("spotsAvailable");
             genderRestricted = inBundle.getBoolean("genderRestricted");
-            tags = inBundle.getStringArrayList("tags");
+            tag = inBundle.getString("tag");
         }else{
-            resetSearchDates();
+            resetSearchValues();
         }
 
         // Event details
@@ -187,12 +187,14 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     //Sets search dates to default value
-    public void resetSearchDates(){
+    public void resetSearchValues(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar now = Calendar.getInstance();
         from_searchDate = dateFormat.format(now.getTime());
         now.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH)+3, now.get(Calendar.DAY_OF_MONTH));
         to_searchDate = dateFormat.format(now.getTime());
+        genderRestricted = false;
+        tag = "*";
     }
 
     /**
@@ -263,8 +265,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         Toast.makeText(getApplicationContext(), from_searchDate + "   " + to_searchDate,
                 Toast.LENGTH_LONG)
                 .show();
+        String uri = String.format(URL+"getEventsFromTo/"+ from_searchDate + "/" + to_searchDate + "?genderRestriction=%1$s&tag=%2$s", genderRestricted, tag);
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, URL+"getallevents/" + to_searchDate, null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, uri, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         for(int i = 0; i < response.length(); i++){

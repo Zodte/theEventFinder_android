@@ -42,8 +42,6 @@ public class SearchActivity extends AppCompatActivity {
     private int toYear, toMonth, toDay;
 
     Spinner tags;
-    TextView tags_text;
-    Button clearTag;
     //NumberPicker available;
     CheckBox genderRestriction;
 
@@ -52,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     private int toDay_int = 3;
     private int toHour_int = 0;
     //private int available_int = 1;
-    private ArrayList<String> tags_array = new ArrayList<>();
+    private String tag_string = "*";
     private Boolean genderRestrict;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +75,6 @@ public class SearchActivity extends AppCompatActivity {
 
         tags = (Spinner) findViewById(R.id.tags_spinner);
         tags.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-
-        tags_text = (TextView) findViewById(R.id.tags_text);
-
-        clearTag = (Button) findViewById(R.id.clear_btn);
 
         //Works but server side needs to be implemented, will be implemented later
 //        available = (NumberPicker) findViewById(R.id.available_numberPicker);
@@ -198,33 +192,13 @@ public class SearchActivity extends AppCompatActivity {
 
     //Adds new tag to array of all tags
     public void addTag(String tag){
-        if(!tag.equals("Choose")){
-            if(tags_array.size() == 0) {
-                clearTag.setVisibility(View.VISIBLE);
-            }
-            if(!tags_array.contains(tag)) {
-                tags_array.add(tag);
-            }
+        if(!tag.equals("choose")){
+            tag_string = tag;
+        }else{
+            tag_string = "*";
         }
-        displayTagsText();
     }
 
-    //Displays which tags have been choosen by user
-    public void displayTagsText() {
-        StringBuilder sb = new StringBuilder();
-        for (String s : tags_array)
-        {
-            sb.append(s);
-            sb.append("\t");
-        }
-        tags_text.setText(sb);
-    }
-
-    public void clearTag(View view){
-        tags_array.clear();
-        displayTagsText();
-        clearTag.setVisibility(View.GONE);
-    }
 
     //Submits search criteria to map event acticity
     public void acceptIt(View view) {
@@ -233,7 +207,7 @@ public class SearchActivity extends AppCompatActivity {
         intent.putExtra("to_searchDate", getToDate());
         //intent.putExtra("spotsAvailable", available_int);
         intent.putExtra("genderRestricted", genderRestrict);
-        intent.putExtra("tags", tags_array);
+        intent.putExtra("tag", tag_string);
         startActivity(intent);
     }
 
@@ -241,8 +215,7 @@ public class SearchActivity extends AppCompatActivity {
     public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-            addTag(parent.getItemAtPosition(pos).toString());
-            parent.setSelection(0);
+            addTag(parent.getItemAtPosition(pos).toString().toLowerCase());
         }
 
         @Override
