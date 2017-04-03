@@ -69,6 +69,17 @@ class Event_ListAdapter extends BaseAdapter{
         subtitleTextView.setText(event.getDescription());
         detailTextView.setText(event.getStartDate().toString().substring(0, 10));
 
+        switch(event.getCategory()){
+            case "Sports":
+                thumbnailImageView.setImageResource(R.mipmap.football);
+                break;
+            case "Outdoors":
+                thumbnailImageView.setImageResource(R.mipmap.outdoors);
+                break;
+            case "Party":
+                thumbnailImageView.setImageResource(R.mipmap.beerbottle);
+                break;
+        }
         // If we want to add a thumbnail with an event photo or something, we could use this:
         //Picasso.with(mContext).load(event.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
 

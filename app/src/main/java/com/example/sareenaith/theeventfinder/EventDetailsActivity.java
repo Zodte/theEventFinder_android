@@ -53,7 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventGenRestrictTw =  (TextView) findViewById(R.id.eventDetails_genderRestrict);
         eventAttendeesTw =  (TextView) findViewById(R.id.eventDetails_attendees);
         attendBtn = (Button) findViewById(R.id.eventDetails_attendBtn);
-        unAttendBtn = (Button) findViewById(R.id.eventDetails_unAttendBtn);
+        //unAttendBtn = (Button) findViewById(R.id.eventDetails_unAttendBtn);
 
 
         Intent intent = getIntent();
@@ -90,7 +90,6 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                                 if(Integer.parseInt(dbid) == event.getInt("creator_id")) {
                                     attendBtn.setEnabled(false);
-                                    unAttendBtn.setEnabled(false);
                                 }
 
                                 eventNameTw.setText("Event name: " + eventName);
@@ -115,9 +114,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 }
                                 */
                                 if(isAttending) {
-                                    attendBtn.setEnabled(false);
-                                }else{
-                                    unAttendBtn.setEnabled(false);
+                                    attendBtn.setText("Unattend Event");
                                 }
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");
@@ -135,15 +132,15 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Click listener for the "Attend" button.
         attendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                attendEvent();
+                // Dirty dirty code
+                if(attendBtn.getText().subSequence(0,1).equals("A")){
+                    attendEvent();
+                } else {
+                    unAttendEvent();
+                }
             }
         });
 
-        unAttendBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                unAttendEvent();
-            }
-        });
     }
 
     public void attendEvent() {
@@ -183,8 +180,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT)
                 .show();
         // Hide the attending button if it is clicked.
-        attendBtn.setEnabled(false);
-        unAttendBtn.setEnabled(true);
+        attendBtn.setText("Unattend Event");
+        //unAttendBtn.setEnabled(true);
 
     }
 
@@ -218,8 +215,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        unAttendBtn.setEnabled(false);
-        attendBtn.setEnabled(true);
+
+        //unAttendBtn.setEnabled(false);
+        attendBtn.setText("Attend event");
 
     }
 }

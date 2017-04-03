@@ -74,22 +74,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/color_Light_Blue"
+            android:layout_marginEnd="120dp"
+            android:layout_marginRight="120dp"
+            android:text="Attend Event"
+            android:padding="10dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="41dp"
-            android:layout_marginEnd="28dp"
-            android:layout_marginRight="28dp"
-            android:text="Attend Event" />
+            android:layout_alignParentEnd="true" />
 
-        <Button
-            android:id="@+id/eventDetails_unAttendBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/color_Light_Blue"
-            android:text="unAttend Event"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="26dp"
-            android:layout_marginStart="26dp" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
