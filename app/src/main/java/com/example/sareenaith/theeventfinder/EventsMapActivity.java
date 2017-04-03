@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,7 +70,8 @@ import java.util.Calendar;
 public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        GoogleMap.OnMapClickListener {
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -80,8 +82,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleApiClient;
     Marker mCurrLocationMarker;
-    private Button eventDetailsBtn, eventDetailsHideBtn;
-    private TextView eventDetailsNameTw, getEventDetailsDescrTw;
+    private Button eventDetailsBtn;
+    private ImageButton eventDetailsCloseBtn;
+    private TextView eventDetailsNameTw, eventDetailsDescrTw, eventDetailsStartTime;
     RelativeLayout eventInfo;
     ImageButton imgBtn;
     RequestQueue requestQueue;
@@ -112,9 +115,10 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
 
         // Event details
         eventDetailsBtn = (Button) findViewById(R.id.eventMap_details_btn);
-
         eventDetailsNameTw = (TextView) findViewById(R.id.eventMap_details_name);
-        getEventDetailsDescrTw = (TextView) findViewById(R.id.eventMap_details_descr);
+        eventDetailsDescrTw = (TextView) findViewById(R.id.eventMap_details_descr);
+        eventDetailsStartTime = (TextView) findViewById((R.id.eventMap_details_starts));
+
         eventInfo = (RelativeLayout) findViewById(R.id.eventInfo);
         eventInfo.setVisibility(View.GONE);
 
@@ -178,6 +182,15 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
+    private void setMapClick() {
+        mMap.setOnMapClickListener(this);
+    }
+
+    @Override
+    public void onMapClick(LatLng point) {
+        eventInfo.setVisibility(View.INVISIBLE);
+    }
+
     public void changeToCreateEventActivity(View view) {
         Intent intent = new Intent(EventsMapActivity.this, CreateEventActivity.class);
         startActivity(intent);
@@ -206,6 +219,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        setMapClick();
 
         // Zoom the map to Reykjavík
         mMap.moveCamera(CameraUpdateFactory.zoomTo(9));
@@ -219,9 +233,30 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
                 eventInfo.setVisibility(View.VISIBLE);
                 // The index is stored in the title of the marker,  this title is not shown to the user.
                 final int clickedEventIndex = Integer.parseInt(marker.getTitle());
-                eventDetailsNameTw.setText("Name: "+ events.get(clickedEventIndex).getName());
-                getEventDetailsDescrTw.setText("Description: " + events.get(clickedEventIndex).getDescription());
-                eventDetailsHideBtn = (Button) findViewById(R.id.eventMap_details_hide_btn);
+                eventDetailsNameTw.setText(events.get(clickedEventIndex).getName());
+                eventDetailsDescrTw.setText(events.get(clickedEventIndex).getDescription());
+                eventDetailsStartTime.setText("Starts: "+ events.get(clickedEventIndex).getStartDate().toString().substring(0, 16));
+                eventDetailsCloseBtn = (ImageButton) findViewById(R.id.eventMap_details_close_btn);
+
+                // get the element which will hold the icon for the event...
+                ImageView categoryIconImageView =
+                        (ImageView) findViewById(R.id.eventMap_details_category_icon);
+                // ... and set it
+                switch(events.get(clickedEventIndex).getCategory()){
+                    case "Sports":
+                        categoryIconImageView.setImageResource(R.mipmap.football);
+                        break;
+                    case "Outdoors":
+                        categoryIconImageView.setImageResource(R.mipmap.outdoors);
+                        break;
+                    case "Party":
+                        categoryIconImageView.setImageResource(R.mipmap.beerbottle);
+                        break;
+                    case "Music":
+                        categoryIconImageView.setImageResource(R.mipmap.guitar);
+                        break;
+                }
+
                 // Move the camera to the clicked marker.
                 LatLng pos = new LatLng(events.get(clickedEventIndex).getLat(), events.get(clickedEventIndex).getLgt());
                 mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
@@ -239,7 +274,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
 
                 // Click listener for "Hide this window" button on the overlay that appears when
                 // a marker is clicked.
-                eventDetailsHideBtn.setOnClickListener(new View.OnClickListener() {
+                eventDetailsCloseBtn.setOnClickListener(new View.OnClickListener() {
                     public  void onClick(View v) {
                         eventInfo.setVisibility(View.INVISIBLE);
                     }
@@ -522,4 +557,5 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         intent.putExtra("to_searchDate", to_searchDate);
         startActivity(intent);
     }
+
 }
