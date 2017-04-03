@@ -1,4 +1,9 @@
 <resources>
+    <string-array name="eventTypes_array">
+        <item>Sports</item>
+        <item>Outdoors</item>
+        <item>Party</item>
+    </string-array>
     <string name="app_name">Eventure</string>
     <string name="app_name_create_event">Create Event</string>
     <string name="app_name_my_profile">My Profile</string>

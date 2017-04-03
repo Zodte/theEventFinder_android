@@ -36,7 +36,7 @@ public class EventService {
     public EventService() {
         Log.d("myApp", "init");
     }
-
+    /*
     public void getAllEvents() {
         Log.d("myApp", "Fetching events");
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
@@ -90,5 +90,5 @@ public class EventService {
             });
 
         //requestQueue.add(jsObjRequest);
-    }
+    } */
 }

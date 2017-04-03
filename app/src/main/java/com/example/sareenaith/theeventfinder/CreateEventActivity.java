@@ -20,10 +20,12 @@ import android.util.Log;
 import android.view.View;
 
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +68,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     private double lgt;
     private EditText minAge;
     private EditText maxAge;
+    private Spinner eventTypesSpinner;
 
     private RelativeLayout mainLayout;
     private RelativeLayout mapLayout;
@@ -106,6 +109,13 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         eventDescriptionTxt = (EditText) findViewById(R.id.createEvent_descriptionId_input);
         validateLocation = (EditText) findViewById(R.id.createEvent_hiddenPosText);
 
+        // Initialize the event type spinner and fill it with data.
+        // The items in the spinner are populated with the eventTypes array in strings.xml
+        eventTypesSpinner = (Spinner) findViewById(R.id.createEvent_eventTypes);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.eventTypes_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eventTypesSpinner.setAdapter(adapter);
 
         // validating the 2 fields above. The regex as the 3rd param is the string pattern that is accepted.
         mAwesomeValidation.addValidation(this, R.id.createEvent_nameId_input, RegexTemplate.NOT_EMPTY, R.string.noEmptyFields);
@@ -237,6 +247,8 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         mMap.setOnMapClickListener(this);
     }
 
+
+
     @Override
     public void onMapClick(LatLng point) {
         lat = point.latitude;
@@ -290,6 +302,11 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         ViewGroup.LayoutParams params = mapLayout.getLayoutParams();
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         mapLayout.setLayoutParams(params);
+
+        LatLng reykjavikPos = new LatLng(64.14139101702763, -21.955103874206543);
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(9));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(reykjavikPos));
+
     }
 
     // show layout "visible" and "invisible" when accepting location.
@@ -465,6 +482,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                         params.put("ageMax", "100"); //maxAge.getText().toString().trim());
                         params.put("startDate", dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim()));
                         params.put("endDate", dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim()));
+                        params.put("category", eventTypesSpinner.getSelectedItem().toString());
                         params.put("isAndroid", "true");
                         params.put("db_id", dbid);
                         return params;

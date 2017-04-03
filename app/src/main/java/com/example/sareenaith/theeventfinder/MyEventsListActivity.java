@@ -76,9 +76,10 @@ public class MyEventsListActivity extends AppCompatActivity {
                                 Timestamp endDate = Timestamp.valueOf(endDateString);
                                 float lat = (float)event.getDouble("lat");
                                 float lgt = (float)event.getDouble("lgt");
+                                String category = event.getString("category");
 
                                 Event eventObj = new Event(eventID, name, description, ageMin, ageMax, genderRestriction,
-                                        lat, lgt, creatorID, startDate, endDate );
+                                        lat, lgt, creatorID, startDate, endDate, category );
                                 events.add(eventObj);
 
                             } catch (JSONException e) {

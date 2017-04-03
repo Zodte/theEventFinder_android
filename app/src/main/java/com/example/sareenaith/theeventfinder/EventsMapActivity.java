@@ -9,14 +9,11 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -45,7 +42,6 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -95,6 +91,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     int spotsAvailable = 1;
     Boolean genderRestricted = false;
     String tag;
+    LatLng reykjavikPos = new LatLng(64.14139101702763, -21.955103874206543);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +206,11 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+        // Zoom the map to Reykjavík
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(9));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(reykjavikPos));
+
         // Handle marker click
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -287,9 +289,10 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
                                 Timestamp endDate = Timestamp.valueOf(endDateString);
                                 float lat = (float)event.getDouble("lat");
                                 float lgt = (float)event.getDouble("lgt");
+                                String category = event.getString("category");
 
                                 Event eventObj = new Event(eventID, name, description, ageMin, ageMax, genderRestriction,
-                                        lat, lgt, creatorID, startDate, endDate );
+                                        lat, lgt, creatorID, startDate, endDate, category );
                                 events.add(eventObj);
                                 Log.d("myApp",""+eventObj.getStartDate());
                             } catch (JSONException e) {
@@ -319,9 +322,25 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     // add all events when map is ready
     public void addEvents(){
+        // Default to football so it will render a football marker if it fails to fetch the category.
+        int iconId = R.mipmap.football;
         for(int i = 0; i<events.size(); i++){
+            switch(events.get(i).getCategory()){
+                case "Sports":
+                    iconId = R.mipmap.football;
+                    break;
+                case "Outdoors":
+                    iconId = R.mipmap.outdoors;
+                    break;
+                case "Party":
+                    iconId = R.mipmap.beerbottle;
+                    break;
+            }
             LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
-            mMap.addMarker(new MarkerOptions().position(pos).title(i+""));
+            mMap.addMarker(new MarkerOptions()
+                    .position(pos)
+                    .title(i+"")
+                    .icon(BitmapDescriptorFactory.fromResource(iconId)));
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(pos));
         }
     }
@@ -419,8 +438,8 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         //move map camera
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-       //mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //stop location updates
         if (mGoogleApiClient != null) {

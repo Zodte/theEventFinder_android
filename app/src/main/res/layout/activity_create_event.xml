@@ -266,6 +266,29 @@
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/createEvent_fifthContainer"
+            android:layout_below="@+id/createEvent_fourthContainer">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Type"/>
+
+            <Spinner
+                android:id="@+id/createEvent_eventTypes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                />
+
+        </RelativeLayout>
+
+
         <ImageButton
             android:layout_width="53dp"
             android:layout_height="53dp"
@@ -286,7 +309,7 @@
             android:id="@+id/createEvent_chooseSexId_txt"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/createEvent_fourthContainer"/>
+            android:layout_below="@+id/createEvent_fifthContainer"/>
 
         <EditText
             android:id="@+id/createEvent_hiddenPosText"
@@ -316,6 +339,5 @@
             android:onClick="setLocation"
             android:layout_below="@+id/createEvent_chooseSexId_txt" />
     </RelativeLayout>
-
 
 </RelativeLayout>
