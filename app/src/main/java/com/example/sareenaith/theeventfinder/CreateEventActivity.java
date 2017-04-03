@@ -7,8 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.DatePickerDialog;
@@ -117,7 +120,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eventTypesSpinner.setAdapter(adapter);
 
-        // validating the 2 fields above. The regex as the 3rd param is the string pattern that is accepted.
+        // Validation. The regex as the 3rd param is the string pattern that is accepted.
         mAwesomeValidation.addValidation(this, R.id.createEvent_nameId_input, RegexTemplate.NOT_EMPTY, R.string.noEmptyFields);
         mAwesomeValidation.addValidation(this, R.id.createEvent_descriptionId_input, RegexTemplate.NOT_EMPTY, R.string.noEmptyFields);
         // adding a hidden textfield so we can validate the lat and lng coordinates.
@@ -152,6 +155,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         showDate(yearTo, monthTo+1, dayTo, idDateTo);
 
         timeViewTo = (TextView) findViewById(R.id.createEvent_endTimeId_input);
+
         Calendar calendarTimeTo = Calendar.getInstance();
 
         hourTo = calendarTimeTo.get(Calendar.HOUR_OF_DAY);
@@ -267,28 +271,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
 
         Toast.makeText(getApplicationContext(), "lat:"+lat+ " " +"long:"+lgt,Toast.LENGTH_SHORT).show();
     }
-    /*
-    // check the age
-    public void checkAge() {
-        String minText = minAge.getText().toString().trim();
-        String maxText = maxAge.getText().toString().trim();
-        if(minText.equals("")) {
-            minAge.setText(R.string.age);
-        } else if(maxText.equals("")) {
-            maxAge.setText(R.string.age);
-        }
-        try {
-            int minVal = parseInt(minAge.getText().toString().trim());
-            int maxVal = parseInt(maxAge.getText().toString().trim());
-            if(minVal > maxVal) {
-                Toast.makeText(getApplicationContext(), "The min age cannot be higher than max age",
-                        Toast.LENGTH_SHORT).show();
-            }
-        } catch(NumberFormatException error) {
-            Toast.makeText(getApplicationContext(),"Please enter the required age",Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
+
     // show layout "visible" and "invisible" when choosing location.
     public void setLocation(View view) {
         mAwesomeValidation.clear();
@@ -449,12 +432,38 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         }
     }
 
+    public boolean dateValidation() {
+        try
+        {
+            String startDate = dateViewFrom.getText().toString().trim().concat(" ").concat(timeViewFrom.getText().toString().trim());
+            String endDate = dateViewTo.getText().toString().trim().concat(" ").concat(timeViewTo.getText().toString().trim());
+
+            String myFormatString = "yyyy-M-d HH:mm";
+            SimpleDateFormat df = new SimpleDateFormat(myFormatString, Locale.US);
+            Date endDateTime = df.parse(endDate);
+            Date startDateTime = df.parse(startDate);
+
+            if (endDateTime.after(startDateTime))
+                // All is well
+                return true;
+            else {
+                // We don't allow enddate before start date
+                timeViewTo.setError("");
+                Toast.makeText(this, "Event cannot end before it starts :)", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+
     // this is the "onClick" method of the (+) button on the create event page
     public void sendEvent(View view) throws JSONException {
-        System.out.println("validate location er: "+validateLocation.getText().toString());
-
-        if (mAwesomeValidation.validate()) {
-            Toast.makeText(this, "Validation Successful", Toast.LENGTH_LONG).show();
+        // validation returns true we process the data
+        if (mAwesomeValidation.validate() && dateValidation()) {
             //checkAge();
             final String dbid = sharedpreferences.getString("db_id", null);
             System.out.println("inní sendEvent og dbid er: "+dbid);
