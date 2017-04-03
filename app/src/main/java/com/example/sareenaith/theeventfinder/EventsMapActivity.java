@@ -335,6 +335,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
                 case "Party":
                     iconId = R.mipmap.beerbottle;
                     break;
+                case "Music":
+                    iconId = R.mipmap.guitar;
+                    break;
             }
             LatLng pos = new LatLng(events.get(i).getLat(), events.get(i).getLgt());
             mMap.addMarker(new MarkerOptions()

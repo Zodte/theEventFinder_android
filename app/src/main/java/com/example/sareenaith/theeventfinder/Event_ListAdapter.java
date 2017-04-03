@@ -79,6 +79,9 @@ class Event_ListAdapter extends BaseAdapter{
             case "Party":
                 thumbnailImageView.setImageResource(R.mipmap.beerbottle);
                 break;
+            case "Music":
+                thumbnailImageView.setImageResource(R.mipmap.guitar);
+                break;
         }
         // If we want to add a thumbnail with an event photo or something, we could use this:
         //Picasso.with(mContext).load(event.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);

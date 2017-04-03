@@ -88,9 +88,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 JSONArray attendees = event.getJSONArray("attendees");
                                 Boolean isAttending = event.getBoolean("isAttending");
 
-                                if(Integer.parseInt(dbid) == event.getInt("creator_id")) {
-                                    attendBtn.setEnabled(false);
-                                }
+
 
                                 eventNameTw.setText("Event name: " + eventName);
                                 eventDescrTw.setText("Description: " + eventDescr);
@@ -115,6 +113,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 */
                                 if(isAttending) {
                                     attendBtn.setText("Unattend Event");
+                                }
+                                if(Integer.parseInt(dbid) == event.getInt("creator_id")) {
+                                    attendBtn.setText("You created this event!");
+                                    attendBtn.setEnabled(false);
                                 }
                             } catch (JSONException e) {
                                 Log.d("myApp", "buhuu");

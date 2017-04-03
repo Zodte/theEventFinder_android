@@ -1,9 +1,4 @@
 <resources>
-    <string-array name="eventTypes_array">
-        <item>Sports</item>
-        <item>Outdoors</item>
-        <item>Party</item>
-    </string-array>
     <string name="app_name">Eventure</string>
     <string name="app_name_create_event">Create Event</string>
     <string name="app_name_my_profile">My Profile</string>
@@ -57,10 +52,9 @@
     <!-- string variables for searchActivity -->
     <string name="event_tags_prompt">Choose Tags</string>
     <string-array name="event_tags">
-        <item>Choose</item>
-        <item>Outdoor</item>
+        <item>Outdoors</item>
         <item>Music</item>
-        <item>Sport</item>
+        <item>Sports</item>
         <item>Party</item>
     </string-array>
 </resources>
