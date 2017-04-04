@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     private int toDay_int = 3;
     private int toHour_int = 0;
     //private int available_int = 1;
-    private String tag_string = "*";
+    private String tag_string = "any";
     private Boolean genderRestrict;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         //From date setup
         fromDateView = (TextView) findViewById(R.id.fromDateView);
         fromCalendar = Calendar.getInstance();
+        //fromDatePicker.setMinDate(fromCalendar.getTimeInMillis()-(24*60*60*1000));
         fromYear = fromCalendar.get(Calendar.YEAR);
         fromMonth = fromCalendar.get(Calendar.MONTH);
         fromDay = fromCalendar.get(Calendar.DAY_OF_MONTH);
@@ -69,9 +70,9 @@ public class SearchActivity extends AppCompatActivity {
         toDateView = (TextView) findViewById(R.id.toDateView);
         toCalendar = Calendar.getInstance();
         toYear = toCalendar.get(Calendar.YEAR);
-        toMonth = toCalendar.get(Calendar.MONTH);
+        toMonth = toCalendar.get(Calendar.MONTH );
         toDay = toCalendar.get(Calendar.DAY_OF_MONTH);
-        showDate(toYear, toMonth+1, toDay, toDateID);
+        showDate(toYear, toMonth+1, toDay+3, toDateID);
 
         tags = (Spinner) findViewById(R.id.tags_spinner);
         tags.setOnItemSelectedListener(new CustomOnItemSelectedListener());
@@ -195,7 +196,7 @@ public class SearchActivity extends AppCompatActivity {
         if(!tag.equals("choose")){
             tag_string = tag;
         }else{
-            tag_string = "*";
+            tag_string = "any";
         }
     }
 
@@ -215,7 +216,7 @@ public class SearchActivity extends AppCompatActivity {
     public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
         public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-            addTag(parent.getItemAtPosition(pos).toString().toLowerCase());
+            addTag(parent.getItemAtPosition(pos).toString());
         }
 
         @Override

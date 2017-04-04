@@ -204,7 +204,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         now.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH)+3, now.get(Calendar.DAY_OF_MONTH));
         to_searchDate = dateFormat.format(now.getTime());
         genderRestricted = false;
-        tag = "*";
+        tag = "any";
     }
 
     /**
