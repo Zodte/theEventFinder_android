@@ -50,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     private int toDay_int = 3;
     private int toHour_int = 0;
     //private int available_int = 1;
-    private String tag_string = "any";
+    private String tag_string = "Any";
     private Boolean genderRestrict;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +62,17 @@ public class SearchActivity extends AppCompatActivity {
         fromCalendar = Calendar.getInstance();
         //fromDatePicker.setMinDate(fromCalendar.getTimeInMillis()-(24*60*60*1000));
         fromYear = fromCalendar.get(Calendar.YEAR);
-        fromMonth = fromCalendar.get(Calendar.MONTH);
+        fromMonth = fromCalendar.get(Calendar.MONTH) +1;
         fromDay = fromCalendar.get(Calendar.DAY_OF_MONTH);
-        showDate(fromYear, fromMonth+1, fromDay, fromDateID);
+        showDate(fromYear, fromMonth, fromDay, fromDateID);
 
         //To date setup
         toDateView = (TextView) findViewById(R.id.toDateView);
         toCalendar = Calendar.getInstance();
         toYear = toCalendar.get(Calendar.YEAR);
-        toMonth = toCalendar.get(Calendar.MONTH );
-        toDay = toCalendar.get(Calendar.DAY_OF_MONTH);
-        showDate(toYear, toMonth+1, toDay+3, toDateID);
+        toMonth = toCalendar.get(Calendar.MONTH ) +1;
+        toDay = toCalendar.get(Calendar.DAY_OF_MONTH) + 3;
+        showDate(toYear, toMonth, toDay, toDateID);
 
         tags = (Spinner) findViewById(R.id.tags_spinner);
         tags.setOnItemSelectedListener(new CustomOnItemSelectedListener());
@@ -193,11 +193,7 @@ public class SearchActivity extends AppCompatActivity {
 
     //Adds new tag to array of all tags
     public void addTag(String tag){
-        if(!tag.equals("choose")){
-            tag_string = tag;
-        }else{
-            tag_string = "any";
-        }
+        tag_string = tag;
     }
 
 

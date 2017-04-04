@@ -116,7 +116,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         // The items in the spinner are populated with the eventTypes array in strings.xml
         eventTypesSpinner = (Spinner) findViewById(R.id.createEvent_eventTypes);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.event_tags, android.R.layout.simple_spinner_item);
+                R.array.createEvent_tags, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eventTypesSpinner.setAdapter(adapter);
 

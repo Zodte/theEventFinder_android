@@ -51,10 +51,19 @@
 
     <!-- string variables for searchActivity -->
     <string name="event_tags_prompt">Choose Tags</string>
-    <string-array name="event_tags">
+    <string-array name="searchEvent_tags">
+        <item>Any</item>
         <item>Outdoors</item>
         <item>Music</item>
         <item>Sports</item>
         <item>Party</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="createEvent_tags">
+        <item>Outdoors</item>
+        <item>Music</item>
+        <item>Sports</item>
+        <item>Party</item>
+        <item>Other</item>
     </string-array>
 </resources>

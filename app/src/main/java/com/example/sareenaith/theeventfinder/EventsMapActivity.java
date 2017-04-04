@@ -201,10 +201,10 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar now = Calendar.getInstance();
         from_searchDate = dateFormat.format(now.getTime());
-        now.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH)+3, now.get(Calendar.DAY_OF_MONTH));
+        now.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)+3);
         to_searchDate = dateFormat.format(now.getTime());
         genderRestricted = false;
-        tag = "any";
+        tag = "Any";
     }
 
     /**
