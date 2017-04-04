@@ -83,7 +83,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     GoogleApiClient mGoogleApiClient;
     Marker mCurrLocationMarker;
     private Button eventDetailsBtn;
-    private ImageButton eventDetailsCloseBtn;
+    private ImageButton eventDetailsCloseBtn, eventCreateBtn;
     private TextView eventDetailsNameTw, eventDetailsDescrTw, eventDetailsStartTime;
     RelativeLayout eventInfo;
     ImageButton imgBtn;
@@ -118,6 +118,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         eventDetailsNameTw = (TextView) findViewById(R.id.eventMap_details_name);
         eventDetailsDescrTw = (TextView) findViewById(R.id.eventMap_details_descr);
         eventDetailsStartTime = (TextView) findViewById((R.id.eventMap_details_starts));
+        eventCreateBtn = (ImageButton) findViewById(R.id.eventMap_create_event_icon);
+
+        eventCreateBtn.setVisibility(View.VISIBLE);
 
         eventInfo = (RelativeLayout) findViewById(R.id.eventInfo);
         eventInfo.setVisibility(View.GONE);
@@ -189,6 +192,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapClick(LatLng point) {
         eventInfo.setVisibility(View.INVISIBLE);
+        eventCreateBtn.setVisibility(View.VISIBLE);
     }
 
     public void changeToCreateEventActivity(View view) {
@@ -231,11 +235,12 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
             public boolean onMarkerClick(final Marker marker) {
                 // Show the overlay when a marker is clicked.
                 eventInfo.setVisibility(View.VISIBLE);
+                eventCreateBtn.setVisibility(View.GONE);
                 // The index is stored in the title of the marker,  this title is not shown to the user.
                 final int clickedEventIndex = Integer.parseInt(marker.getTitle());
                 eventDetailsNameTw.setText(events.get(clickedEventIndex).getName());
                 eventDetailsDescrTw.setText(events.get(clickedEventIndex).getDescription());
-                eventDetailsStartTime.setText("Starts: "+ events.get(clickedEventIndex).getStartDate().toString().substring(0, 16));
+                eventDetailsStartTime.setText(events.get(clickedEventIndex).getStartDate().toString().substring(0, 16) + " • ");
                 eventDetailsCloseBtn = (ImageButton) findViewById(R.id.eventMap_details_close_btn);
 
                 // get the element which will hold the icon for the event...
@@ -277,6 +282,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
                 eventDetailsCloseBtn.setOnClickListener(new View.OnClickListener() {
                     public  void onClick(View v) {
                         eventInfo.setVisibility(View.INVISIBLE);
+                        eventCreateBtn.setVisibility(View.VISIBLE);
                     }
                 });
                 return true;

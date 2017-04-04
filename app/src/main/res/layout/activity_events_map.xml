@@ -28,8 +28,8 @@
             android:scaleType="centerInside"
             android:contentDescription="search icon"
             android:src="@drawable/search_icon_48x48"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
 
         <ImageButton
             android:id="@+id/eventMap_settings_icon"
@@ -40,8 +40,8 @@
             android:background="@drawable/button_state"
             android:adjustViewBounds="true"
             android:src="@drawable/settings_icon"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
 <!--
         <ImageButton
             android:layout_width="40dp"
@@ -60,6 +60,9 @@
             android:id="@+id/eventMap_create_event_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/button_state"
             android:src="@drawable/create_event_icon"
             android:onClick="changeToCreateEventActivity"
@@ -71,26 +74,16 @@
     <RelativeLayout
         android:id="@+id/eventInfo"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginBottom="46dp"
-        android:weightSum="1"
-        android:background="@color/colorWhite"
+        android:layout_height="150dp"
+        android:background="@drawable/border_shadow"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <ImageView
-            android:id="@+id/eventMap_details_category_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_above="@+id/eventMap_details_starts"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:scaleType="centerInside"/>
-
         <Button
+            android:background="@drawable/default_button"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
             android:id="@+id/eventMap_details_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,42 +91,78 @@
             android:layout_centerHorizontal="true"
             android:text="Show event details"/>
 
-        <TextView
-            android:id="@+id/eventMap_details_descr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:layout_below="@+id/eventMap_details_close_btn"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:id="@+id/eventMap_details_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"
-            android:text="Name"/>
+        <ImageView
+            android:id="@+id/eventMap_details_category_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="centerInside"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+<!--
+        <Button
+            android:id="@+id/eventMap_details_hide_btn"
+            android:layout_width="65dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:text="Hide this"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>-->
 
         <TextView
             android:id="@+id/eventMap_details_starts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Starts"/>
+            android:text="Start"
+            android:textSize="15sp"
+            android:textColor="@color/colorGrey"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/eventMap_details_name"
+            android:layout_alignLeft="@+id/eventMap_details_name"
+            android:layout_alignStart="@+id/eventMap_details_name" />
+
+        <TextView
+            android:id="@+id/eventMap_details_descr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorGrey"
+            android:layout_below="@+id/eventMap_details_name"
+            android:layout_toRightOf="@+id/eventMap_details_starts"
+            android:layout_toEndOf="@+id/eventMap_details_starts"/>
 
         <ImageButton
             android:id="@+id/eventMap_details_close_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:background="@drawable/button_state"
             app:srcCompat="@mipmap/close_icon_32x32"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"/>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/eventMap_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/eventMap_details_category_icon"
+            android:layout_toEndOf="@+id/eventMap_details_category_icon"/>
 
+    </RelativeLayout>
 
 </RelativeLayout>
