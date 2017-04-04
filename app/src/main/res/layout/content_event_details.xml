@@ -21,66 +21,72 @@
             android:id="@+id/eventDetails_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/eventDetails_name"
-            android:layout_alignStart="@+id/eventDetails_name"
+            android:textSize="16sp"
+            android:layout_marginTop="30dp"
+            android:text=""
             android:layout_below="@+id/eventDetails_name"
-            android:layout_marginTop="37dp"
-            android:text="" />
+            android:layout_alignLeft="@+id/eventDetails_name"
+            android:layout_alignStart="@+id/eventDetails_name" />
 
         <TextView
             android:id="@+id/eventDetails_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:layout_alignLeft="@+id/eventDetails_description"
             android:layout_alignStart="@+id/eventDetails_description"
             android:layout_below="@+id/eventDetails_description"
-            android:layout_marginTop="43dp"
+            android:layout_marginTop="30dp"
             android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_genderRestrict"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/eventDetails_time"
-            android:layout_alignRight="@+id/eventDetails_time"
+            android:textSize="16sp"
+            android:layout_alignLeft="@+id/eventDetails_time"
+            android:layout_alignStart="@+id/eventDetails_time"
             android:layout_below="@+id/eventDetails_time"
-            android:layout_marginTop="51dp"
+            android:layout_marginTop="30dp"
             android:text="" />
 
         <TextView
             android:id="@+id/eventDetails_attendees"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:layout_alignLeft="@+id/eventDetails_genderRestrict"
             android:layout_alignStart="@+id/eventDetails_genderRestrict"
             android:layout_below="@+id/eventDetails_genderRestrict"
-            android:layout_marginTop="59dp"
+            android:layout_marginTop="30dp"
             android:text="" />
 
         <Button
             android:id="@+id/eventDetails_attendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/color_Light_Blue"
+            android:background="@drawable/default_button"
+            android:textColor="@color/colorWhite"
             android:layout_marginEnd="120dp"
             android:layout_marginRight="120dp"
             android:text="Attend Event"
-            android:padding="10dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

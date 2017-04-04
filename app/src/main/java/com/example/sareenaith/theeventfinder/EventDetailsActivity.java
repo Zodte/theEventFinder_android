@@ -92,7 +92,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                                 eventNameTw.setText("Event name: " + eventName);
                                 eventDescrTw.setText("Description: " + eventDescr);
-                                eventTimeTw.setText("This event is starts " + startDate + " and ends " + endDate);
+                                eventTimeTw.setText("This event happens on " + startDate + " and ends " + endDate);
                                 //eventAgesTw.setText("This event is for ages " + ageMin + " to " + ageMax);
                                 if(genRestrict) {
                                     eventGenRestrictTw.setText("This is a gender restricted event");
@@ -104,7 +104,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 // length of the attendee array.  This is a dirty fix that will get changed later,
                                 // because there is no need to fetch all the individual attendees any more.
                                 numAttendees = attendees.length();
-                                eventAttendeesTw.setText("Number of attendees: "+attendees.length());
+                                eventAttendeesTw.setText(attendees.length() + " joined this event");
                                 /*
                                 for(int i = 0; i < attendees.length(); i++) {
                                     JSONObject attendee = attendees.getJSONObject(i);
