@@ -3,38 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/myprofile_buttons"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.31">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <Button
             android:id="@+id/myprofile_hosted_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:elevation="0dp"
-            android:text="My Hosted Events"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.31">
+            android:background="@drawable/default_button"
+            android:text="My Hosted Events"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/myprofile_attended_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/myprofile_hosted_button"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="39dp"
-            android:text="My Attended Events"/>
+            android:background="@drawable/default_button"
+            android:text="My Attended Events"
+            android:textColor="@color/colorWhite" />
     </RelativeLayout>
 
 </LinearLayout>

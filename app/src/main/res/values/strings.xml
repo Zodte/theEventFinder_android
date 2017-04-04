@@ -15,11 +15,11 @@
     <string name="createEvent_name_placeholder">Event Name</string>
     <string name="createEvent_description_placeholder">Description</string>
     <string name="createEvent_startDate_text">From: </string>
-    <string name="createEvent_startDate_textView_placeholder">Set Date</string>
-    <string name="createEvent_startTime_textView_placeholder">Set Time</string>
+    <string name="createEvent_startDate_textView_placeholder">Start Date</string>
+    <string name="createEvent_startTime_textView_placeholder">Start Time</string>
     <string name="createEvent_endDate_text">To: </string>
-    <string name="createEvent_endDate_textView_placeholder">Set Date</string>
-    <string name="createEvent_endTime_textView_placeholder">Set Time</string>
+    <string name="createEvent_endDate_textView_placeholder">Start Date</string>
+    <string name="createEvent_endTime_textView_placeholder">Start Time</string>
     <string name="createEvent_minAge_placeholder">min age</string>
     <string name="createEvent_maxAge_placeholder">max age</string>
     <string name="age">18</string>

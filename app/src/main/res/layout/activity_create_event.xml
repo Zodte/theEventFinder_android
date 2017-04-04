@@ -21,6 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ok"
+            android:background="@drawable/default_button"
+            android:textColor="@color/colorWhite"
             android:onClick="onClickAccept"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
@@ -52,6 +54,7 @@
                 android:src="@mipmap/event_icon"
                 android:id="@+id/imageView_event_icon"
                 android:layout_centerVertical="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:contentDescription="create event image"/>
@@ -94,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/description_icon"
+                android:src="@mipmap/pen_icon"
                 android:id="@+id/imageView_description_icon"
                 android:contentDescription="icon for description"/>
 
@@ -137,54 +140,31 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/from_icon"
+                android:src="@mipmap/clock_icon"
                 android:id="@+id/imageView_from_icon"
-                android:layout_above="@+id/createEvent_startDateId_input"
+                android:layout_marginTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="3dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
-
-            <TextView
-                android:text="@string/createEvent_startDate_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/createEvent_startDateId_text"
-                android:ems="10"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/hourglass_from"
-                android:id="@+id/imageView_hourglass_from_icon"
-                android:layout_below="@+id/imageView_from_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+                android:layout_alignParentStart="true" />
 
             <TextView
                 android:id="@+id/createEvent_startDateId_input"
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/createEvent_startDate_textView_placeholder"
                 android:onClick="setDateFrom"
                 android:padding="10dp"
-                android:layout_toEndOf="@+id/imageView_hourglass_from_icon"
-                android:layout_toRightOf="@+id/imageView_hourglass_from_icon"
-                android:layout_below="@+id/createEvent_startDateId_text"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@+id/imageView_from_icon"
+                android:layout_toRightOf="@+id/imageView_from_icon"
                 android:layout_toStartOf="@+id/createEvent_startTimeId_input"
                 android:layout_toLeftOf="@+id/createEvent_startTimeId_input"/>
 
             <TextView
                 android:id="@+id/createEvent_startTimeId_input"
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/createEvent_startTime_textView_placeholder"
@@ -193,73 +173,27 @@
                 android:layout_alignBottom="@+id/createEvent_startDateId_input"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:id="@+id/createEvent_fourthContainer"
-            android:layout_below="@+id/createEvent_thirdContainer">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/to_icon"
-                android:id="@+id/imageView_to_icon"
-                android:layout_above="@+id/createEvent_endDateId_input"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
 
             <TextView
-                android:text="@string/createEvent_endDate_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/createEvent_endDateId_text"
-                android:ems="10"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:layout_toEndOf="@+id/imageView_to_icon"
-                android:layout_toRightOf="@+id/imageView_to_icon"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/hourglass_to"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/imageView_hourglass_to_icon"
-                android:layout_below="@+id/createEvent_endDateId_text"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/createEvent_endDate_textView_placeholder"
                 android:onClick="setDateTo"
                 android:padding="10dp"
-                android:layout_below="@+id/createEvent_endDateId_text"
+                android:layout_below="@+id/createEvent_startDateId_input"
                 android:id="@+id/createEvent_endDateId_input"
-                android:layout_toEndOf="@+id/imageView_hourglass_to_icon"
-                android:layout_toRightOf="@+id/imageView_hourglass_to_icon"
+                android:layout_toEndOf="@+id/imageView_from_icon"
+                android:layout_toRightOf="@+id/imageView_from_icon"
                 android:layout_toStartOf="@+id/createEvent_endTimeId_input"
                 android:layout_toLeftOf="@+id/createEvent_endTimeId_input"/>
 
             <TextView
                 android:id="@+id/createEvent_endTimeId_input"
-                style="@android:style/Widget.Holo.Light.Spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/createEvent_endTime_textView_placeholder"
                 android:onClick="setTimeTo"
                 android:padding="10dp"
-                android:layout_alignBaseline="@+id/createEvent_endDateId_input"
                 android:layout_alignBottom="@+id/createEvent_endDateId_input"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
@@ -269,7 +203,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/createEvent_fourthContainer"
+            android:layout_below="@+id/createEvent_thirdContainer">
+
+
+
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -279,18 +227,36 @@
             android:id="@+id/createEvent_fifthContainer"
             android:layout_below="@+id/createEvent_fourthContainer">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/event_type_icon"
+                android:id="@+id/imageView_event_type_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="18dp"
+                android:layout_marginEnd="18dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Event Type"/>
+                android:text="Event Type"
+                android:id="@+id/textView_eventType_label"
+                android:layout_toRightOf="@+id/imageView_event_type_icon"
+                android:layout_toEndOf="@+id/imageView_event_type_icon"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="17dp"
+                android:layout_marginEnd="17dp"/>
 
             <Spinner
                 android:id="@+id/createEvent_eventTypes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:padding="10dp"
-                />
+                android:hint="Event Type"
+                android:layout_centerInParent="true"
+                android:layout_toEndOf="@+id/textView_eventType_label"
+                android:layout_toRightOf="@+id/textView_eventType_label"/>
 
         </RelativeLayout>
 
@@ -298,10 +264,9 @@
         <ImageButton
             android:layout_width="53dp"
             android:layout_height="53dp"
-            android:src="@mipmap/add_icon"
+            android:background="@mipmap/add_icon"
             android:onClick="sendEvent"
             android:id="@+id/createEvent_submitId_btn"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="11dp" />
@@ -317,16 +282,6 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/createEvent_fifthContainer"/>
 
-        <EditText
-            android:id="@+id/createEvent_hiddenPosText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/chooseLocation_button"
-            android:layout_alignBottom="@+id/chooseLocation_button"
-            android:layout_alignEnd="@+id/createEvent_submitId_btn"
-            android:layout_alignRight="@+id/createEvent_submitId_btn"
-            android:background="@android:color/transparent"/>
-
         <CheckBox
             android:layout_width="wrap_content"
             android:onClick="setGenderRestriction"
@@ -337,13 +292,55 @@
             android:layout_toRightOf="@+id/createEvent_chooseSexId_txt"
             android:layout_toEndOf="@+id/createEvent_chooseSexId_txt" />
 
-        <Button
-            android:text="Choose Location"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/chooseLocation_button"
-            android:onClick="setLocation"
-            android:layout_below="@+id/createEvent_chooseSexId_txt" />
+            android:padding="5dp"
+            android:layout_below="@+id/createEvent_fifthContainer">
+
+            <ImageView
+                android:id="@+id/imageView_location_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/location_icon"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp"
+                android:id="@+id/textView_location_label"
+                android:layout_toEndOf="@+id/imageView_location_icon"
+                android:layout_toRightOf="@+id/imageView_location_icon"
+                android:layout_centerInParent="true"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chooseLocation_button"
+                android:onClick="setLocation"
+                android:layout_toEndOf="@+id/textView_location_label"
+                android:background="@mipmap/map_icon"
+                android:layout_toRightOf="@+id/textView_location_label" />
+
+            <EditText
+                android:id="@+id/createEvent_hiddenPosText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/chooseLocation_button"
+                android:layout_toEndOf="@+id/chooseLocation_button"
+                android:layout_alignEnd="@+id/chooseLocation_button"
+                android:layout_alignRight="@+id/chooseLocation_button"
+                android:background="@android:color/transparent"/>
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>
