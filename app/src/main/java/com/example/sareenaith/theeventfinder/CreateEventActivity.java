@@ -514,6 +514,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setAllGesturesEnabled(false);
         setMapClick();
     }
 }

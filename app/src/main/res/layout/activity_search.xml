@@ -1,77 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        style="@style/mediumTitle"
-        android:id="@+id/searchRange_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Seach Range"/>
-
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fromPickers">
+        android:id="@+id/container_one"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/mediumTitle"
+            android:id="@+id/searchRange_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Seach Dates" />
+
+        <ImageView
+            android:id="@+id/imageView_chooseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:background="@mipmap/clock_icon"
+            android:layout_below="@+id/searchRange_title"/>
+
+        <TextView
+            android:id="@+id/searchEvent_From_label"
+            android:text="From Date"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imageView_chooseDate"
+            android:layout_toEndOf="@+id/imageView_chooseDate"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/searchRange_title"/>
+
+        <TextView
+            android:id="@+id/searchEvent_To_label"
+            android:text="End Date"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/searchEvent_From_label"
+            android:layout_toEndOf="@+id/searchEvent_From_label"
+            android:layout_below="@+id/searchRange_title"/>
+
         <TextView
             android:id="@+id/fromDateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/createEvent_startDate_textView_placeholder"
             android:onClick="setFromDate"
-            android:padding="10dp"/>
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:layout_below="@+id/searchEvent_From_label"
+            android:layout_toRightOf="@+id/imageView_chooseDate"
+            android:layout_toEndOf="@+id/imageView_chooseDate"/>
 
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/toDateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/createEvent_startDate_textView_placeholder"
             android:onClick="setToDate"
-            android:padding="10dp"/>
-
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:layout_below="@+id/searchEvent_To_label"
+            android:layout_toRightOf="@+id/fromDateView"
+            android:layout_toEndOf="@+id/fromDateView"/>
     </RelativeLayout>
 
-    <TextView
-        style="@style/mediumTitle"
-        android:id="@+id/tags_title"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/container_two"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Tags"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_below="@+id/container_one">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView_eventType"
+            android:layout_below="@+id/tags_title"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:background="@mipmap/event_type_icon"/>
+
+        <TextView
+            style="@style/mediumTitle"
+            android:id="@+id/tags_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Type of Event" />
+
         <Spinner
+            android:layout_toRightOf="@+id/imageView_eventType"
+            android:layout_toEndOf="@+id/imageView_eventType"
+            android:layout_margin="5dp"
+            android:padding="7dp"
             android:id="@+id/tags_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tags_title"
             android:entries="@array/searchEvent_tags"
             android:prompt="@string/event_tags_prompt"></Spinner>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tags_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/clear_btn"
-            android:onClick="clearTag"
-            android:text="Clear"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tags_text"/>
     </RelativeLayout>
 
     <!--<RelativeLayout-->
@@ -96,17 +133,27 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_below="@+id/container_two">
+
         <TextView
+            style="@style/mediumTitle"
             android:id="@+id/genderRestrict_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
             android:text="Gender Restricted"/>
+
         <CheckBox
+            android:layout_centerVertical="true"
             android:id="@+id/genderRestrict_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/genderRestrict_title"/>
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/genderRestrict_title"
+            android:layout_toEndOf="@+id/genderRestrict_title"/>
     </RelativeLayout>
 
     <Button
@@ -115,5 +162,7 @@
         android:id="@+id/acceptBtn"
         android:onClick="acceptIt"
         android:text="search"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
