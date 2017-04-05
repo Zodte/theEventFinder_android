@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -93,14 +94,38 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Boolean isActive = event.getBoolean("isactive");
 
 
-                                eventNameTw.setText("Event name: " + eventName);
-                                eventDescrTw.setText("Description: " + eventDescr);
-                                eventTimeTw.setText("This event happens on " + startDate + " and ends " + endDate);
+
+                                Calendar calStart = Calendar.getInstance();
+                                Calendar calEnd = Calendar.getInstance();
+                                SimpleDateFormat inputF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                SimpleDateFormat outputSameDay = new SimpleDateFormat("HH:mm");
+                                SimpleDateFormat outputOtherDay = new SimpleDateFormat("EEE, d MMM HH:mm");
+                                try {
+                                    calStart.setTime(inputF.parse(startDate));
+                                    calEnd.setTime(inputF.parse(endDate));
+                                }catch (ParseException p) {
+
+                                }
+                                String startDate2 = outputOtherDay.format(calStart.getTime());
+                                if(calStart.get(calStart.DAY_OF_MONTH) == calEnd.get(calEnd.DAY_OF_MONTH)
+                                   && calStart.get(calStart.MONTH) == calEnd.get(calEnd.MONTH)){
+                                    endDate = outputSameDay.format(calEnd.getTime());
+                                }else{
+                                    endDate = outputOtherDay.format(calEnd.getTime());
+                                }
+
+
+
+
+
+                                eventNameTw.setText(eventName);
+                                eventDescrTw.setText(eventDescr);
+                                eventTimeTw.setText(startDate2 + " - " + endDate);
                                 //eventAgesTw.setText("This event is for ages " + ageMin + " to " + ageMax);
                                 if(genRestrict) {
                                     eventGenRestrictTw.setText("This is a gender restricted event");
                                 } else {
-                                    eventGenRestrictTw.setText("This is not a gender restricted event");
+                                    eventGenRestrictTw.setVisibility(View.GONE);
                                 }
 
                                 // Currently we fetch all attendees and calculate the number of attendees by the
