@@ -18,12 +18,11 @@
         app:layout_constraintRight_toRightOf="parent">
 
         <TextView
+            style="@style/bigTitle"
             android:id="@+id/eventDetails_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:textAllCaps="true"
-            android:textStyle="bold"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
@@ -77,11 +76,10 @@
             android:text="" />
 
         <Button
+            style="@style/buttonStyle"
             android:id="@+id/eventDetails_attendBtn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/default_button"
-            android:textColor="@color/colorWhite"
             android:layout_marginEnd="120dp"
             android:layout_marginRight="120dp"
             android:text="Attend Event"

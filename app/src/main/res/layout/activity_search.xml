@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
 
     <TextView
+        style="@style/mediumTitle"
         android:id="@+id/searchRange_title"
-        style="@android:style/Widget.Holo.Light.Spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -17,7 +17,6 @@
         android:id="@+id/fromPickers">
         <TextView
             android:id="@+id/fromDateView"
-            style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/createEvent_startDate_textView_placeholder"
@@ -31,7 +30,6 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/toDateView"
-            style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/createEvent_startDate_textView_placeholder"
@@ -41,8 +39,8 @@
     </RelativeLayout>
 
     <TextView
+        style="@style/mediumTitle"
         android:id="@+id/tags_title"
-        style="@android:style/Widget.Holo.Light.Spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -112,9 +110,10 @@
     </RelativeLayout>
 
     <Button
+        style="@style/buttonStyle"
+        android:background="@drawable/default_button"
         android:id="@+id/acceptBtn"
         android:onClick="acceptIt"
         android:text="search"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
