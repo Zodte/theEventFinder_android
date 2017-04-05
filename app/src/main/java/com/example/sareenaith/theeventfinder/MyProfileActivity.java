@@ -39,6 +39,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private String path;
 
+    private TextView title;
+
     Button hostedButton;
     Button attendedButton;
 
@@ -53,6 +55,8 @@ public class MyProfileActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
         sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         path = "getAttendedEvents/";
+        title = (TextView) findViewById(R.id.eventListTitle);
+        title.setText(R.string.myProfile_my_attended_events);
         getEvents();
     }
 
@@ -63,6 +67,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         path = "getHostedEvents/";
+                        title.setText(R.string.myProfile_my_hosted_events);
                         getEvents();
                     }
                 }
@@ -74,6 +79,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         path = "getAttendedEvents/";
+                        title.setText(R.string.myProfile_my_attended_events);
                         getEvents();
                     }
                 }
@@ -149,8 +155,8 @@ public class MyProfileActivity extends AppCompatActivity {
                     }
             );
         } else {
-            TextView noEvents = (TextView) findViewById(R.id.noHostedEvents);
-            noEvents.setText(R.string.myProfile_no_events);
+
+            title.setText(R.string.myProfile_no_events);
         }
     }
 }

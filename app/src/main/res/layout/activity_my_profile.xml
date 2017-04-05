@@ -48,7 +48,7 @@
         android:layout_below="@+id/myprofile_buttons">
 
         <TextView
-            android:id="@+id/noHostedEvents"
+            android:id="@+id/eventListTitle"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_alignParentTop="true"
@@ -59,7 +59,7 @@
             android:id="@+id/myEventList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/eventListTitle"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
     </RelativeLayout>
