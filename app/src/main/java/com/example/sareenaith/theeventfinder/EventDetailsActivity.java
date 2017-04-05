@@ -255,7 +255,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         // Fetch the userId
         final String dbid = sharedpreferences.getString("db_id", null);
         // Tell the server the user is going to attend the event.
-        eventAttendeesTw.setText("Number of attendees: "+ ++numAttendees);
+        eventAttendeesTw.setText(++numAttendees + " joined this event");
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
                 @Override
@@ -295,7 +295,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void unAttendEvent() {
         final String dbid = sharedpreferences.getString("db_id", null);
-        eventAttendeesTw.setText("Number of attendees: "+ --numAttendees);
+        eventAttendeesTw.setText(--numAttendees + " joined this event");
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"unAttendEvent", new Response.Listener<String>() {
                 @Override
