@@ -62,6 +62,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -253,8 +254,23 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
                 // The index is stored in the title of the marker,  this title is not shown to the user.
                 final int clickedEventIndex = Integer.parseInt(marker.getTitle());
                 eventDetailsNameTw.setText(events.get(clickedEventIndex).getName());
-                eventDetailsDescrTw.setText(events.get(clickedEventIndex).getDescription());
-                eventDetailsStartTime.setText(events.get(clickedEventIndex).getStartDate().toString().substring(0, 16) + " • ");
+                eventDetailsDescrTw.setVisibility(View.GONE);
+
+                Calendar calStart = Calendar.getInstance();
+                Calendar calEnd = Calendar.getInstance();
+                SimpleDateFormat outputSameDay = new SimpleDateFormat("HH:mm");
+                SimpleDateFormat outputOtherDay = new SimpleDateFormat("EEE, d MMM HH:mm");
+                calStart.setTime(events.get(clickedEventIndex).getStartDate());
+                calEnd.setTime(events.get(clickedEventIndex).getEndDate());
+                String startDate = outputOtherDay.format(calStart.getTime());
+                String endDate;
+                if(calStart.get(calStart.DAY_OF_MONTH) == calEnd.get(calEnd.DAY_OF_MONTH)
+                        && calStart.get(calStart.MONTH) == calEnd.get(calEnd.MONTH)){
+                    endDate = outputSameDay.format(calEnd.getTime());
+                }else{
+                    endDate = outputOtherDay.format(calEnd.getTime());
+                }
+                eventDetailsStartTime.setText(startDate + " - " + endDate);
                 eventDetailsCloseBtn = (ImageButton) findViewById(R.id.eventMap_details_close_btn);
 
                 // get the element which will hold the icon for the event...
