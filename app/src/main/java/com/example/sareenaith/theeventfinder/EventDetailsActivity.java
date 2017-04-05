@@ -94,7 +94,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Boolean isActive = event.getBoolean("isactive");
 
 
-
+                                /*
                                 Calendar calStart = Calendar.getInstance();
                                 Calendar calEnd = Calendar.getInstance();
                                 SimpleDateFormat inputF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -113,14 +113,14 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 }else{
                                     endDate = outputOtherDay.format(calEnd.getTime());
                                 }
-
+                                */
 
 
 
 
                                 eventNameTw.setText(eventName);
                                 eventDescrTw.setText(eventDescr);
-                                eventTimeTw.setText(startDate2 + " - " + endDate);
+                                eventTimeTw.setText("Event time: " + startDate + " - " + endDate);
                                 //eventAgesTw.setText("This event is for ages " + ageMin + " to " + ageMax);
                                 if(genRestrict) {
                                     eventGenRestrictTw.setText("This is a gender restricted event");
@@ -139,7 +139,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     eventAttendeesTw.append(attendee.getString("name")+"\n");
                                 }
                                 */
-                                Boolean isExpired = isEventExpired( startDate );
+                                Boolean isExpired = isEventExpired( endDate );
 
                                 if(isAttending && isActive) {
                                     attendBtn.setText("Unattend Event");
@@ -154,6 +154,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     attendBtn.setText("Expired Event");
                                     attendBtn.setEnabled(false);
                                 }
+
 
                                 if(!isActive) {
                                     attendBtn.setText("Inactive Event");
@@ -191,11 +192,20 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     }
 
-    private Boolean isEventExpired( String startDate ) {
+    private Boolean isEventOnGoing( String startDate, String endDate ) {
         //Find the current date
         Date today = new Date();
         //Get the event start date
         Date eventStartDate = convertToDateObject( startDate );
+        Date eventEndDate = convertToDateObject( endDate );
+        return ( today.compareTo(eventEndDate) < 0 && today.compareTo(eventStartDate) >= 0);
+    }
+
+    private Boolean isEventExpired( String endDate ) {
+        //Find the current date
+        Date today = new Date();
+        //Get the event end date
+        Date eventStartDate = convertToDateObject( endDate );
 
         return (today.compareTo(eventStartDate) > 0);
     }
