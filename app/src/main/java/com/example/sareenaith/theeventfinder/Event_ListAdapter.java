@@ -1,6 +1,8 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This adapter class allows us to display the basic details of events in the list view under 'My
@@ -63,11 +68,27 @@ class Event_ListAdapter extends BaseAdapter{
         ImageView thumbnailImageView =
                 (ImageView) rowView.findViewById(R.id.event_list_thumbnail);
 
+        // Get active element
+        TextView activeTextView =
+                (TextView) rowView.findViewById(R.id.event_list_active);
+
         Event event = (Event) getItem(position);
 
         titleTextView.setText(event.getName());
         subtitleTextView.setText(event.getDescription());
         detailTextView.setText(event.getStartDate().toString().substring(0, 10));
+        if(!event.isActive()) {
+            activeTextView.setText("Inactive Event");
+            rowView.setBackgroundColor(Color.RED);
+        } else {
+            activeTextView.setText("");
+        }
+
+        //Color the row yellow if the event is expired.
+        if(isEventExpired( event )) {
+            activeTextView.setText("Expired Event");
+            rowView.setBackgroundColor(Color.YELLOW);
+        }
 
         switch(event.getCategory()){
             case "Sports":
@@ -87,5 +108,24 @@ class Event_ListAdapter extends BaseAdapter{
         //Picasso.with(mContext).load(event.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
 
         return rowView;
+    }
+
+    // Returns true if event is already started, else returns false.
+    private Boolean isEventExpired( Event event ) {
+        //Find the current date
+        Date today = new Date();
+        //Get the event start date
+        Date eventStartDate = convertToDateObject( event.getStartDate().toString().substring(0, 16).replace('T', ' ') );
+
+        return (today.compareTo(eventStartDate) > 0 && event.isActive());
+
+    }
+
+    private Date convertToDateObject( String date ) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }

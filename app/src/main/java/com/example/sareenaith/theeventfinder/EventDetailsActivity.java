@@ -26,6 +26,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,12 +85,12 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 String eventDescr = event.getString("description");
                                 //int ageMin = event.getInt("age_min");
                                 //int ageMax = event.getInt("age_max");
-                                String endDate = event.getString("end_date").substring(0,10);
-                                String startDate = event.getString("start_date").substring(0,10);
+                                String endDate = event.getString("end_date").substring(0, 16).replace('T', ' ');
+                                String startDate = event.getString("start_date").substring(0, 16).replace('T', ' ');
                                 Boolean genRestrict = event.getBoolean("gender_restriction");
                                 JSONArray attendees = event.getJSONArray("attendees");
                                 Boolean isAttending = event.getBoolean("isAttending");
-
+                                Boolean isActive = event.getBoolean("isactive");
 
 
                                 eventNameTw.setText("Event name: " + eventName);
@@ -111,15 +114,28 @@ public class EventDetailsActivity extends AppCompatActivity {
                                     eventAttendeesTw.append(attendee.getString("name")+"\n");
                                 }
                                 */
-                                if(isAttending) {
+                                Boolean isExpired = isEventExpired( startDate );
+
+                                if(isAttending && isActive) {
                                     attendBtn.setText("Unattend Event");
                                 }
-                                if(Integer.parseInt(dbid) == event.getInt("creator_id")) {
-                                    attendBtn.setText("You created this event!");
+
+
+
+                                if(Integer.parseInt(dbid) == event.getInt("creator_id") && isActive && !isExpired) {
+                                    attendBtn.setText("Delete Event");
+                                }
+                                if(isExpired && isActive ) {
+                                    attendBtn.setText("Expired Event");
+                                    attendBtn.setEnabled(false);
+                                }
+
+                                if(!isActive) {
+                                    attendBtn.setText("Inactive Event");
                                     attendBtn.setEnabled(false);
                                 }
                             } catch (JSONException e) {
-                                Log.d("myApp", "buhuu");
+                                Log.d("myApp", "buhuu"+e);
                             }
                     }
                 }, new Response.ErrorListener() {
@@ -135,13 +151,78 @@ public class EventDetailsActivity extends AppCompatActivity {
         attendBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Dirty dirty code
+
                 if(attendBtn.getText().subSequence(0,1).equals("A")){
                     attendEvent();
-                } else {
+                }
+                else if(attendBtn.getText().subSequence(0,1).equals("D")) {
+                    deleteEvent();
+                }
+                else if(attendBtn.getText().subSequence(0,1).equals("U")){
                     unAttendEvent();
                 }
             }
         });
+
+    }
+
+    private Boolean isEventExpired( String startDate ) {
+        //Find the current date
+        Date today = new Date();
+        //Get the event start date
+        Date eventStartDate = convertToDateObject( startDate );
+
+        return (today.compareTo(eventStartDate) > 0);
+    }
+
+    private Date convertToDateObject(String date ) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    private void deleteEvent() {
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"deactivateEvent", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    // Add the post parameters to the http request.
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("eventId", eventId);
+                    params.put("isAndroid", "true");
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        // Hide the attending button if it is clicked.
+        //attendBtn.setText("Event Deleted");
+        //attendBtn.setEnabled(false);
+
+        Toast.makeText(getApplicationContext(), "Event deleted!",
+                Toast.LENGTH_SHORT)
+                .show();
+        Intent intent = new Intent(EventDetailsActivity.this, EventsMapActivity.class);
+        startActivity(intent);
+
+        //unAttendBtn.setEnabled(true);
+
 
     }
 

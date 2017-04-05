@@ -1,7 +1,10 @@
 package com.example.sareenaith.theeventfinder;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by SareenAith on 12/2/2017.
@@ -24,6 +27,8 @@ public class Event {
     private Timestamp startDate;
     private Timestamp endDate;
     private String category;
+    private String creatorGender;
+    private Boolean isActive;
 
 
     // Notice the empty constructor, because we need to be able to create an empty Event to add
@@ -33,7 +38,7 @@ public class Event {
     }
 
     public Event(int id, String name, String description, int ageMin, int ageMax, boolean genderRestriction,
-                 float lat, float lgt, int creatorId, Timestamp startDate, Timestamp endDate, String category) {
+                 float lat, float lgt, int creatorId, Timestamp startDate, Timestamp endDate, String category, String creatorGender, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -46,6 +51,8 @@ public class Event {
         this.startDate = startDate;
         this.endDate = endDate;
         this.category = category;
+        this.creatorGender = creatorGender;
+        this.isActive = isActive;
     }
 
     public int getId() { return id; }
@@ -128,4 +135,8 @@ public class Event {
     public void setCreatorId(int creatorId) { this.creatorId = creatorId; }
 
     public String getCategory() { return this.category; }
+
+    public String getCreatorGender() { return this.creatorGender; }
+
+    public Boolean isActive() { return this.isActive; }
 }

@@ -18,17 +18,30 @@
         android:id="@+id/event_list_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="4dp"
         android:maxLines="1"
         android:paddingEnd="24dp"
         android:textColor="#000000"
         android:textSize="12sp"
         tools:text="Detail"
-        android:layout_marginLeft="4dp"
+        android:paddingRight="24dp"
+        android:layout_alignBottom="@+id/event_list_thumbnail"
         android:layout_alignParentRight="true"
-        android:paddingRight="24dp"/>
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/event_list_active"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/event_list_text_layout"
+        android:layout_alignBottom="@+id/event_list_text_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:maxLines="1"
+        android:paddingEnd="24dp"
+        android:paddingRight="24dp"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        tools:text="Active" />
 
     <RelativeLayout
         android:id="@+id/event_list_text_layout"

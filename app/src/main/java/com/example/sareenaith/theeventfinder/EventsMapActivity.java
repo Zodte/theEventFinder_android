@@ -1,8 +1,10 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -29,6 +31,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.facebook.login.LoginManager;
@@ -62,6 +65,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *  This class is responsible to check permission for Location Services, connect to Google Client API
@@ -96,6 +101,8 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     String tag;
     LatLng reykjavikPos = new LatLng(64.14139101702763, -21.955103874206543);
 
+    SharedPreferences sharedpreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +135,8 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+
+        sharedpreferences = getSharedPreferences("MyPref",Context.MODE_PRIVATE);
 
         // code for the option items from settings
         imgBtn = (ImageButton) findViewById(R.id.eventMap_settings_icon);
@@ -308,49 +317,64 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         Toast.makeText(getApplicationContext(), from_searchDate + "   " + to_searchDate,
                 Toast.LENGTH_LONG)
                 .show();
-        String uri = String.format(URL+"getEventsFromTo/"+ from_searchDate + "/" + to_searchDate + "?genderRestriction=%1$s&tag=%2$s", genderRestricted, tag);
-        JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, uri, null, new Response.Listener<JSONArray>() {
+
+        final String userGender = sharedpreferences.getString("gender", null);
+
+
+
+        String uri = URL+"getEventsFromToPost";
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.POST, uri, new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        for(int i = 0; i < response.length(); i++){
-                            JSONObject event = null;
-                            try {
-                                event = response.getJSONObject(i);
-                                int eventID = event.getInt("id");
-                                String name = event.getString("name");
-                                String description = event.getString("description");
-                                int ageMin = event.getInt("age_min");
-                                int ageMax = event.getInt("age_max");
-                                int creatorID = event.getInt("creator_id");
-                                boolean genderRestriction = event.getBoolean("gender_restriction");
-                                String startDateString = event.getString("start_date").replace("T"," ").substring(0,23);
-                                Timestamp startDate = Timestamp.valueOf(startDateString);
-                                String endDateString = event.getString("end_date").replace("T", " ").substring(0,23);
-                                Timestamp endDate = Timestamp.valueOf(endDateString);
-                                float lat = (float)event.getDouble("lat");
-                                float lgt = (float)event.getDouble("lgt");
-                                String category = event.getString("category");
+                    public void onResponse(String response) {
+                        Log.d("myApp", response);
+                        try {
+                            JSONArray resEvents = new JSONArray(response);
+                            Log.d("MyApp", "lengdin er " + resEvents.length());
+                            for(int i = 0; i < resEvents.length(); i++){
+                                    JSONObject event = resEvents.getJSONObject(i);
+                                    int eventID = event.getInt("id");
+                                    String name = event.getString("name");
+                                    String description = event.getString("description");
+                                    int ageMin = event.getInt("age_min");
+                                    int ageMax = event.getInt("age_max");
+                                    int creatorID = event.getInt("creator_id");
+                                    boolean genderRestriction = event.getBoolean("gender_restriction");
+                                    String startDateString = event.getString("start_date").replace("T", " ").substring(0, 23);
+                                    Timestamp startDate = Timestamp.valueOf(startDateString);
+                                    String endDateString = event.getString("end_date").replace("T", " ").substring(0, 23);
+                                    Timestamp endDate = Timestamp.valueOf(endDateString);
+                                    float lat = (float) event.getDouble("lat");
+                                    float lgt = (float) event.getDouble("lgt");
+                                    String category = event.getString("category");
+                                    String creatorGender = event.getString("creator_gender");
 
-                                Event eventObj = new Event(eventID, name, description, ageMin, ageMax, genderRestriction,
-                                        lat, lgt, creatorID, startDate, endDate, category );
-                                events.add(eventObj);
-                                Log.d("myApp",""+eventObj.getStartDate());
-                            } catch (JSONException e) {
-                                Log.d("myApp", "buhuu");
+                                    Event eventObj = new Event(eventID, name, description, ageMin, ageMax, genderRestriction,
+                                            lat, lgt, creatorID, startDate, endDate, category, creatorGender, true);
+                                    events.add(eventObj);
+                                    Log.d("myApp", "" + eventObj.getStartDate());
                             }
-
+                        } catch (JSONException e) {
+                            Log.d("MyApp", "error!!!!!!" + e);
                         }
                         addEvents();
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
                         Log.d("myApp", ""+error);
                     }
-                });
+                }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("from", from_searchDate);
+                    params.put("to", to_searchDate);
+                    params.put("gender", userGender);
+                    return params;
+                }
+        };
         requestQueue.add(jsObjRequest);
     }
 

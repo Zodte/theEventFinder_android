@@ -466,6 +466,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         if (mAwesomeValidation.validate() && dateValidation()) {
             //checkAge();
             final String dbid = sharedpreferences.getString("db_id", null);
+            final String userGender = sharedpreferences.getString("gender", null);
             System.out.println("inní sendEvent og dbid er: "+dbid);
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"createEvent", new Response.Listener<String>() {
@@ -494,6 +495,7 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
                         params.put("category", eventTypesSpinner.getSelectedItem().toString());
                         params.put("isAndroid", "true");
                         params.put("db_id", dbid);
+                        params.put("creatorGender",userGender);
                         return params;
                     }
                 };
