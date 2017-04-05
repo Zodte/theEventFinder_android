@@ -31,6 +31,7 @@ import java.util.ArrayList;
  * in a list.
  */
 
+// Not using this one anymore. We moved the functionality over to the "MyProfileActivity" class.
 public class MyEventsListActivity extends AppCompatActivity {
     private Config config = new Config();
     private final String URL = config.getUrl();
@@ -42,7 +43,7 @@ public class MyEventsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_events_list);
+        setContentView(R.layout.activity_my_profile);
         requestQueue = Volley.newRequestQueue(this);
         sharedpreferences = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         getEvents();

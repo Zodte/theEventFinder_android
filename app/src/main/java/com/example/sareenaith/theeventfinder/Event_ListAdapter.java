@@ -104,8 +104,6 @@ class Event_ListAdapter extends BaseAdapter{
                 thumbnailImageView.setImageResource(R.mipmap.guitar);
                 break;
         }
-        // If we want to add a thumbnail with an event photo or something, we could use this:
-        //Picasso.with(mContext).load(event.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
 
         return rowView;
     }
