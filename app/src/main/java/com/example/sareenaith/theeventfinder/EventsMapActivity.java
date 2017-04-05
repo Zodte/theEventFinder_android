@@ -65,6 +65,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -211,11 +212,15 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
 
     //Sets search dates to default value
     public void resetSearchValues(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        /*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar now = Calendar.getInstance();
         from_searchDate = dateFormat.format(now.getTime());
         now.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)+3);
-        to_searchDate = dateFormat.format(now.getTime());
+        to_searchDate = dateFormat.format(now.getTime()); */
+        Date today = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        from_searchDate = dateFormat.format(today);
+        to_searchDate = "2017-08-20";
         genderRestricted = false;
         tag = "Any";
     }
@@ -372,6 +377,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
                     params.put("from", from_searchDate);
                     params.put("to", to_searchDate);
                     params.put("gender", userGender);
+                    params.put("tag", tag);
                     return params;
                 }
         };
