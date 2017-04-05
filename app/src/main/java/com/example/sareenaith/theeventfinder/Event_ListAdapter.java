@@ -79,11 +79,15 @@ class Event_ListAdapter extends BaseAdapter{
         detailTextView.setText(event.getStartDate().toString().substring(0, 10));
         if(!event.isActive()) {
             activeTextView.setText("Inactive Event");
-            rowView.setBackgroundColor(Color.RED);
+            rowView.setBackgroundColor(Color.parseColor("#e46363"));
+        }
+        else if(isEventOnGoing( event )){
+            activeTextView.setText("Ongoing Event");
+            rowView.setBackgroundColor(Color.parseColor("#72e265"));
         }
         else if(isEventExpired( event )) {
             activeTextView.setText("Expired Event");
-            rowView.setBackgroundColor(Color.YELLOW);
+            rowView.setBackgroundColor(Color.parseColor("#edf07b"));
         }
         else {
             activeTextView.setText("Upcoming Event");
@@ -108,14 +112,23 @@ class Event_ListAdapter extends BaseAdapter{
         return rowView;
     }
 
-    // Returns true if event is already started, else returns false.
+    // Returns true if event is already ended, else returns false.
     private Boolean isEventExpired( Event event ) {
         //Find the current date
         Date today = new Date();
         //Get the event start date
-        Date eventStartDate = convertToDateObject( event.getStartDate().toString().substring(0, 16).replace('T', ' ') );
+        Date eventEndDate = convertToDateObject( event.getEndDate().toString().substring(0, 16).replace('T', ' ') );
 
-        return (today.compareTo(eventStartDate) > 0 && event.isActive());
+        return (today.compareTo(eventEndDate) > 0 && event.isActive());
+    }
+
+    private Boolean isEventOnGoing( Event event ) {
+        //Find the current date
+        Date today = new Date();
+        //Get the event start date
+        Date eventStartDate = convertToDateObject( event.getStartDate().toString().substring(0, 16).replace('T', ' ') );
+        Date eventEndDate = convertToDateObject( event.getEndDate().toString().substring(0, 16).replace('T', ' '));
+        return ( today.compareTo(eventEndDate) < 0 && today.compareTo(eventStartDate) >= 0 && event.isActive());
 
     }
 

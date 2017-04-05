@@ -220,7 +220,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         Date today = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         from_searchDate = dateFormat.format(today);
-        to_searchDate = "2017-08-20";
+        to_searchDate = "2017-06-20";
         genderRestricted = false;
         tag = "Any";
     }
