@@ -80,15 +80,15 @@ class Event_ListAdapter extends BaseAdapter{
         if(!event.isActive()) {
             activeTextView.setText("Inactive Event");
             rowView.setBackgroundColor(Color.RED);
-        } else {
-            activeTextView.setText("");
         }
-
-        //Color the row yellow if the event is expired.
-        if(isEventExpired( event )) {
+        else if(isEventExpired( event )) {
             activeTextView.setText("Expired Event");
             rowView.setBackgroundColor(Color.YELLOW);
         }
+        else {
+            activeTextView.setText("Upcoming Event");
+        }
+
 
         switch(event.getCategory()){
             case "Sports":
