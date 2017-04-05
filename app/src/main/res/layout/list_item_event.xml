@@ -24,7 +24,7 @@
         android:textSize="12sp"
         tools:text="Detail"
         android:paddingRight="24dp"
-        android:layout_alignBottom="@+id/event_list_thumbnail"
+        android:layout_alignBaseline="@+id/event_list_text_layout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -32,8 +32,7 @@
         android:id="@+id/event_list_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/event_list_text_layout"
-        android:layout_alignBottom="@+id/event_list_text_layout"
+        android:layout_below="@+id/event_list_detail"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:maxLines="1"
@@ -60,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:maxLines="1"
             android:textSize="18sp"
             tools:text="Title"/>
 
@@ -72,7 +72,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:textSize="15sp"
             tools:text="Subtitle"/>
 
