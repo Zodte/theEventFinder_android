@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Seach Dates" />
+            android:text="Search Dates" />
 
         <ImageView
             android:id="@+id/imageView_chooseDate"

@@ -334,11 +334,6 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
             mMap.setMyLocationEnabled(true);
         }
 
-        // sending request to the server to get all events before a specific date.
-        Toast.makeText(getApplicationContext(), from_searchDate + "   " + to_searchDate,
-                Toast.LENGTH_LONG)
-                .show();
-
         final String userGender = sharedpreferences.getString("gender", null);
 
 
