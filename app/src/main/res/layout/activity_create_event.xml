@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:id="@+id/createEvent_secondContainer"
-            android:layout_below="@+id/createEvent_thirdContainer">
+            android:layout_below="@+id/createEvent_firstContainer">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:id="@+id/createEvent_thirdContainer"
-            android:layout_below="@+id/createEvent_firstContainer">
+            android:layout_below="@+id/createEvent_secondContainer">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -190,7 +190,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:id="@+id/createEvent_fifthContainer"
-            android:layout_below="@+id/createEvent_secondContainer">
+            android:layout_below="@+id/createEvent_thirdContainer">
 
             <ImageView
                 android:layout_width="wrap_content"
