@@ -2,6 +2,7 @@ package com.example.sareenaith.theeventfinder;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import java.util.Map;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -167,6 +169,20 @@ public class CreateEventActivity extends FragmentActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
 
         addTextListeners();
+    }
+
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this)
+                .setTitle("Back to map")
+                .setMessage("Are sure you want to stop creating a new event?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CreateEventActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
     public void addTextListeners() {

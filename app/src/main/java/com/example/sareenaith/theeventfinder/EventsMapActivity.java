@@ -200,6 +200,13 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         mMap.setOnMapClickListener(this);
     }
 
+
+    //Do nothing on back pressed
+    @Override
+    public void onBackPressed(){
+
+    }
+
     @Override
     public void onMapClick(LatLng point) {
         eventInfo.setVisibility(View.INVISIBLE);

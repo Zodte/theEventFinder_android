@@ -1,11 +1,13 @@
 package com.example.sareenaith.theeventfinder;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -94,7 +96,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 Boolean isActive = event.getBoolean("isactive");
 
 
-                                /*
+
                                 Calendar calStart = Calendar.getInstance();
                                 Calendar calEnd = Calendar.getInstance();
                                 SimpleDateFormat inputF = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -107,20 +109,21 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                                 }
                                 String startDate2 = outputOtherDay.format(calStart.getTime());
+                                String endDate2;
                                 if(calStart.get(calStart.DAY_OF_MONTH) == calEnd.get(calEnd.DAY_OF_MONTH)
                                    && calStart.get(calStart.MONTH) == calEnd.get(calEnd.MONTH)){
-                                    endDate = outputSameDay.format(calEnd.getTime());
+                                    endDate2 = outputSameDay.format(calEnd.getTime());
                                 }else{
-                                    endDate = outputOtherDay.format(calEnd.getTime());
+                                    endDate2 = outputOtherDay.format(calEnd.getTime());
                                 }
-                                */
+
 
 
 
 
                                 eventNameTw.setText(eventName);
                                 eventDescrTw.setText(eventDescr);
-                                eventTimeTw.setText("Event time: " + startDate + " - " + endDate);
+                                eventTimeTw.setText(startDate2 + " - " + endDate2);
                                 //eventAgesTw.setText("This event is for ages " + ageMin + " to " + ageMax);
                                 if(genRestrict) {
                                     eventGenRestrictTw.setText("This is a gender restricted event");
@@ -132,7 +135,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                                 // length of the attendee array.  This is a dirty fix that will get changed later,
                                 // because there is no need to fetch all the individual attendees any more.
                                 numAttendees = attendees.length();
-                                eventAttendeesTw.setText(attendees.length() + " joined this event");
+                                eventAttendeesTw.setText(attendees.length() + " Going");
                                 /*
                                 for(int i = 0; i < attendees.length(); i++) {
                                     JSONObject attendee = attendees.getJSONObject(i);
@@ -182,7 +185,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     attendEvent();
                 }
                 else if(attendBtn.getText().subSequence(0,1).equals("D")) {
-                    deleteEvent();
+                    deleteEventPrompt();
                 }
                 else if(attendBtn.getText().subSequence(0,1).equals("U")){
                     unAttendEvent();
@@ -218,7 +221,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void deleteEvent() {
+    private void deleteEvent(){
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"deactivateEvent", new Response.Listener<String>() {
                 @Override
@@ -255,17 +258,27 @@ public class EventDetailsActivity extends AppCompatActivity {
                 .show();
         Intent intent = new Intent(EventDetailsActivity.this, EventsMapActivity.class);
         startActivity(intent);
-
         //unAttendBtn.setEnabled(true);
+    }
 
-
+    private void deleteEventPrompt() {
+        new AlertDialog.Builder(this)
+            .setTitle("Delete Event")
+            .setMessage("Are sure you want to delete this event?")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    deleteEvent();
+                }
+            })
+            .setNegativeButton(android.R.string.no, null).show();
     }
 
     public void attendEvent() {
         // Fetch the userId
         final String dbid = sharedpreferences.getString("db_id", null);
         // Tell the server the user is going to attend the event.
-        eventAttendeesTw.setText(++numAttendees + " joined this event");
+        eventAttendeesTw.setText(++numAttendees + " Going");
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"attendEvent", new Response.Listener<String>() {
                 @Override
@@ -305,7 +318,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void unAttendEvent() {
         final String dbid = sharedpreferences.getString("db_id", null);
-        eventAttendeesTw.setText(--numAttendees + " joined this event");
+        eventAttendeesTw.setText(--numAttendees + " Going");
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL+"unAttendEvent", new Response.Listener<String>() {
                 @Override
